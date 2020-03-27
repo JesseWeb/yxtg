@@ -53,11 +53,11 @@
       </section>
       <div class="main">
          <div class="m-pc-title">
-            <h3 class="title">注册同福客栈会员</h3>
+            <h3 class="title">注册悦享推广会员</h3>
          </div>
          <div class="form">
             <a-form :form="form" @submit="handleSubmit">
-               <a-form-item>
+               <!-- <a-form-item>
                   <span slot="label">昵称</span>
                   <a-input
                      v-decorator="[
@@ -67,11 +67,11 @@
                         }
                      ]"
                   />
-               </a-form-item>
+               </a-form-item>-->
                <a-form-item label="手机号">
                   <a-input
                      v-decorator="[
-                        'phone',
+                        'mobile',
                         {
                            rules: [{ required: true, message: '手机号不能为空' },{validator:this.checkPhoneNumber.bind(this)}],
                         }
@@ -84,14 +84,14 @@
                      <a-col :span="12">
                         <a-input
                            v-decorator="[
-                           'captcha',
+                           'sms_code',
                            {rules: [{ required: true, message: '请输入手机验证码' }]}
                            ]"
                         />
                      </a-col>
                      <a-col :span="12">
                         <countDownBtn @send-verification-code="getCaptcha" defText="获取验证码"></countDownBtn>
-                          <!-- <send-verification-code :count-down-parent="30" ="sendVerificationCode"></send-verification-code> -->
+                        <!-- <send-verification-code :count-down-parent="30" ="sendVerificationCode"></send-verification-code> -->
 
                         <!-- <a-button type="primary" :loading="!captchaStatus" @click="getCaptcha">获取验证码{{captchaTimer}}</a-button> -->
                      </a-col>
@@ -135,7 +135,19 @@
                   </a-checkbox>
                </a-form-item>-->
                <a-form-item>
-                  <a-button class="login-form-button" type="primary" html-type="submit">注册</a-button>
+                  <span slot="label">邀请码(选填)</span>
+                  <a-input
+                     v-decorator="[
+                        'inviter_id',
+                        { initialValue: inviter_id },
+                        {
+                           rules: [{ required: false, message: '输入邀请码', whitespace: false }]
+                        }
+                     ]"
+                  />
+               </a-form-item>
+               <a-form-item>
+                  <a-button class="login-form-button" :loading="btnloading" type="primary" html-type="submit">注册</a-button>
                </a-form-item>
             </a-form>
          </div>
@@ -143,42 +155,38 @@
    </div>
 </template>
 <script>
-import countDownBtn from '@/components/count-down-btn.vue'
+import countDownBtn from "@/components/count-down-btn.vue";
+import { register, getCaptcha } from "@/apis/user";
+
 export default {
+   name: "register",
    data() {
       return {
+         btnloading: false,
          redirectURL: "/",
          form: this.$form.createForm(this),
          captchaText: "获取验证码",
          captchaDisabled: true,
-         captchaTimer: 0
+         captchaTimer: 0,
+         inviter_id: ""
       };
    },
-   components:{
+   components: {
       countDownBtn
    },
    methods: {
       checkPhoneNumber(rule, value, callback) {
          var reg = /^1[3|4|5|7|8][0-9]{9}$/;
          var flag = reg.test(value);
-         if (value == "") {
-            callback();
+         if(!value){
+            callback()
          }
          if (!flag) {
             callback("手机号码不正确!");
          }
+         callback();
       },
-      getCaptcha() {
-        
-      },
-      handleSubmit(e) {
-         e.preventDefault();
-         this.form.validateFieldsAndScroll((err, values) => {
-            if (!err) {
-               console.log("Received values of form: ", values);
-            }
-         });
-      },
+      getCaptcha() {},
       handleConfirmBlur(e) {
          const value = e.target.value;
          this.confirmDirty = this.confirmDirty || !!value;
@@ -202,16 +210,31 @@ export default {
          e.preventDefault();
          this.form.validateFields((err, values) => {
             if (!err) {
-               console.log("Received values of form: ", values);
+               this.btnloading = true;
+               register({...values,validate_token:"sb"})
+                  .then(res => {})
+                  .finally(() => {
+                     this.btnloading = false;
+                  });
             }
          });
       },
       goBack() {
-        this.$router.go(-1)
+         this.$router.go(-1);
       }
    },
    mounted() {
       this.redirectURL = this.$route.query.redirect_url || "/";
-   }
+      this.inviter_id = this.$route.query.inviter_id || "";
+   },
+   // asyncData(){
+   //    register().then((res) => {
+   //       console.log(1);
+   //       console.log(res);
+   //    }).catch((error) => {
+   //       console.log(2);
+   //       console.log(error);
+   //    })
+   // }
 };
 </script>

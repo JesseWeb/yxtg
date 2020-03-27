@@ -398,6 +398,7 @@
 
 <script>
 export default {
+   name:"introduce",
    components: {},
    mounted() {
       this.$nextTick(() => {

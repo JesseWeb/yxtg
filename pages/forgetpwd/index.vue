@@ -60,7 +60,7 @@
                <a-form-item label="手机号">
                   <a-input
                      v-decorator="[
-                        'phone',
+                        'mobile',
                         {
                            rules: [{ required: true, message: '手机号不能为空' },{validator:this.checkPhoneNumber.bind(this)}],
                         }
@@ -73,14 +73,14 @@
                      <a-col :span="12">
                         <a-input
                            v-decorator="[
-                           'captcha',
+                           'sms_code',
                            {rules: [{ required: true, message: '请输入手机验证码' }]}
                            ]"
                         />
                      </a-col>
                      <a-col :span="12">
                         <countDownBtn @send-verification-code="getCaptcha" defText="获取验证码"></countDownBtn>
-                          <!-- <send-verification-code :count-down-parent="30" ="sendVerificationCode"></send-verification-code> -->
+                        <!-- <send-verification-code :count-down-parent="30" ="sendVerificationCode"></send-verification-code> -->
 
                         <!-- <a-button type="primary" :loading="!captchaStatus" @click="getCaptcha">获取验证码{{captchaTimer}}</a-button> -->
                      </a-col>
@@ -132,9 +132,10 @@
    </div>
 </template>
 <script>
-import countDownBtn from '@/components/count-down-btn.vue'
+import countDownBtn from "@/components/count-down-btn.vue";
+import { resetPwd } from "@/apis/user";
 export default {
-   name:"ForgetPwd",
+   name: "ForgetPwd",
    data() {
       return {
          redirectURL: "/",
@@ -144,31 +145,19 @@ export default {
          captchaTimer: 0
       };
    },
-   components:{
+   components: {
       countDownBtn
    },
    methods: {
       checkPhoneNumber(rule, value, callback) {
          var reg = /^1[3|4|5|7|8][0-9]{9}$/;
          var flag = reg.test(value);
-         if (value == "") {
-            callback();
-         }
          if (!flag) {
             callback("手机号码不正确!");
          }
+         callback();
       },
-      getCaptcha() {
-        
-      },
-      handleSubmit(e) {
-         e.preventDefault();
-         this.form.validateFieldsAndScroll((err, values) => {
-            if (!err) {
-               console.log("Received values of form: ", values);
-            }
-         });
-      },
+      getCaptcha() {},
       handleConfirmBlur(e) {
          const value = e.target.value;
          this.confirmDirty = this.confirmDirty || !!value;
@@ -190,14 +179,22 @@ export default {
       },
       handleSubmit(e) {
          e.preventDefault();
-         this.form.validateFields((err, values) => {
-            if (!err) {
-               console.log("Received values of form: ", values);
+         this.form.validateFields(
+            async (err, { mobile, password, sms_code }) => {
+               if (!err) {
+                  await resetPwd({
+                     mobile,
+                     password,
+                     sms_code,
+                     validate_token: "sb"
+                  });
+                  // console.log("Received values of form: ", values);
+               }
             }
-         });
+         );
       },
       goBack() {
-        this.$router.go(-1)
+         this.$router.go(-1);
       }
    },
    mounted() {

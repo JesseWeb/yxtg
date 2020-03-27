@@ -54,14 +54,14 @@
       </section>
       <div class="main">
          <div class="m-pc-title">
-            <h3 class="title">登录同福客栈</h3>
+            <h3 class="title">登录悦享推广</h3>
          </div>
          <div class="form">
             <a-form id="components-form-demo-normal-login" :form="form" class="login-form" @submit="handleSubmit">
                <a-form-item>
                   <a-input
                      v-decorator="[
-                        'userName',
+                        'mobile',
                         { rules: [{ required: true, message: '手机号不能为空!'},{validator:this.checkPhoneNumber.bind(this)}] }
                   ]"
                      placeholder="请输入手机号"
@@ -83,7 +83,8 @@
                </a-form-item>
                <a-form-item>
                   <a-button type="primary" html-type="submit" class="login-form-button">登录</a-button>
-                  <nuxt-link to="/forgetpwd">忘记密码</nuxt-link>Or<n-link @click="goRegister" to="/register"  href="javascript:void(0);">注册新用户</n-link>
+                  <nuxt-link to="/forgetpwd">忘记密码</nuxt-link>Or
+                  <n-link @click="goRegister" to="/register" href="javascript:void(0);">注册新用户</n-link>
                </a-form-item>
             </a-form>
          </div>
@@ -91,7 +92,11 @@
    </div>
 </template>
 <script>
+import { login } from "../../apis/user";
+import { message } from "ant-design-vue";
+import { getToken } from "../../tools/token";
 export default {
+   name: "login",
    data() {
       return {
          url: "/login",
@@ -113,12 +118,15 @@ export default {
          if (!flag) {
             callback("手机号码不正确!");
          }
+         callback();
       },
-      handleSubmit(e) {
+      async handleSubmit(e) {
          e.preventDefault();
-         this.form.validateFields((err, values) => {
+         this.form.validateFields(async (err, values) => {
             if (!err) {
-               console.log("Received values of form: ", values);
+               let res = await login(values);
+               await message.success("登录成功", 1);
+               this.$router.push("home");
             }
          });
       },
@@ -126,9 +134,13 @@ export default {
          this.$router.back();
       }
    },
-   mounted() {
+   async mounted() {
       this.redirectURL = this.$route.query.redirect_url || "/";
       this.url = this.$route.path;
+      if (getToken()) {
+         await message.loading("您已登录", 1);
+         this.$router.push("home")
+      }
    }
 };
 </script>

@@ -5,10 +5,11 @@
   <send-verification-code :count-down-parent="30" @send-verification-code="sendVerificationCode"></send-verification-code>
  -->
 <template>
-   <a-button type="primary" :loading="isSended" @click="sendVerificationCode">{{btnText}}</a-button>
+   <a-button type="primary" :disabled="isSended" @click="sendVerificationCode">{{btnText}}</a-button>
 </template>
 <script>
 export default {
+   name:"CountDownBtn",
    data() {
       return {
          btnText: "发送验证码", // 按钮的文本
