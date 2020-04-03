@@ -399,7 +399,6 @@ input[type="tel"] {
                <button
                   rseat="810251_ocm_unionperson_invite"
                   id="share-btn"
-                  data-clipboard-text="http://www.iqiyi.com/common/unionH5.html/#/invitation?personInvite=3421878940"
                   class="item-link"
                >
                   <span class="c-icon c-invite"></span>

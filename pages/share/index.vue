@@ -297,8 +297,7 @@
       <div class="m-bottom-fixed">
          <div class="m-infoCover-btFixed">
             <div class="tab-wrap">
-               <button v-if="true" id="make-poster" @click="sharing" class="tab-item-btn c-darkGold" style="cursor: pointer;">生成海报</button>
-               <button v-else id="make-poster" @click="authorize" class="tab-item-btn c-darkGold" style="cursor: pointer;">点击授权</button>
+               <button id="make-poster" @click="sharing" class="tab-item-btn c-darkGold" style="cursor: pointer;">生成海报</button>
             </div>
          </div>
       </div>
@@ -319,7 +318,7 @@ export default {
    },
    data() {
       return {
-         type: 2,
+         type: 1,
          typeEentities: [
             {
                name: "饿了么",

@@ -17,11 +17,11 @@
 ### 安装依赖
 确保安装了npx（npx在NPM版本5.2.0默认安装了）：
 ```
-npm install
+npm i && npm i -g pm2 cross-env
 ```
 或者使用yarn：
 ```
-yarn
+yarn && yarn global add pm2 cross-env
 ```
 ### 部署模式
 * 部署该项目最简单的方式是使用内置nuxt框架的http服务器作为web容器

@@ -63,13 +63,74 @@
       color: #68400b;
    }
    .item {
-      margin-top: 0.1rem;
+      margin-top: 0.2rem;
       .item-desc {
+         .item-desc-title {
+            font-weight: 600;
+         }
          display: flex;
          justify-content: space-between;
+         .purpose {
+            font-size: 0.12rem;
+         }
       }
       .item-progress-bar {
          width: calc(100% - 0.1rem);
+      }
+   }
+}
+.m-bottom-fixed {
+   height: 0.45rem;
+   .m-infoCover-btFixed {
+      position: fixed;
+      // left: 0;
+      // right: 0;
+      bottom: 0;
+      width: 100%;
+      z-index: 999;
+      height: 0.45rem;
+      background: #fff;
+      max-width: 640px;
+      // left
+      .tab-wrap {
+         display: flex;
+         line-height: 0.45rem;
+         .tab-item-btn {
+            flex: 1;
+            width: 50%;
+            text-align: center;
+            display: block;
+            font-size: 0.18rem;
+            color: #bb8b51;
+            line-height: 0.45rem;
+         }
+         .c-darkGold {
+            font-family: "Helvetica Neue", helvetica, arial, sans-serif;
+            color: #68400b;
+            font-size: bold;
+            background-image: -moz-linear-gradient(
+               180deg,
+               #e7bb78 1%,
+               #f0d19e 99%
+            );
+            background-image: -webkit-linear-gradient(
+               180deg,
+               #e7bb78 1%,
+               #f0d19e 99%
+            );
+            background-image: -ms-linear-gradient(
+               180deg,
+               #e7bb78 1%,
+               #f0d19e 99%
+            );
+            background-image: -webkit-linear-gradient(
+               180deg,
+               #e7bb78 1%,
+               #f0d19e 99%
+            );
+            outline: none;
+            border: none;
+         }
       }
    }
 }
@@ -87,20 +148,34 @@
                <div v-if="userDetail&&userDetail.promote&&userDetail.promote.level_desc" class="role">{{userDetail.promote.level_desc}}</div>
             </div>
          </div>
-         <div class="contact" @click="contactMaster">联系导师</div>
+         <div class="contact" v-if="inviterWechat" v-clipboard:error="onError" v-clipboard:copy="inviterWechat" v-clipboard:success="contactMaster">联系导师</div>
       </div>
       <div class="progress">
          <div class="title">升级进度</div>
-         <div class="item">
+         <div class="item" v-for="mission in missions" :key="mission.type">
             <div class="item-desc">
-               <div class="item-desc-title">直邀有效</div>
+               <div class="item-desc-title">{{mission.name}}</div>
                <div class="item-desc-schedule">
-                  0人/
-                  <span class="purpose">目标150人</span>
+                  {{mission.num}}{{mission.unit}}
+                  <span class="purpose">/目标{{mission.target}}{{mission.unit}}</span>
                </div>
             </div>
             <div class="item-progress-bar">
-               <a-progress strokeColor="#b98023" :percent="100" status="active" />
+               <a-progress strokeColor="#b98023" :percent="Math.floor(mission.num/mission.target)*100" status="active" />
+            </div>
+         </div>
+      </div>
+      <div class="m-bottom-fixed">
+         <div class="m-infoCover-btFixed">
+            <div class="tab-wrap">
+               <button
+                  id="make-poster"
+                  v-clipboard:error="onError"
+                  v-clipboard:copy="promoteText"
+                  v-clipboard:success="promoteCopySuccess"
+                  class="tab-item-btn c-darkGold"
+                  style="cursor: pointer;"
+               >邀请好友</button>
             </div>
          </div>
       </div>
@@ -117,19 +192,48 @@ export default {
    data() {
       return {
          title: "我的任务",
+         missions: [],
          userDetail: {
             user: {
                username: ""
             },
             promote: {
                level_desc: ""
+            },
+            inviter: {
+               wechat: ""
             }
          }
       };
    },
+   computed: {
+      toFixed(num) {
+         if (num == 0) {
+            return 0;
+         } else {
+            return Number(num.toFixed(2));
+         }
+      },
+      inviterWechat() {
+         return this.userDetail.inviter.wechat;
+      },
+      promoteText() {
+         return `${window.location.host}/#/register?inviter_id=${this.userDetail.user.userid}`;
+      }
+   },
    methods: {
+      promoteCopySuccess() {
+            this.$message.success("已复制微推广文案，粘贴分享即可");
+      },
+      onError() {
+         this.$message.success("复制失败");
+      },
       contactMaster() {
-         
+         if (this.promoteText) {
+            this.$message.success("已复制微信号，在微信中添加即可");
+         } else {
+            this.$message.success("获取导师微信失败");
+         }
       },
       async getUserDetail() {
          try {
@@ -140,7 +244,7 @@ export default {
       async getUpgradeProgress() {
          try {
             let { data } = await getUpgradeProgress();
-            console.log(data);
+            this.missions = data.data.progress;
          } catch (error) {}
       }
    },
