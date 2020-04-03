@@ -242,7 +242,6 @@ export default {
                this.btnloading = true;
                register({ ...values, validate_token: this.validate_token })
                   .then(res => {
-                     setToken(res.data?.data?.token)
                      this.$router.push("home");
                   })
                   .finally(() => {

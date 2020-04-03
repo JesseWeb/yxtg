@@ -137,3 +137,9 @@ export async function getTeamStatistics(type=1){
       }
    })
 }
+export async function getUpgradeProgress(){
+   return request({
+      url:"/promote/upgrade_progress",
+      method:"get",
+   })
+}

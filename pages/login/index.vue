@@ -125,8 +125,7 @@ export default {
          this.form.validateFields(async (err, values) => {
             if (!err) {
                try {
-                  let { data } = await login(values);
-                  setToken(data.data.token)
+                  await login(values);
                   await message.success("登录成功", 1);
                   this.$router.push("home");
                } catch (error) {
