@@ -163,6 +163,9 @@ input[type="tel"] {
       box-sizing: border-box;
       font-size: 0.12rem;
       margin-bottom: 0.1rem;
+      .own-predict-money{
+         line-height: .12rem;
+      }
       .own-predict-wrap {
          display: flex;
          flex-direction: column;

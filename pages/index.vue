@@ -1,11 +1,21 @@
 <style lang="scss">
 .login-top {
+   position: relative;
    .login-top-bg {
       width: 100%;
       height: 2.09rem;
       overflow: hidden;
-      background: url("~assets/image/login-top-bg.png") no-repeat;
-      background-size: 100% auto;
+      background-color: #F0D3A4;
+      position: relative;
+      .login-slogan{
+         color: #683F0B;
+         position: absolute;
+         top: .5rem;
+         font-size: .32rem;
+         font-weight: bold;
+         text-align: center;
+         width: 100%;
+      }
       .wrap {
          display: flex;
          margin: 0.1rem 0.1rem 0;
@@ -262,11 +272,10 @@
 }
 .flow-join-btn {
    height: 0.45rem;
+   width: 100%;
    .flow-join-btnMain {
       position: fixed;
       bottom: 0;
-      left: 0;
-      right: 0;
       width: 100%;
       background-image: -webkit-linear-gradient(left, #f0d19e 0, #e7bb78 100%);
       background-image: -o-linear-gradient(left, #f0d19e 0, #e7bb78 100%);
@@ -276,7 +285,8 @@
       color: #68400b;
       text-align: center;
       line-height: 0.45rem;
-      height: 0;
+      // height: 0;
+      max-width:640px;
       &.am-up {
          height: 0.45rem;
          transition: height 0.3s;
@@ -300,6 +310,7 @@
                </div>
                <nuxt-link v-else class="login-box cursor-pointer" to="/login" tag="div">登录</nuxt-link>
             </div>
+            <div class="login-slogan">分享红包 ·  分享获利</div>
             <div class="login-invite-title">
                <span class="top-title-inviter">喜欢吃香蕉的刘傅觅风</span>
                <span>邀请您加入个人联盟</span>
@@ -391,7 +402,7 @@
       </div>
       <div class="m-flow"></div>
       <div class="flow-join-btn">
-         <nuxt-link to="/login" class="flow-join-btnMain" :class="showJoin2?'am-up':'am-down'">现在加入</nuxt-link>
+         <nuxt-link to="/login" class="flow-join-btnMain" tag="div" :class="showJoin2?'am-up':'am-down'">现在加入</nuxt-link>
       </div>
    </div>
 </template>

@@ -1,5 +1,6 @@
 <style lang="scss">
 .m-goBack {
+   cursor: pointer;
    height: 0.4rem;
    padding: 0.15rem 0.1rem 0;
    box-sizing: border-box;
@@ -48,9 +49,9 @@
 <template>
    <div id="login">
       <section class="m-goBack" @click="goBack">
-         <a data-node="goBack" class="c-link" href="javascript:void(0);">
+         <div data-node="goBack" class="c-link">
             <i class="iconfont iconfanhui"></i>
-         </a>
+         </div>
       </section>
       <div class="main">
          <div class="m-pc-title">
