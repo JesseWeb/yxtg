@@ -17,7 +17,7 @@ export function register(data) {
 }
 export function getCaptcha(data) {
    return request({
-      url: "/sms",
+      url: "/sms/send",
       method: 'post',
       data
    })
@@ -119,3 +119,21 @@ export async function getRebateStatic(time_type=1,form_type=1,type=1){
    })
 }
 
+export async function getTeamList(type=1,page=1,num=20){
+   return request({
+      url:"/team/list",
+      method:"get",
+      params:{
+         type,page,num
+      }
+   })
+}
+export async function getTeamStatistics(type=1){
+   return request({
+      url:"/team/statistics",
+      method:"get",
+      params:{
+         type
+      }
+   })
+}

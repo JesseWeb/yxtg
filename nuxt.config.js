@@ -19,12 +19,13 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      { rel: 'stylesheet', href: "//at.alicdn.com/t/font_1644987_7muyudv94w9.css" }
+      { rel: 'stylesheet', href: "//at.alicdn.com/t/font_1644987_yodir87xgmk.css" }
     ]
   },
   proxy: {
     '/api': {
       target: 'http://api.brazz.cn',
+      changeOrigin:true,
       pathRewrite: {
         '^/api': '/'
       }
@@ -35,6 +36,7 @@ export default {
   },
   router: {
     middleware: ['auth'],
+    // mode: "history"
     mode: "hash"
   },
   /*
@@ -76,7 +78,8 @@ export default {
   */
   plugins: [
     '@/plugins/ant-design-vue',
-    '@/plugins/vue-clipboard'
+    '@/plugins/vue-clipboard',
+    '@/plugins/main'
     // "@/plugins/auth",
     // "@/plugins/axios"
   ],
@@ -84,7 +87,7 @@ export default {
   ** Nuxt.js dev-modules
   */
   buildModules: [
-    // '@nuxt/typescript-build'
+    '@nuxt/typescript-build'
   ],
   /*
   ** Nuxt.js modules

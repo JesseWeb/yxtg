@@ -1,13 +1,12 @@
 <style lang="scss" scoped>
-
+   .user-info{
+      padding: .1rem;
+   }
 </style>
 <template>
    <div id="missions">
-      <gold-header>
-
-      </gold-header>
-      <div class="level">
-         中级管理员
+      <div class="user-info">
+         
       </div>
    </div>
 </template>

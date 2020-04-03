@@ -5,9 +5,9 @@
   "author": "legendary_jesse",
   "private": true,
   "scripts": {
-    "dev": "cross-env mode=development PORT=3001  nuxt",
+    "dev": "cross-env mode=development nuxt",
     "build": "cross-env mode=production nuxt build",
-    "start": "cross-env mode=production PORT=8000 nuxt  start",
+    "start": "cross-env mode=production nuxt start",
     "generate": "cross-env mode=production nuxt generate"
   },
   "dependencies": {

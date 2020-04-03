@@ -3,7 +3,9 @@
    height: 0.44rem;
    display: flex;
    .m-title-base {
-      position: fixed;
+      // position: fixed;
+      position: relative;
+      width:100%;
       top: 0;
       left: 0;
       right: 0;

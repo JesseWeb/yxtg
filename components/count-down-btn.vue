@@ -9,7 +9,7 @@
 </template>
 <script>
 export default {
-   name:"CountDownBtn",
+   name: "CountDownBtn",
    data() {
       return {
          btnText: "发送验证码", // 按钮的文本
@@ -31,8 +31,9 @@ export default {
       //    }
       // },
       // 自定义倒计时时长
-      defText:{
-         type:String,default:'发送验证码'
+      defText: {
+         type: String,
+         default: "发送验证码"
       },
       countDownParent: { type: Number, default: 60 }
    },
@@ -41,22 +42,24 @@ export default {
          let v = this;
          // vue2.0 props被控制为单向数据流，因此用子组件的属性接受下即可
          v.countDownChild = v.countDownParent;
-         v.btnText = v.defText
+         v.btnText = v.defText;
          if (!v.isSended) {
             // 调用父组件里面的发送验证码的事件，一般为调用后台接口
             v.$emit("send-verification-code");
-            v.isSended = true; // 幂等控制
-            v.timer = setInterval(() => {
-               v.countDownChild--;
-               v.btnText = `${v.countDownChild}s`;
-               if (v.countDownChild < 0) {
-                  v.countDownChild = v.countDownChild;
-                  v.isSended = false;
-                  v.btnText = "发送验证码";
-                  clearInterval(v.timer);
-               }
-            }, 1000);
          }
+      },
+      startCountDown() {
+         this.isSended = true; // 幂等控制
+         this.timer = setInterval(() => {
+            this.countDownChild--;
+            this.btnText = `${this.countDownChild}s`;
+            if (this.countDownChild < 0) {
+               this.countDownChild = this.countDownChild;
+               this.isSended = false;
+               this.btnText = "发送验证码";
+               clearInterval(this.timer);
+            }
+         }, 1000);
       }
    },
    destoryed() {

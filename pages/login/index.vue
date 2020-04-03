@@ -94,7 +94,7 @@
 <script>
 import { login } from "../../apis/user";
 import { message } from "ant-design-vue";
-import { getToken } from "../../tools/token";
+import { getToken, setToken } from "../../tools/token";
 export default {
    name: "login",
    data() {
@@ -110,7 +110,7 @@ export default {
          // window.location.href = `/register?redirect_url=${url}`;
       },
       checkPhoneNumber(rule, value, callback) {
-         var reg = /^1[3|4|5|7|8][0-9]{9}$/;
+         var reg = /^1[3|4|5|6|7|8|9][0-9]{9}$/;
          var flag = reg.test(value);
          if (value == "") {
             callback();
@@ -124,9 +124,15 @@ export default {
          e.preventDefault();
          this.form.validateFields(async (err, values) => {
             if (!err) {
-               let res = await login(values);
-               await message.success("登录成功", 1);
-               this.$router.push("home");
+               try {
+                  let { data } = await login(values);
+                  setToken(data.data.token)
+                  await message.success("登录成功", 1);
+                  this.$router.push("home");
+               } catch (error) {
+                  console.log(error)
+                  // message.error(error.message)
+               }
             }
          });
       },
@@ -139,7 +145,7 @@ export default {
       this.url = this.$route.path;
       if (getToken()) {
          await message.loading("您已登录", 1);
-         this.$router.push("home")
+         this.$router.push("home");
       }
    }
 };

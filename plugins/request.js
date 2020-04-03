@@ -1,19 +1,22 @@
 import axios, { AxiosInstance } from "axios"
 import { message } from "ant-design-vue"
 // create an axios instance
+import { removeToken,getToken } from '@/tools/token'
 
 const axiosInstance = axios.create({
    baseURL: process.env.BASE_URL,// api 的 base_url
+   // withCredentials: true,
    // timeout: 5000, // request timeout
 })
 // request interceptor
 axiosInstance.interceptors.request.use(
    config => {
       // Do something before request is sent
-      // if (store.getters.token) {
-      //    // 让每个请求携带token-- ['X-Token']为自定义key 请根据实际情况自行修改
-      //    // config.headers['X-Token'] = getToken()
-      // }
+      let token  = getToken()
+      if (token) {
+         // 让每个请求携带token-- ['X-Token']为自定义key 请根据实际情况自行修改
+         // config.headers['Cookie'] = `token=${token}`
+      }
       // config.headers['Content-Type'] = 'application/x-www-form-urlencoded'
       return config
    },
@@ -24,7 +27,6 @@ axiosInstance.interceptors.request.use(
    }
 )
 
-import { removeToken } from '@/tools/token'
 // response interceptor
 axiosInstance.interceptors.response.use(
    response => {
@@ -76,7 +78,6 @@ axiosInstance.interceptors.response.use(
    // },
    error => {
       console.log('err' + error) // for debug
-
       // 暂时屏蔽  just for the show
       // Message({
       //   message: error.message,

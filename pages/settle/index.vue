@@ -118,8 +118,9 @@
          </div>
       </gold-header>
       <div class="settle-history">
-         <div class="settle-history-title">反佣结算记录</div>
+         <div class="settle-history-title">返佣结算记录</div>
          <div class="settle-history-list">
+            <empty-list :list="cashList" offsetTop=".3rem"/>
             <nuxt-link tag="div" :to="'settle_detail/'+item.id" class="item" v-for="(item,index) in cashList" :key="index">
                <div class="item-left">
                   <div class="item-left-top">周期：2019.08-2019.11</div>

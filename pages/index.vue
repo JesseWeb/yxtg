@@ -384,7 +384,7 @@
                </li>
             </ul>
             <p class="detail-rules">
-               <a href="#/rules" class="detail-rules-text" rseat="810251_ocm_unionperson_openRules">详细返佣规则请参看帮助页面</a>
+               <nuxt-link to="rules" tag="a" class="detail-rules-text" rseat="810251_ocm_unionperson_openRules">详细返佣规则请参看帮助页面</nuxt-link>
                <span class="detail-rules-angle"></span>
             </p>
          </div>
@@ -416,6 +416,9 @@ export default {
          showJoin2: false,
          redirectUrl: ""
       };
+   },
+   computed:{
+
    },
    methods: {
       async scroll() {

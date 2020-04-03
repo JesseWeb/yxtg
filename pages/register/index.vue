@@ -85,12 +85,12 @@
                         <a-input
                            v-decorator="[
                            'sms_code',
-                           {rules: [{ required: true, message: '请输入手机验证码' }]}
+                           {rules: [{ required: true, message: '请输入手机验证码' ,}]}
                            ]"
                         />
                      </a-col>
                      <a-col :span="12">
-                        <countDownBtn @send-verification-code="getCaptcha" defText="获取验证码"></countDownBtn>
+                        <countDownBtn ref="countDownBtn" @send-verification-code="getCaptcha"  defText="获取验证码"></countDownBtn>
                         <!-- <send-verification-code :count-down-parent="30" ="sendVerificationCode"></send-verification-code> -->
 
                         <!-- <a-button type="primary" :loading="!captchaStatus" @click="getCaptcha">获取验证码{{captchaTimer}}</a-button> -->
@@ -157,6 +157,7 @@
 <script>
 import countDownBtn from "@/components/count-down-btn.vue";
 import { register, getCaptcha } from "@/apis/user";
+import { setToken } from "../../tools/token";
 
 export default {
    name: "register",
@@ -168,7 +169,8 @@ export default {
          captchaText: "获取验证码",
          captchaDisabled: true,
          captchaTimer: 0,
-         inviter_id: ""
+         inviter_id: "",
+         validate_token:""
       };
    },
    components: {
@@ -176,17 +178,44 @@ export default {
    },
    methods: {
       checkPhoneNumber(rule, value, callback) {
-         var reg = /^1[3|4|5|7|8][0-9]{9}$/;
+         var reg = /^1[3|4|5|6|7|8|9][0-9]{9}$/;
          var flag = reg.test(value);
-         if(!value){
-            callback()
+         if (!value) {
+            callback();
          }
          if (!flag) {
             callback("手机号码不正确!");
          }
          callback();
       },
-      getCaptcha() {},
+      async getCaptcha() {
+         // console.log(this.form.getFieldValue(`mobile`))
+         let mobile = this.form.getFieldValue("mobile")
+         var reg = /^1[3|4|5|6|7|8|9][0-9]{9}$/;
+         var flag = reg.test(mobile);
+         if (!mobile) {
+            this.$message.error("手机号码未填写");
+            return
+         }
+         if (!flag) {
+            this.$message.error("手机号码不正确!");
+            return
+         }
+         try {
+            let { data } = await getCaptcha({
+               mobile,
+               type: 1
+            });
+            let validate_token = data.data.validate_token
+            this.validate_token = validate_token
+            this.$refs.countDownBtn.startCountDown()
+            this.$message.success("发送成功");
+         } catch (error) {
+            console.log(error)
+         }
+
+         // console.log(data)
+      },
       handleConfirmBlur(e) {
          const value = e.target.value;
          this.confirmDirty = this.confirmDirty || !!value;
@@ -211,8 +240,11 @@ export default {
          this.form.validateFields((err, values) => {
             if (!err) {
                this.btnloading = true;
-               register({...values,validate_token:"sb"})
-                  .then(res => {})
+               register({ ...values, validate_token: this.validate_token })
+                  .then(res => {
+                     setToken(res.data?.data?.token)
+                     this.$router.push("home");
+                  })
                   .finally(() => {
                      this.btnloading = false;
                   });
@@ -226,7 +258,7 @@ export default {
    mounted() {
       this.redirectURL = this.$route.query.redirect_url || "/";
       this.inviter_id = this.$route.query.inviter_id || "";
-   },
+   }
    // asyncData(){
    //    register().then((res) => {
    //       console.log(1);

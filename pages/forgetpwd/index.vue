@@ -79,7 +79,7 @@
                         />
                      </a-col>
                      <a-col :span="12">
-                        <countDownBtn @send-verification-code="getCaptcha" defText="获取验证码"></countDownBtn>
+                        <countDownBtn ref="countDownBtn" @send-verification-code="getCaptcha" defText="获取验证码"></countDownBtn>
                         <!-- <send-verification-code :count-down-parent="30" ="sendVerificationCode"></send-verification-code> -->
 
                         <!-- <a-button type="primary" :loading="!captchaStatus" @click="getCaptcha">获取验证码{{captchaTimer}}</a-button> -->
@@ -133,7 +133,7 @@
 </template>
 <script>
 import countDownBtn from "@/components/count-down-btn.vue";
-import { resetPwd } from "@/apis/user";
+import { resetPwd, getCaptcha } from "@/apis/user";
 export default {
    name: "ForgetPwd",
    data() {
@@ -142,7 +142,8 @@ export default {
          form: this.$form.createForm(this),
          captchaText: "获取验证码",
          captchaDisabled: true,
-         captchaTimer: 0
+         captchaTimer: 0,
+         validate_token: ""
       };
    },
    components: {
@@ -150,14 +151,41 @@ export default {
    },
    methods: {
       checkPhoneNumber(rule, value, callback) {
-         var reg = /^1[3|4|5|7|8][0-9]{9}$/;
+         var reg = /^1[3|4|5|6|7|8|9][0-9]{9}$/;
          var flag = reg.test(value);
          if (!flag) {
             callback("手机号码不正确!");
          }
          callback();
       },
-      getCaptcha() {},
+      async getCaptcha() {
+         // console.log(this.form.getFieldValue(`mobile`))
+         let mobile = this.form.getFieldValue("mobile");
+         var reg = /^1[3|4|5|6|7|8|9][0-9]{9}$/;
+         var flag = reg.test(mobile);
+         if (!mobile) {
+            this.$message.error("手机号码未填写");
+            return;
+         }
+         if (!flag) {
+            this.$message.error("手机号码不正确!");
+            return;
+         }
+         try {
+            let { data } = await getCaptcha({
+               mobile,
+               type: 2
+            });
+            let validate_token = data.data.validate_token;
+            this.validate_token = validate_token;
+            this.$refs.countDownBtn.startCountDown();
+            this.$message.success("发送成功");
+         } catch (error) {
+            console.log(error);
+         }
+
+         // console.log(data)
+      },
       handleConfirmBlur(e) {
          const value = e.target.value;
          this.confirmDirty = this.confirmDirty || !!value;
@@ -182,12 +210,18 @@ export default {
          this.form.validateFields(
             async (err, { mobile, password, sms_code }) => {
                if (!err) {
-                  await resetPwd({
-                     mobile,
-                     password,
-                     sms_code,
-                     validate_token: "sb"
-                  });
+                  try {
+                     await resetPwd({
+                        mobile,
+                        password,
+                        sms_code,
+                        validate_token: this.validate_token
+                     });
+                     this.$message.success("重置成功");
+                     setTimeout(() => {
+                        this.$router.push("/login");
+                     }, 1000);
+                  } catch (error) {}
                   // console.log("Received values of form: ", values);
                }
             }

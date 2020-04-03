@@ -201,12 +201,15 @@
    height: 0.45rem;
    .m-infoCover-btFixed {
       position: fixed;
-      left: 0;
-      right: 0;
+      // left: 0;
+      // right: 0;
       bottom: 0;
+      width: 100%;
       z-index: 999;
       height: 0.45rem;
       background: #fff;
+      max-width: 640px;
+      // left
       .tab-wrap {
          display: flex;
          line-height: 0.45rem;
@@ -280,15 +283,22 @@
             <div class="cont">{{promoteText}}</div>
             <div class="btn-wrap">
                <a href="javascript:;" @click="getRandomPromoteText" class="c-btn-tab">换一换</a>
-               <button id="word-copy" v-clipboard:error="onError"
-     v-clipboard:copy="promoteText"  v-clipboard:success="onCopy" class="c-btn-tab c-btn-copy" style="cursor: pointer;">复制文案</button>
+               <button
+                  id="word-copy"
+                  v-clipboard:error="onError"
+                  v-clipboard:copy="promoteText"
+                  v-clipboard:success="onCopy"
+                  class="c-btn-tab c-btn-copy"
+                  style="cursor: pointer;"
+               >复制文案</button>
             </div>
          </div>
       </div>
       <div class="m-bottom-fixed">
          <div class="m-infoCover-btFixed">
             <div class="tab-wrap">
-               <button id="make-poster" @click="sharing" class="tab-item-btn c-darkGold" style="cursor: pointer;">生成海报</button>
+               <button v-if="true" id="make-poster" @click="sharing" class="tab-item-btn c-darkGold" style="cursor: pointer;">生成海报</button>
+               <button v-else id="make-poster" @click="authorize" class="tab-item-btn c-darkGold" style="cursor: pointer;">点击授权</button>
             </div>
          </div>
       </div>
@@ -296,7 +306,11 @@
 </template>
 <script>
 import GoldTitle from "@/components/GoldTitle";
-import { getMaterialImages, getQrCode,getRandomPromoteText } from "@/apis/user";
+import {
+   getMaterialImages,
+   getQrCode,
+   getRandomPromoteText
+} from "@/apis/user";
 import MC from "mcanvas";
 export default {
    name: "popularize",
@@ -322,15 +336,15 @@ export default {
          magazineIndex: 0,
          mergedImgBase64: null,
          qrcodeImage: null,
-         promoteText:""
+         promoteText: ""
       };
    },
    methods: {
-      onError(){
-         this.$message.error('复制失败');
+      onError() {
+         this.$message.error("复制失败");
       },
-      onCopy(){
-         this.$message.success('复制成功');
+      onCopy() {
+         this.$message.success("复制成功");
       },
       mergeImg(backgroundImage, qrcodeImage) {
          return new Promise((res, rej) => {
@@ -348,11 +362,11 @@ export default {
                height: 840
             })
                .add(qrcodeImage, {
-                  width: 190*1.5,
-                  height: 190*1.5,
+                  width: 190 * 1.5,
+                  height: 190 * 1.5,
                   pos: {
                      y: 500,
-                     x: 236-43
+                     x: 236 - 43
                   }
                })
                // .text("扫码领取红包", {
@@ -370,41 +384,69 @@ export default {
       },
       async getQrCode() {
          let { data } = await getQrCode();
-         return data.data.channel.elem_url;
+         return data.data.channel;
       },
+      async authorize() {},
       async sharing() {
          let src = this.magazines[this.magazineIndex];
-         let qrcode = await this.getQrCode();
-         this.qrcodeImage = qrcode;
-         this.mergedImgBase64 = await this.mergeImg(src, qrcode);
-         this.success(this.mergedImgBase64)
+         let channel = await this.getQrCode();
+         let { elem_url, mt_url, elem_auth_url } = channel;
+         if (this.type == 1) {
+            // if (!elem_url) {
+            this.$message.error("请先授权");
+            let iframe_url = `${elem_auth_url}`;
+            alert(iframe_url);
+            setTimeout(() => {
+               this.$router.push({
+                  path: "authorize_taobao",
+                  query: {
+                     iframe_url
+                  }
+               });
+            }, 1000);
+            return;
+            // }
+            this.qrcodeImage = elem_url;
+            if (!src) {
+               this.$message.error("请选择一张海报");
+               return;
+            }
+            this.mergedImgBase64 = await this.mergeImg(src, elem_url);
+            this.success(this.mergedImgBase64);
+         } else if (this.type == 2) {
+            this.qrcodeImage = mt_url;
+            this.mergedImgBase64 = await this.mergeImg(src, mt_url);
+            this.success(this.mergedImgBase64);
+         }
       },
       success(src) {
          this.$success({
             title: "长按保存图片",
-            centered:true,
-            okText:"知道了",
+            centered: true,
+            okText: "知道了",
             // JSX support
-            content: (
-              <img src={src} />
-            )
+            content: <img src={src} />
          });
       },
-      async getRandomPromoteText(){
-         let {data} = await getRandomPromoteText({type:this.type})
-         let promoteText = data.data.content
-         this.promoteText = promoteText
+      async getRandomPromoteText() {
+         let { data } = await getRandomPromoteText({ type: this.type });
+         let promoteText = data.data.content;
+         this.promoteText = promoteText;
       },
       magazineChange(current) {
          this.magazineIndex = current;
       },
       async changeType(entity) {
-         this.type = entity.type;
-         await this.getMaterialImages();
-         await this.getRandomPromoteText()
-         this.magazines.length
-            ? this.$refs.carousel.goTo(this.magazineIndex)
-            : null;
+         try {
+            this.type = entity.type;
+            await this.getMaterialImages();
+            await this.getRandomPromoteText();
+            this.magazines.length
+               ? this.$refs.carousel.goTo(this.magazineIndex)
+               : null;
+         } catch (error) {
+            console.log(error)
+         }
       },
       async getMaterialImages() {
          let { data } = await getMaterialImages({ type: this.type });
@@ -413,7 +455,7 @@ export default {
    },
    mounted() {
       this.getMaterialImages();
-      this.getRandomPromoteText()
+      this.getRandomPromoteText();
    }
 };
 </script>

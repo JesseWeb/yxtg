@@ -9,11 +9,13 @@ import {
    Modal,
    InputNumber,
    Drawer,
-   Tabs
+   Tabs,
+   Popconfirm
 } from 'ant-design-vue'
 
 Vue.use(Modal)
 Vue.use(Button)
+Vue.use(Popconfirm)
 Vue.use(Drawer)
 Vue.use(Progress)
 Vue.use(Tabs)

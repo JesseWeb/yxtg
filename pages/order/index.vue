@@ -230,6 +230,7 @@
                   @pullingDown="ownLoadRefresh"
                   @pullingUp="ownLoadMore"
                >
+                        <empty-list :list="ownOrders" offsetTop=".3rem" />
                   <div class="order-item" v-for="order in ownOrders" :key="order.id">
                      <div class="order-top-bar">
                         <div class="order-status" :class="{success:order.status==1}">{{order.status_name}}</div>
@@ -280,6 +281,7 @@
             </div>
             <div class="scroll-wrap">
                <Scroll ref="groupScroll" :updateData="groupOrders" @pullingDown="groupLoadRefresh" @pullingUp="groupLoadMore">
+                  <empty-list :list="groupOrders" offsetTop=".3rem" />
                   <div class="order-item" v-for="order in groupOrders" :key="order.id">
                      <div class="order-top-bar">
                         <div class="order-status" :class="{success:order.status==1}">{{order.status_name}}</div>

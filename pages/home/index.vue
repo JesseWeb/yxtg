@@ -234,6 +234,7 @@ input[type="tel"] {
             display: block;
             margin: 0 auto;
             color: #333;
+            cursor: pointer;
             .c-icon {
                position: relative;
                display: block;
@@ -327,10 +328,10 @@ input[type="tel"] {
             <div class="header-pic">
                <img src="@/assets/image/ilm-rowshort-logo.png" />
             </div>
-            <a href="#/rules" class="header-quit" rseat="810251_ocm_unionperson_helpCenter">
+            <nuxt-link to="rules" tag="a" class="header-quit" rseat="810251_ocm_unionperson_helpCenter">
                <em>帮助中心</em>
                <i class="iconGroup- iconfont"></i>
-            </a>
+            </nuxt-link>
          </div>
       </div>
       <div class="own-newbox">
@@ -388,7 +389,7 @@ input[type="tel"] {
       <div class="m-indexbtn" @click="shareRP">
          <div class="m-indexbtn-main">
             <div class="m-indexbtn-right">
-               <em>分享反佣红包</em>
+               <em>分享返佣红包</em>
             </div>
          </div>
       </div>
@@ -406,10 +407,10 @@ input[type="tel"] {
                </button>
             </li>
             <li class="list-item">
-               <a href="#/person/friends" class="item-link" rseat="810251_ocm_unionperson_myTeam">
+               <nuxt-link tag="a" to="/my_team" class="item-link" rseat="810251_ocm_unionperson_myTeam">
                   <span class="c-icon c-myteam"></span>
                   <i class="c-txt">我的好友</i>
-               </a>
+               </nuxt-link>
             </li>
             <li class="list-item">
                <nuxt-link tag="a" to="/missions" class="item-link">
@@ -418,16 +419,16 @@ input[type="tel"] {
                </nuxt-link>
             </li>
             <li class="list-item">
-               <a href="#/settle" class="item-link" rseat="810251_ocm_unionperson_myTeam">
+               <nuxt-link to="/settle" tag="a" class="item-link" rseat="810251_ocm_unionperson_myTeam">
                   <span class="c-icon c-count"></span>
                   <i class="c-txt">结算记录</i>
-               </a>
+               </nuxt-link>
             </li>
             <li class="list-item">
-               <a href="#/order" class="item-link" rseat="810251_ocm_unionperson_myTeam">
+               <nuxt-link to="/order" tag="a" class="item-link" rseat="810251_ocm_unionperson_myTeam">
                   <span class="c-icon c-detail"></span>
                   <i class="c-txt">收入明细</i>
-               </a>
+               </nuxt-link>
             </li>
          </ul>
          <!---->
@@ -436,6 +437,8 @@ input[type="tel"] {
          <div class="m-spreadbox-main">
             <h3>推广动态</h3>
             <ul class="m-spreadbox-list">
+               <empty-list :list="rebateList" offsetTop=".3rem" />
+
                <li v-for="item in rebateList" :key="item.id">
                   <em>{{parseTimeS(item.created_time)}}</em>
                   <div class="m-list-info">
@@ -473,8 +476,8 @@ export default Vue.extend({
       promoteText() {
          if (this.userDetail) {
             return `${window.location.host}/#/register?inviter_id=${this.userDetail.user.userid}`;
-         }else{
-            return '获取信息失败，请刷新后重试'
+         } else {
+            return "获取信息失败，请刷新后重试";
          }
       }
    },
@@ -505,7 +508,7 @@ export default Vue.extend({
             let { data } = await getRebateList();
             this.rebateList = data.data.list;
          } catch (error) {
-            console.log(error);
+            console.log(error)
          }
       },
       async getStatistics() {
@@ -513,7 +516,7 @@ export default Vue.extend({
             let { data } = await getStatistics();
             this.statistics = data.data;
          } catch (error) {
-            console.log(error);
+            console.log(error)
          }
       }
    },
@@ -524,7 +527,9 @@ export default Vue.extend({
          this.getRebateList();
          this.getUserDetail();
          this.getStatistics();
-      } catch (error) {}
+      } catch (error) {
+         console.log(error)
+      }
    }
 });
 </script>
