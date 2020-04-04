@@ -115,6 +115,9 @@ export default {
     analyze: {
       analyzerMode: "server"
     },
+    extractCSS:{
+      allChunks:true
+    },
     optimization: {
       splitChunks: {
         chunks: 'all',
