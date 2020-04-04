@@ -1,9 +1,9 @@
 <style lang="scss" scoped>
-input {
-   outline: none;
-   border: none;
-}
 .mes-newBox {
+   input {
+      outline: none;
+      border: none;
+   }
    width: 100%;
    height: auto;
    padding: 0.1rem 0.12rem 0;
@@ -12,9 +12,10 @@ input {
    box-sizing: border-box;
    .c-link-btn {
       display: block;
-      width: 0.77rem;
+      // width: 0.77rem;
       height: 0.22rem;
       border-radius: 0.02rem;
+      padding: 0 0.05rem;
       background: #f5f5f5;
       line-height: 0.225rem;
       text-align: center;
@@ -54,7 +55,7 @@ input {
          width: 100%;
          height: 0.5rem;
          font-size: 0.15rem;
-         color: #222;
+         color: #333;
          font-weight: bold;
          padding-left: 28.494%;
          padding-top: 0.14rem;
@@ -65,6 +66,7 @@ input {
          font-family: "DIN-Regular";
       }
       .c-newInfo:disabled {
+         color: #333;
          background: transparent;
       }
    }
@@ -101,14 +103,17 @@ input {
             </li>
             <li>
                <div class="c-txt">邀请人</div>
-               <input type="text" v-model="inviterUsername" class="c-newInfo" />
+               <input type="text" disabled="disabled" v-model="inviterUsername" class="c-newInfo" />
             </li>
             <li>
                <div class="c-txt">实名收款账号</div>
                <div class="c-newInfo">
                   {{userDetail?userDetail.user.ali_account:""}}
-                  <button class="c-link-btn" v-if="userDetail&&!userDetail.user.ali_account">
-                     绑定支付宝
+                  <button
+                     class="c-link-btn"
+                     @click="openBindZfbModal"
+                  >
+                     {{userDetail.user.ali_account?"更改绑定":"绑定支付宝"}}
                      <i class="arrow"></i>
                   </button>
                </div>
@@ -118,55 +123,125 @@ input {
       <div class="m-outbox">
          <a href class="m-outbox-btn" @click="removeToken">退出登录</a>
       </div>
+      <a-modal title="绑定信息" cancelText="取消" okText="确定"  v-model="changeZfbModalVisible" @ok="bindZfb">
+         <a-form-model ref="form" :rules="rules" layout="vertical" :model="form">
+            <a-form-model-item label="支付宝账号" prop="ali_account">
+               <a-input type="primary" v-model="form.ali_account" />
+            </a-form-model-item>
+            <a-form-model-item prop="realname" label="支付宝姓名">
+               <a-input type="primary" v-model="form.realname" />
+            </a-form-model-item>
+         </a-form-model>
+      </a-modal>
    </div>
 </template>
 
 <script>
 import GoldTitle from "@/components/GoldTitle";
 import { removeToken } from "../../tools/token";
-import { getUserDetail } from "@/apis/user";
+import { getUserDetail, updateUserInfo } from "@/apis/user";
 export default {
    name: "userInfo",
-   data(){
-      return {userDetail:null}
+   data() {
+      return {
+         userDetail: {
+            user: {
+               ali_account: "",
+               username: "",
+               realname: ""
+            },
+            inviter: { username: "" }
+         },
+         form: {
+            ali_account: "",
+            realname: ""
+         },
+         changeZfbModalVisible: false,
+         rules: {
+            realname: [
+               {
+                  required: true,
+                  message: "请输入支付宝姓名",
+                  trigger: "blur"
+               },
+            ],
+            ali_account: [
+               {
+                  required: true,
+                  message: "请输入支付宝账号",
+                  trigger: "blur"
+               }
+            ]
+         }
+      };
    },
-   components:{
+   components: {
       GoldTitle
    },
-   computed:{
-      username:{
-         get(){
-            return this.userDetail?this.userDetail.user.username:""
+   computed: {
+      username: {
+         get() {
+            return this.userDetail ? this.userDetail.user.username : "";
          },
-         set(username){
-            this.userDetail = {...userDetail,...{user:{username:username}}}
+         set(username) {
+            this.userDetail = {
+               ...userDetail,
+               ...{ user: { username: username } }
+            };
          }
       },
-      inviterUsername:{
-         get(){
-            return this.userDetail?this.userDetail.inviter.username:""
+      inviterUsername: {
+         get() {
+            return this.userDetail ? this.userDetail.inviter.username : "";
          },
-         set(username){
-            this.userDetail = {...userDetail,...{inviter:{username:username}}}
+         set(username) {
+            this.userDetail = {
+               ...userDetail,
+               ...{ inviter: { username: username } }
+            };
          }
       }
    },
    methods: {
+      async bindZfb() {
+         this.$refs.form.validate(async valid => {
+            if (valid) {
+               try {
+                  let { data } = await updateUserInfo({
+                     ali_account: this.form.ali_account,
+                     realname: this.form.realname
+                  });
+                  this.$message.success('修改成功')
+                  this.getUserDetail()
+                  this.changeZfbModalVisible = false;
+               } catch (error) {
+                  console.log(error);
+               }
+            } else {
+               return false;
+            }
+         });
+      },
+      openBindZfbModal() {
+         this.changeZfbModalVisible = true;
+      },
       removeToken() {
          removeToken();
-         this.$router.push('login')
+         this.$router.push("login");
       },
-      async getUserDetail(){
+      async getUserDetail() {
          try {
-            let {data} = await getUserDetail()
-            this.userDetail = data.data
-         } catch (error) {
-            
-         }
+            let { data } = await getUserDetail();
+            this.userDetail = data.data;
+            this.form = {
+               ali_account: this.userDetail.user.ali_account,
+               realname: this.userDetail.user.realname
+            };
+         } catch (error) {}
       }
    },
-   mounted(){
-      this.getUserDetail()
+   mounted() {
+      this.getUserDetail();
    }
 };
 </script>

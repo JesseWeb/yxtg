@@ -174,7 +174,7 @@
                <div class="user-detail">
                   <div class="title">
                      成员明细
-                     <i class="iconfont iconbangzhu help"></i>
+                     <!-- <i class="iconfont iconbangzhu help"></i> -->
                   </div>
                   <div class="item-wrap">
                      <Scroll
@@ -211,10 +211,10 @@
                                  <div class="digit">{{item.user_count}}人</div>
                               </div>
                            </div>
-                           <div class="bottom">
+                           <!-- <div class="bottom">
                               邀请明细
                               <i class="iconfont iconyou"></i>
-                           </div>
+                           </div> -->
                         </div>
                      </Scroll>
                   </div>
@@ -262,7 +262,7 @@
                <div class="user-detail">
                   <div class="title">
                      成员明细
-                     <i class="iconfont iconbangzhu help"></i>
+                     <!-- <i class="iconfont iconbangzhu help"></i> -->
                   </div>
                   <div class="item-wrap">
                      <Scroll
@@ -299,10 +299,10 @@
                                  <div class="digit">{{item.user_count}}人</div>
                               </div>
                            </div>
-                           <div class="bottom">
+                           <!-- <div class="bottom">
                               邀请明细
                               <i class="iconfont iconyou"></i>
-                           </div>
+                           </div> -->
                         </div>
                      </Scroll>
                   </div>

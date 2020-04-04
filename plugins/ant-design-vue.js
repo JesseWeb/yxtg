@@ -10,10 +10,12 @@ import {
    InputNumber,
    Drawer,
    Tabs,
-   Popconfirm
+   Popconfirm,
+   FormModel
 } from 'ant-design-vue'
 
 Vue.use(Modal)
+Vue.use(FormModel)
 Vue.use(Button)
 Vue.use(Popconfirm)
 Vue.use(Drawer)

@@ -143,3 +143,10 @@ export async function getUpgradeProgress(){
       method:"get",
    })
 }
+export async function updateUserInfo(data={wechat:"",ali_account:"",realname:""}){
+   return request({
+      url:"/api/profile/modify",
+      method:"post",
+      data
+   })
+}
