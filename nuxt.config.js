@@ -104,9 +104,6 @@ export default {
 
   render: {
     etag: false,
-    static: {
-      maxAge: -1
-    }
   },
   /*
   ** Build configuration
