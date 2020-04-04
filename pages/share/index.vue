@@ -401,7 +401,7 @@ export default {
                      iframe_url
                   }
                });
-            }, 1000);
+            }, 500);
             return;
             }
             this.qrcodeImage = elem_url;
