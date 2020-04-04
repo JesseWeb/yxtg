@@ -24,7 +24,7 @@ export default {
   },
   proxy: {
     '/api': {
-      target: 'http://api.brazz.cn',
+      target: 'http://promote.brazz.cn',
       changeOrigin:true,
       pathRewrite: {
         '^/api': '/'
