@@ -25,7 +25,7 @@ export default {
   proxy: {
     '/api': {
       target: 'http://promote.brazz.cn',
-      changeOrigin:true,
+      changeOrigin: true,
       pathRewrite: {
         '^/api': '/'
       }
@@ -97,6 +97,16 @@ export default {
     '@nuxtjs/component-cache',
     '@nuxtjs/proxy'
   ],
+  /**
+   * Render configuration
+   */
+
+  render: {
+    etag: false,
+    static: {
+      maxAge: -1
+    }
+  },
   /*
   ** Build configuration
   */
