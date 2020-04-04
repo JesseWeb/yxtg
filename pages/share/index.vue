@@ -57,7 +57,7 @@
    right: -1px;
    width: 0.2rem;
    height: 0.13rem;
-   // background-image: url("~assets/image/selected-pic.png");
+   background-image: url("~assets/image/selected-pic.png");
    background-repeat: no-repeat;
    background-size: cover;
 }

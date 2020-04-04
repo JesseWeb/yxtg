@@ -50,7 +50,7 @@
       <h1 class="p404__content__title">There's nothing here</h1>
       <p class="p404__content__description">The page you were looking for appears to have been moved, deleted, or does not exist.</p>
       <div class="p404__content__illustration" style="max-width: 45rem;">
-         <img src="~assets/image/404.png" alt="There's nothing here" class="p404__content__illustration__img" />
+         <img src="~/assets/image/404.png" alt="There's nothing here" class="p404__content__illustration__img" />
       </div>
       <nuxt-link class="p404__content__link" v-if="error.statusCode==404" to="/">click here to return to home</nuxt-link>
       <nuxt-link class="p404__content__link" v-else-if="error.statusCode==403" to="/login">click here to relogin</nuxt-link>

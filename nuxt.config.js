@@ -1,7 +1,7 @@
 import env from './env'
 export default {
-  // mode: 'universal',
-  mode: 'spa',
+  mode: 'universal',
+  // mode: 'spa',
   server: {
     // port: 8000, // default: 3000
     host: '0.0.0.0' // default: localhost
@@ -102,9 +102,9 @@ export default {
    * Render configuration
    */
 
-  render: {
-    etag: false,
-  },
+  // render: {
+  //   etag: false,
+  // },
   /*
   ** Build configuration
   */
