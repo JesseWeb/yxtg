@@ -3,47 +3,47 @@ import request from '~/plugins/request'
 import { fn } from 'moment'
 export function login(data) {
    return request({
-      url: "/passport/login",
+      url: "/api/passport/login",
       method: 'post',
       data
    })
 }
 export function register(data) {
    return request({
-      url: "/passport/reg",
+      url: "/api/passport/reg",
       method: 'post',
       data
    })
 }
 export function getCaptcha(data) {
    return request({
-      url: "/sms/send",
+      url: "/api/sms/send",
       method: 'post',
       data
    })
 }
 export function resetPwd(data) {
    return request({
-      url: "/passport/resetPasswd",
+      url: "/api/passport/resetPasswd",
       method: 'post',
       data
    })
 }
 export async function config() {
    return request({
-      url: '/static/config',
+      url: '/api/static/config',
       method: "get",
    })
 }
 export async function getUserDetail() {
    return request({
-      url: '/user/detail',
+      url: '/api/user/detail',
       method: "get"
    })
 }
 export async function getCashList(pageSize = 10, pageNumber = 1) {
    return request({
-      url: "/account/cash_list",
+      url: "/api/account/cash_list",
       method: "get",
       params: { page: pageNumber, num: pageSize }
    })
@@ -54,14 +54,14 @@ export async function getRebateList(params) {
    }
    let { pageSize, pageNumber, type, form_type, time_type } = { ...defaultParam, ...params }
    return request({
-      url: "/promote/rebateList",
+      url: "/api/promote/rebateList",
       method: "get",
       params: { page: pageNumber, num: pageSize, type, form_type, time_type }
    })
 }
 export async function getStatistics() {
    return request({
-      url: "/promote/statistics",
+      url: "/api/promote/statistics",
       method: "get",
    })
 }
@@ -73,7 +73,7 @@ export async function getMaterialImages(params) {
    }
    params = { ...defaultParams, ...params }
    return request({
-      url: "/promote/material_images",
+      url: "/api/promote/material_images",
       method: "get",
       params
    })
@@ -81,7 +81,7 @@ export async function getMaterialImages(params) {
 
 export async function getQrCode() {
    return request({
-      url: "/promote/info",
+      url: "/api/promote/info",
       method: "get",
    })
 }
@@ -92,14 +92,14 @@ export async function getRandomPromoteText(params) {
    }
    params = { ...defaultParams, ...params }
    return request({
-      url: "/promote/material_random_content",
+      url: "/api/promote/material_random_content",
       method: "get",
       params
    })
 }
 export async function drawal(cash_num) {
    return request({
-      url:"/account/withdrawal",
+      url:"/api/account/withdrawal",
       method:"post",
       data:{
          cash_num
@@ -109,7 +109,7 @@ export async function drawal(cash_num) {
 }
 export async function getRebateStatic(time_type=1,form_type=1,type=1){
    return request({
-      url:"/promote/rebateStatistic",
+      url:"/api/promote/rebateStatistic",
       method:"get",
       params:{
          time_type,
@@ -121,7 +121,7 @@ export async function getRebateStatic(time_type=1,form_type=1,type=1){
 
 export async function getTeamList(type=1,page=1,num=20){
    return request({
-      url:"/team/list",
+      url:"/api/team/list",
       method:"get",
       params:{
          type,page,num
@@ -130,7 +130,7 @@ export async function getTeamList(type=1,page=1,num=20){
 }
 export async function getTeamStatistics(type=1){
    return request({
-      url:"/team/statistics",
+      url:"/api/team/statistics",
       method:"get",
       params:{
          type
@@ -139,7 +139,7 @@ export async function getTeamStatistics(type=1){
 }
 export async function getUpgradeProgress(){
    return request({
-      url:"/promote/upgrade_progress",
+      url:"/api/promote/upgrade_progress",
       method:"get",
    })
 }
