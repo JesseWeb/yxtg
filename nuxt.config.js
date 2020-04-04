@@ -1,7 +1,7 @@
 import env from './env'
 export default {
-  mode: 'universal',
-  // mode: 'spa',
+  // mode: 'universal',
+  mode: 'spa',
   server: {
     // port: 8000, // default: 3000
     host: '0.0.0.0' // default: localhost
@@ -16,7 +16,11 @@ export default {
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: process.env.npm_package_description || '' },
-      { hid: 'no-scale', name: "viewport", content: "width=device-width, initial-scale=1.0,user-scalable=no, viewport-fit=cover" }
+      { name: "viewport", content: "width=device-width, initial-scale=1.0,user-scalable=no, viewport-fit=cover" },
+      { "http-equiv": "Cache-Control", content: "no-cache, no-store, must-revalidate" },
+      { "http-equiv": "Pragma", content: "no-cache" },
+      { "http-equiv": "Expires", content: "0" },
+
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
