@@ -161,7 +161,7 @@
                </div>
             </div>
             <div class="item-progress-bar">
-               <a-progress strokeColor="#b98023" :percent="Math.floor(mission.num/mission.target)*100" status="active" />
+               <a-progress strokeColor="#b98023" :percent="Math.floor((mission.num/mission.target)*100)" status="active" />
             </div>
          </div>
       </div>
