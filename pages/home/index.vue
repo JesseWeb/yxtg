@@ -477,7 +477,7 @@ export default Vue.extend({
    computed: {
       promoteText() {
          if (this.userDetail) {
-            return `${window.location.host}/#/register?inviter_id=${this.userDetail.user.userid}`;
+            return `月入10000元的副业，邀你进入：${window.location.host}/#/register?inviter_id=${this.userDetail.user.userid}`;
          } else {
             return "获取信息失败，请刷新后重试";
          }
