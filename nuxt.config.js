@@ -102,9 +102,12 @@ export default {
    * Render configuration
    */
 
-  // render: {
-  //   etag: false,
-  // },
+  render: {
+    etag: false,
+    static: {
+      maxAge: -1
+    }
+  },
   /*
   ** Build configuration
   */
@@ -114,9 +117,6 @@ export default {
     */
     analyze: {
       analyzerMode: "server"
-    },
-    extractCSS:{
-      allChunks:true
     },
     optimization: {
       splitChunks: {
