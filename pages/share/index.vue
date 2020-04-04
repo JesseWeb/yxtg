@@ -394,7 +394,6 @@ export default {
             // if (!elem_url) {
             this.$message.error("请先授权");
             let iframe_url = `${elem_auth_url}`;
-            alert(iframe_url);
             setTimeout(() => {
                this.$router.push({
                   path: "authorize_taobao",
