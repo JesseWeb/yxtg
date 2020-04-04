@@ -92,7 +92,7 @@ export default {
   ** Nuxt.js dev-modules
   */
   buildModules: [
-    '@nuxt/typescript-build'
+    // '@nuxt/typescript-build'
   ],
   /*
   ** Nuxt.js modules
@@ -106,27 +106,41 @@ export default {
    * Render configuration
    */
 
-  render: {
-    etag: false,
-    static: {
-      maxAge: -1
-    }
-  },
+  // render: {
+  //   etag: false,
+  //   static: {
+  //     maxAge: -1
+  //   }
+  // },
   /*
   ** Build configuration
   */
+
+  // build: {
+  //   filenames: {
+  //     chunk: ({ isDev }) => isDev ? '[name].js' : '[id].[contenthash].js'
+  //   }
+  // }
   build: {
     /*
     ** You can extend webpack config here
     */
-    analyze: {
-      analyzerMode: "server"
+    filenames: {
+      app: ({ isDev }) => isDev ? '[name].js' : '[contenthash].js',
+      chunk: ({ isDev }) => isDev ? '[name].js' : '[contenthash].js',
+      css: ({ isDev }) => isDev ? '[name].css' : '[contenthash].css',
+      img: ({ isDev }) => isDev ? '[path][name].[ext]' : 'img/[contenthash:7].[ext]',
+      font: ({ isDev }) => isDev ? '[path][name].[ext]' : 'fonts/[contenthash:7].[ext]',
+      video: ({ isDev }) => isDev ? '[path][name].[ext]' : 'videos/[contenthash:7].[ext]'
     },
+    analyze: process.env.mode == "development" ? {
+      analyzerMode: "server"
+    } : false,
     optimization: {
       splitChunks: {
         chunks: 'all',
         automaticNameDelimiter: '.',
-        // maxAsyncRequests: 20,
+        maxAsyncRequests: 20,
         maxSize: 300000,
         cacheGroups: {
           antdesign: {
