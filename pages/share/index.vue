@@ -391,7 +391,7 @@ export default {
          let channel = await this.getQrCode();
          let { elem_url, mt_url, elem_auth_url } = channel;
          if (this.type == 1) {
-            // if (!elem_url) {
+            if (!elem_url) {
             this.$message.error("请先授权");
             let iframe_url = `${elem_auth_url}`;
             setTimeout(() => {
@@ -403,7 +403,7 @@ export default {
                });
             }, 1000);
             return;
-            // }
+            }
             this.qrcodeImage = elem_url;
             if (!src) {
                this.$message.error("请选择一张海报");
