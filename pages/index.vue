@@ -33,9 +33,9 @@
             color: #68400b;
             text-align: right;
             margin-left: 0.06rem;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
+            // overflow: hidden;
+            // text-overflow: ellipsis;
+            // white-space: nowrap;
             .user-pic {
                width: 0.16rem;
                height: 0.16rem;
