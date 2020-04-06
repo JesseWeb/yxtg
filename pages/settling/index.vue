@@ -134,7 +134,8 @@
                <div class="money-wrap">
                   <div class="digit">¥</div>
                   <div class="input-wrap">
-                     <input type="digit" placeholder="请输入结算金额" v-model="num" />
+                     <input type="number" pattern="number" onkeyup="value=value.replace(/[^\d\.]/g,'')" step="0.01" placeholder="请输入结算金额" v-model="num" />
+
                   </div>
                </div>
                <div class="money-desc">
