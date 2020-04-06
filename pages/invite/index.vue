@@ -200,7 +200,6 @@
 .m-bottom-fixed {
    height: 0.45rem;
    .m-infoCover-btFixed {
-      position: absolute;
       position: fixed;
       // left: 0;
       // right: 0;
@@ -256,15 +255,8 @@
 </style>
 <template>
    <div id="popularize">
-      <GoldTitle title="分享红包" />
+      <GoldTitle title="邀请推广" />
       <div class="m-vipCard-kind">
-         <div class="title">选择售卖卡种</div>
-         <ul class="list-item">
-            <li @click="changeType(entity)" :class="{'selected':entity.type==type}" v-for="entity in typeEentities" :key="entity.type">
-               <img class="c-icon" :src="entity.img" />
-               <span class="c-des">{{entity.name}}</span>
-            </li>
-         </ul>
          <div class="title">选择海报图</div>
          <div class="m-slideShow-cont">
             <a-carousel :afterChange="magazineChange" ref="carousel">
@@ -298,57 +290,54 @@
       <div class="m-bottom-fixed">
          <div class="m-infoCover-btFixed">
             <div class="tab-wrap">
-               <button id="make-poster" @click="sharing" class="tab-item-btn c-darkGold" style="cursor: pointer;">生成海报</button>
+               <button id="make-poster" @click="sharing" class="tab-item-btn c-darkGold" style="cursor: pointer;"  v-clipboard:error="onError"
+                  v-clipboard:copy="promoteText"
+                  v-clipboard:success="onCopy" >生成海报</button>
             </div>
          </div>
       </div>
-      <img v-show="qrcodeImage" id="qrcode" :src="qrcodeImage" alt="">
    </div>
 </template>
 <script>
 import GoldTitle from "@/components/GoldTitle";
-import jrQrcode from "jr-qrcode";
 import {
    getMaterialImages,
    getQrCode,
    getRandomPromoteText
 } from "@/apis/user";
 import MC from "mcanvas";
+import jrQrcode from "jr-qrcode";
 export default {
-   name: "share",
+   name: "invite",
    components: {
       GoldTitle
    },
    data() {
       return {
          type: 1,
-         typeEentities: [
-            {
-               name: "饿了么",
-               img: require("@/assets/image/ele.png"),
-               type: 1
-            },
-            {
-               name: "美   团",
-               img: require("@/assets/image/meituan.png"),
-               type: 2
-            }
-         ],
          magazines: [],
          magazineIndex: 0,
          mergedImgBase64: null,
          qrcodeImage: null,
-         promoteText: ""
+         promoteText: "",
+         userDetail: {
+            user: {
+               userid: ""
+            }
+         }
       };
    },
    methods: {
+      getOrigin() {
+         return location.origin;
+      },
       onError() {
          this.$message.error("复制失败");
       },
       onCopy() {
          this.$message.success("复制成功");
       },
-      mergeImg(backgroundImage, qrcodeImage, x, y) {
+      mergeImg(backgroundImage, qrcodeImage,x,y) {
          return new Promise((res, rej) => {
             const mc = new MC({
                width: 660,
@@ -367,8 +356,8 @@ export default {
                   width: 190 * 1.5,
                   height: 190 * 1.5,
                   pos: {
-                     y: y,
-                     x: x
+                     y,
+                     x
                   }
                })
                // .text("扫码领取红包", {
@@ -384,62 +373,22 @@ export default {
                });
          });
       },
-      async getQrCode() {
-         let { data } = await getQrCode();
-         return data.data.channel;
-      },
-      dataURLtoFile: function(dataurl, filename) {
-         var arr = dataurl.split(","),
-            mime = arr[0].match(/:(.*?);/)[1],
-            bstr = atob(arr[1]),
-            n = bstr.length,
-            u8arr = new Uint8Array(n);
-         while (n--) {
-            u8arr[n] = bstr.charCodeAt(n);
-         }
-         return new File([u8arr], filename, { type: mime });
-      },
       async authorize() {},
       async sharing() {
          let src = this.magazines[this.magazineIndex];
-         let channel = await this.getQrCode();
-         let { elem_url, elem_auth_url } = channel;
+         let qrcode = jrQrcode.getQrBase64(
+            `${this.getOrigin}/#/?inviter_id=${this.userDetail.user.userid}`
+         );
+         let {img_x,img_y,url} = this.magazines[this.magazineIndex]
          if (this.type == 1) {
-            if (!elem_url) {
-               this.$message.error("请先授权");
-               let iframe_url = `${elem_auth_url}`;
-               setTimeout(() => {
-                  this.$router.push({
-                     path: "authorize_taobao",
-                     query: {
-                        iframe_url
-                     }
-                  });
-               }, 500);
-               return;
-            }
             if (!src) {
                this.$message.error("请选择一张海报");
                return;
             }
-            let { img_x, img_y,url } = this.magazines[this.magazineIndex];
-            this.mergedImgBase64 = await this.mergeImg(
-               url,
-               elem_url,
-               img_x,
-               img_y
-            );
+            this.mergedImgBase64 = await this.mergeImg(url,qrcode,img_x,img_y);
             this.success(this.mergedImgBase64);
          } else if (this.type == 2) {
-            let { img_x, img_y,url } = this.magazines[this.magazineIndex];
-            let qrcode = jrQrcode.getQrBase64("http://12341234");
-            this.qrcodeImage = qrcode
-            this.mergedImgBase64 = await this.mergeImg(
-               url,
-               qrcode,
-               img_x,
-               img_y
-            );
+            this.mergedImgBase64 = await this.mergeImg(url, qrcode,img_x,img_y);
             this.success(this.mergedImgBase64);
          }
       },
@@ -453,7 +402,10 @@ export default {
          });
       },
       async getRandomPromoteText() {
-         let { data } = await getRandomPromoteText({ type: this.type });
+         let { data } = await getRandomPromoteText({
+            type: this.type,
+            promote_type: 1
+         });
          let promoteText = data.data.content;
          this.promoteText = promoteText;
       },
@@ -473,7 +425,10 @@ export default {
          }
       },
       async getMaterialImages() {
-         let { data } = await getMaterialImages({ type: this.type });
+         let { data } = await getMaterialImages({
+            type: this.type,
+            promote_type: 1
+         });
          this.magazines = data.data;
       }
    },

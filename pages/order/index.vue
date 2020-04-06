@@ -338,24 +338,20 @@ export default {
          choosedType: 1,
          timeRanges: [
             {
+               type: 7,
+               name: "今 日"
+            },
+            {
                type: 1,
-               name: "昨 日"
-            },
-            // {
-            //    type: 2,
-            //    name: "前日"
-            // },
-            {
-               type: 3,
-               name: "本 周"
-            },
-            {
-               type: 4,
-               name: "上 周"
+               name: "昨日"
             },
             {
                type: 5,
                name: "本 月"
+            },
+            {
+               type: 6,
+               name: "上 月"
             }
          ],
          ownOrders: [],
@@ -368,10 +364,10 @@ export default {
          ownCountData: { order_count: 0, order_price: 0, order_rebate: 0 },
          groupCountData: { order_count: 0, order_price: 0, order_rebate: 0 },
          /**
-          * 1 昨日   2 前日   3 本周   4 上周   5 本月
+          * 1 昨日   2 前日   3 本周   4 上周   5 本月   6上月   7今日
           */
-         ownChoosedTimeRangeType: 1,
-         groupChoosedTimeRangeType: 1
+         ownChoosedTimeRangeType:7,
+         groupChoosedTimeRangeType: 7
       };
    },
    computed: {
@@ -413,7 +409,7 @@ export default {
             pageSize: this.ownPageSize,
             pageNumber: this.ownPageNumber,
             type: this.choosedType,
-            form_type: 1,
+            from_type: 1,
             time_type: this.ownChoosedTimeRangeType
          });
          if (!data.data.list.length) {
@@ -430,7 +426,7 @@ export default {
             pageSize: this.groupPageSize,
             pageNumber: this.groupPageNumber,
             type: this.choosedType,
-            form_type: 2,
+            from_type: 2,
             time_type: this.groupChoosedTimeRangeType
          });
          

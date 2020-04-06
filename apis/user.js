@@ -150,3 +150,12 @@ export async function updateUserInfo(data={wechat:"",ali_account:"",realname:""}
       data
    })
 }
+export async function visitorGetInviterInfoById(userid){
+   return request({
+      url:"/api/user/get",
+      method:'get',
+      params:{
+         userid
+      }
+   })
+}

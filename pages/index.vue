@@ -5,13 +5,13 @@
       width: 100%;
       height: 2.09rem;
       overflow: hidden;
-      background-color: #F0D3A4;
+      background-color: #f0d3a4;
       position: relative;
-      .login-slogan{
-         color: #683F0B;
+      .login-slogan {
+         color: #683f0b;
          position: absolute;
-         top: .5rem;
-         font-size: .32rem;
+         top: 0.5rem;
+         font-size: 0.32rem;
          font-weight: bold;
          text-align: center;
          width: 100%;
@@ -286,7 +286,7 @@
       text-align: center;
       line-height: 0.45rem;
       // height: 0;
-      max-width:640px;
+      max-width: 640px;
       &.am-up {
          height: 0.45rem;
          transition: height 0.3s;
@@ -304,15 +304,15 @@
          <div class="login-top-bg">
             <div class="wrap">
                <div class="login-top-logo"></div>
-               <div v-if="userLogin" class="login-box">
+               <nuxt-link to="userinfo" tag="div" v-if="userLogin" class="login-box">
                   <img class="user-pic" src="/male-130.png" />
-                  {{nickName}}
-               </div>
-               <nuxt-link v-else class="login-box cursor-pointer" to="/login" tag="div">登录</nuxt-link>
+                  {{userInfo.user.username}}
+               </nuxt-link>
+               <nuxt-link v-else class="login-box cursor-pointer" :to="`login?inviter_id=${inviterId||''}`" tag="div">登录</nuxt-link>
             </div>
-            <div class="login-slogan">分享红包 ·  分享获利</div>
-            <div class="login-invite-title">
-               <span class="top-title-inviter">喜欢吃香蕉的刘傅觅风</span>
+            <div class="login-slogan">分享红包 · 分享获利</div>
+            <div v-if="inviterId&&inviterName" class="login-invite-title">
+               <span class="top-title-inviter">{{inviterName}}</span>
                <span>邀请您加入个人联盟</span>
             </div>
          </div>
@@ -326,71 +326,68 @@
                   </li>
                   <li>
                      <img src="/login-icon02.png" alt class="top-icons-icon icon-way" />
-                     <em>转发售卡</em>
+                     <em>建立团队</em>
                   </li>
                   <li>
                      <img src="/login-icon03.png" alt class="top-icons-icon icon-rake-back" />
-                     <em>卖出返现</em>
+                     <em>获得佣金</em>
                   </li>
                </ul>
             </div>
          </div>
          <div class="login-top-btn">
-            <nuxt-link tag="span" to="/login" id="join-party-1" class="login-top-btn-main">现在加入</nuxt-link>
+            <nuxt-link v-if="userInfo.user.userid" tag="span" :to="`home`" id="join-party-1" class="login-top-btn-main">进入首页</nuxt-link>
+            <nuxt-link tag="span" v-else :to="`login?inviter_id=${inviterId||''}`" id="join-party-1" class="login-top-btn-main">现在加入</nuxt-link>
          </div>
-         <div class="login-top-agreement">
+         <!-- <div class="login-top-agreement">
             <p class="login-top-agreement-text">
                <i class="agreement-title">加入即表明您同意</i>
                <nuxt-link to="/commission" class="vip-rake-back-agreement">《爱奇艺i联盟成员佣金与行为规则》</nuxt-link>
             </p>
-         </div>
+         </div>-->
       </div>
       <div class="rake-back">
          <div class="rake-back-main">
-            <em class="rake-back-main-title">i联盟返佣策略</em>
+            <em class="rake-back-main-title">悦享推广返佣策略</em>
             <ul class="rake-back-list">
                <li class="rake-back-list-item">
                   <ul class="rake-back-row-list">
-                     <li class="row-list-item">套餐类型</li>
-                     <li class="row-list-item">刊例价</li>
-                     <li class="row-list-item">好友优惠价</li>
-                     <li class="row-list-item">您的奖励</li>
+                     <li class="row-list-item">会员身份</li>
+                     <li class="row-list-item">直推业绩</li>
+                     <li class="row-list-item">好友消费</li>
+                     <li class="row-list-item">您的佣金</li>
                   </ul>
                </li>
                <li class="rake-back-list-item">
                   <ul class="rake-back-row-list">
-                     <li class="row-list-item">
-                        黄金月卡
-                        <br />自动续费
-                     </li>
-                     <li class="row-list-item">￥19.80</li>
-                     <li class="row-list-item">
-                        ￥15
-                        <br />（新用户6元）
-                     </li>
-                     <li class="row-list-item">￥2.50</li>
+                     <li class="row-list-item">体验推广员</li>
+                     <li class="row-list-item">1.5%</li>
+                     <li class="row-list-item">¥10000</li>
+                     <li class="row-list-item">￥150</li>
                   </ul>
                </li>
                <li class="rake-back-list-item">
                   <ul class="rake-back-row-list">
-                     <li class="row-list-item">
-                        黄金季卡
-                        <br />自动续费
-                     </li>
-                     <li class="row-list-item">￥58</li>
-                     <li class="row-list-item">￥45</li>
-                     <li class="row-list-item">￥7.50</li>
+                     <li class="row-list-item">初级推广员</li>
+                     <li class="row-list-item">3%</li>
+                     <li class="row-list-item">￥10000</li>
+                     <li class="row-list-item">￥300</li>
                   </ul>
                </li>
                <li class="rake-back-list-item">
                   <ul class="rake-back-row-list">
-                     <li class="row-list-item">
-                        黄金年卡
-                        <br />自动续费
-                     </li>
-                     <li class="row-list-item">￥198</li>
-                     <li class="row-list-item">￥178</li>
-                     <li class="row-list-item">￥30.00</li>
+                     <li class="row-list-item">中级推广员</li>
+                     <li class="row-list-item">3.6%</li>
+                     <li class="row-list-item">￥10000</li>
+                     <li class="row-list-item">￥360</li>
+                  </ul>
+               </li>
+               <li class="rake-back-list-item">
+                  <ul class="rake-back-row-list">
+                     <li class="row-list-item">高级推广员</li>
+                     <li class="row-list-item">4%</li>
+                     <li class="row-list-item">￥10000</li>
+                     <li class="row-list-item">￥400</li>
                   </ul>
                </li>
             </ul>
@@ -402,36 +399,68 @@
       </div>
       <div class="m-flow"></div>
       <div class="flow-join-btn">
-         <nuxt-link to="/login" class="flow-join-btnMain" tag="div" :class="showJoin2?'am-up':'am-down'">现在加入</nuxt-link>
+         <nuxt-link v-if="userInfo.user.userid" :to="`home`" class="flow-join-btnMain" tag="div" :class="showJoin2?'am-up':'am-down'">进入首页</nuxt-link>
+         <nuxt-link v-else :to="`login?inviter_id=${inviterId||''}`" class="flow-join-btnMain" tag="div" :class="showJoin2?'am-up':'am-down'">现在加入</nuxt-link>
       </div>
    </div>
 </template>
 
 <script>
+import isLogin from "@/tools/isLogin";
+import { getUserDetail, visitorGetInviterInfoById } from "@/apis/user";
 export default {
-   name:"introduce",
+   name: "introduce",
    components: {},
    mounted() {
+      if (this.userLogin) {
+         this.getUserInfo();
+      }
+      this.inviterId = this.$route.query.inviter_id;
+      if (this.inviterId) {
+         this.getInviterInfo();
+      }
       this.$nextTick(() => {
          this.scroll();
          window.addEventListener("scroll", this.scroll);
       });
    },
-  //  async asyncData() {
-      
-  //  },
+   //  async asyncData() {
+
+   //  },
    data() {
       return {
-         userLogin: false,
-         nickName: "",
+         userLogin: isLogin(),
+         userInfo: {
+            user: {
+               username: "",
+               userid: ""
+            }
+         },
          showJoin2: false,
-         redirectUrl: ""
+         redirectUrl: "",
+         inviterId: "",
+         inviterName: ""
       };
    },
-   computed:{
-
-   },
+   computed: {},
    methods: {
+      async getInviterInfo() {
+         try {
+            let inviterId = this.inviterId;
+            let { data } = await visitorGetInviterInfoById(this.inviterId);
+            this.inviterName = data.data.username;
+         } catch (error) {
+            console.log(error);
+         }
+      },
+      async getUserInfo() {
+         try {
+            let { data } = await getUserDetail();
+            this.userInfo = data.data;
+         } catch (error) {
+            console.log(error);
+         }
+      },
       async scroll() {
          let el = document.getElementById("join-party-1");
          if (el) {

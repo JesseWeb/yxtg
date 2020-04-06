@@ -363,6 +363,10 @@ input[type="tel"] {
                </div>
                <div class="own-predict">
                   <div class="own-predict-wrap yestoday">
+                     <a-button type="link" class="own-predict-money">¥{{statistics?statistics.today_count:"0"}}</a-button>
+                     <div class="own-predict-desc">今日预估</div>
+                  </div>
+                   <div class="own-predict-wrap yestoday">
                      <a-button type="link" class="own-predict-money">¥{{statistics?statistics.last_day_count:"0"}}</a-button>
                      <div class="own-predict-desc">昨日预估</div>
                   </div>
@@ -398,18 +402,17 @@ input[type="tel"] {
       </div>
       <div class="m-navlist">
          <ul class="nav-list">
-            <li class="list-item">
+            <nuxt-link to="invite" tag="li" class="list-item">
                <button
-                  rseat="810251_ocm_unionperson_invite"
                   id="share-btn"
                   class="item-link"
                >
                   <span class="c-icon c-invite"></span>
-                  <i class="c-txt" v-clipboard:error="onError" v-clipboard:copy="promoteText" v-clipboard:success="onCopy">邀请推广</i>
+                  <i class="c-txt">邀请推广</i>
                </button>
-            </li>
+            </nuxt-link>
             <li class="list-item">
-               <nuxt-link tag="a" to="/my_team" class="item-link" rseat="810251_ocm_unionperson_myTeam">
+               <nuxt-link tag="a" to="/my_team" class="item-link" >
                   <span class="c-icon c-myteam"></span>
                   <i class="c-txt">我的好友</i>
                </nuxt-link>
@@ -421,13 +424,13 @@ input[type="tel"] {
                </nuxt-link>
             </li>
             <li class="list-item">
-               <nuxt-link to="/settle" tag="a" class="item-link" rseat="810251_ocm_unionperson_myTeam">
+               <nuxt-link to="/settle" tag="a" class="item-link" >
                   <span class="c-icon c-count"></span>
                   <i class="c-txt">结算记录</i>
                </nuxt-link>
             </li>
             <li class="list-item">
-               <nuxt-link to="/order" tag="a" class="item-link" rseat="810251_ocm_unionperson_myTeam">
+               <nuxt-link to="/order" tag="a" class="item-link" >
                   <span class="c-icon c-detail"></span>
                   <i class="c-txt">收入明细</i>
                </nuxt-link>
@@ -484,12 +487,6 @@ export default Vue.extend({
       }
    },
    methods: {
-      onError() {
-         this.$message.error("复制失败");
-      },
-      onCopy() {
-         this.$message.success("复制成功");
-      },
       cashOut() {
          this.$router.push("settling");
       },

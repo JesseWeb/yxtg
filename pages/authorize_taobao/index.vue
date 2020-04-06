@@ -70,18 +70,72 @@
    justify-content: center;
    align-items: center;
 }
+.mask {
+   position: fixed;
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   background-color: rgba(0, 0, 0, 0.7);
+   .arror {
+      width: 2rem;
+      height: 2rem;
+      position: absolute;
+      right: 0.3rem;
+      top: 0;
+   }
+   .steps {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      // justify-content: center;
+      align-items: center;
+      padding-top: 1.5rem;
+      .step {
+         font-size: 0.22rem;
+         width: 100%;
+         display: flex;
+         margin-top: 0.2rem;
+         color: #fff;
+         padding-left: .7rem;
+         .icon{
+            border-radius: 50%;
+            width: .3rem;
+            height: .3rem;
+            line-height: .3rem;
+            text-align: center;
+            background-color: #3277df;
+            margin-right: .1rem;
+         }
+         .desc {
+            display: flex;
+            align-items: center;
+         }
+      }
+   }
+   .safari-icon
+    {
+      height: 0.2rem;
+      width: 0.2rem;
+   }
+   .more-icon{
+      height: 0.3rem;
+      width: 0.3rem;
+   }
+}
 </style>
 
 <style>
 .taobao-modal .ant-modal-footer {
    padding: 0 !important;
 }
-.taobao-modal .ant-modal-title{
+.taobao-modal .ant-modal-title {
    text-align: center;
 }
 </style>
 <template>
-   <div id="authorizeTaobao">
+   <div v-if="!is_weixin()" id="authorizeTaobao">
       <div id="frame-wrap">
          <iframe :src="src" id="frame" frameborder="0" class="taobao-iframe" height="126.5"></iframe>
       </div>
@@ -103,6 +157,32 @@
             <img src="@/assets/image/qd_tip.gif" style="width: 90%;border-radius:5px;padding-bottom:8px;" />
          </div>
       </a-modal>
+   </div>
+   <div v-else class="mask">
+      <img src="~/assets/image/wechat_open.png" alt class="arror" />
+      <div class="steps">
+         <div class="step">
+            <div class="icon">1</div>
+            <div class="desc">
+               点击右上角的
+               <img src="~/assets/image/dotdotdot.jpeg" alt class="more-icon" />按钮
+            </div>
+         </div>
+         <div class="step" v-if="is_ios()">
+            <div class="icon">2</div>
+            <div class="desc">
+               选择
+               <img src="~/assets/image/safari.png" alt class="safari-icon" />在safari中打开
+            </div>
+         </div>
+          <div class="step" v-if="is_android()">
+            <div class="icon">2</div>
+            <div class="desc">
+               选择
+               <img src="~/assets/image/browser.png" alt class="safari-icon" />在浏览器打开
+            </div>
+         </div>
+      </div>
    </div>
 </template>
 <script>
@@ -188,7 +268,9 @@ export default {
       // window.location.href = "https://www.baidu.com"
       var ifm_url = this.$route.query.iframe_url;
       if (ifm_url) {
-         this.modalVisible = true
+         if (!this.is_weixin()) {
+            this.modalVisible = true;
+         }
          ifm_url = decodeURIComponent(ifm_url);
          this.src = ifm_url;
          if (this.is_weixin() == false) {
@@ -198,19 +280,21 @@ export default {
                encodeURIComponent(tb_url);
             this.tbUrl = tb_url;
          }
-      }else{
-         this.$message.error('链接不对').then(() => {
-            this.$router.back()
-         }
-         )
+      } else {
+         this.$message.error("链接不对");
+         setTimeout(() => {
+            this.$router.back();
+         }, 500);
       }
-      this.$nextTick(() => {
-         let frame = document.querySelector("#frame");
-         if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-            frame.attributes;
-            frame.setAttribute("scrolling", "no");
-         }
-      });
+      if (!this.is_weixin()) {
+         this.$nextTick(() => {
+            let frame = document.querySelector("#frame");
+            if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+               frame.attributes;
+               frame.setAttribute("scrolling", "no");
+            }
+         });
+      }
    }
 };
 </script>

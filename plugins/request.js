@@ -35,7 +35,7 @@ axiosInstance.interceptors.response.use(
       } else {
          if (response.data.error_code == -4) {
             removeToken()
-            location.href = '/login'
+            location.href = '/#/login'
          }
          if (process.client) {
             message.error(response.data.msg, 5)

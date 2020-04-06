@@ -85,7 +85,7 @@
                <a-form-item>
                   <a-button type="primary" html-type="submit" class="login-form-button">登录</a-button>
                   <nuxt-link to="/forgetpwd">忘记密码</nuxt-link>Or
-                  <n-link @click="goRegister" to="/register" href="javascript:void(0);">注册新用户</n-link>
+                  <n-link @click="goRegister" :to="`register?inviter_id=${inviterId}`" href="javascript:void(0);">注册新用户</n-link>
                </a-form-item>
             </a-form>
          </div>
@@ -102,7 +102,8 @@ export default {
       return {
          url: "/login",
          redirectURL: "/",
-         form: this.$form.createForm(this)
+         form: this.$form.createForm(this),
+         inviterId:""
       };
    },
    methods: {
@@ -143,6 +144,7 @@ export default {
    async mounted() {
       this.redirectURL = this.$route.query.redirect_url || "/";
       this.url = this.$route.path;
+      this.inviterId = this.$route.query.inviter_id
       if (getToken()) {
          await message.loading("您已登录", 1);
          this.$router.push("home");

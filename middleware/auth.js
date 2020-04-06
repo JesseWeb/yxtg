@@ -8,6 +8,4 @@ export default async ({ app, route, error }) => {
       }
     }
   }
-
-
 }
