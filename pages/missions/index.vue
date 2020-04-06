@@ -1,10 +1,10 @@
 <style lang="scss" scoped>
 .user-info {
-   margin-top: 0.2rem;
    padding: 0.1rem;
    display: flex;
    justify-content: space-between;
    align-items: center;
+   background-color: #f0d19e;
    .header {
       display: flex;
       align-items: center;
@@ -24,14 +24,14 @@
          justify-content: space-between;
          align-items: flex-start;
          .name {
-            font-size: 0.16rem;
+            font-size: 0.14rem;
+            font-weight: bold;
          }
          .role {
-            border: 1px solid #f0d19e;
-            background-color: #f0d19e;
-            color: #fff;
+            background-color: rgba(255, 255, 255, 0.7);
+            color: #94918b;
             padding: 0 0.05rem;
-            border-radius: 0.05rem;
+            border-radius: 0.3rem;
             font-size: 0.12rem;
             width: auto;
             &.level1 {
@@ -49,18 +49,22 @@
       padding: 0.05rem 0.1rem;
    }
 }
+.progress-wrap{
+   background-color: #f0d19e;
+   overflow: hidden;
+   padding: .1rem;
+}
 .progress {
-   margin: 0.1rem;
    padding: 0.1rem;
    padding-bottom: 0.2rem;
    border-radius: 0.08rem;
-   background-color: #f0d19e;
+   background-color: #fff;
    // background-color: #e6d4b8
    .title {
       font-size: 0.16rem;
       text-align: center;
       font-weight: bold;
-      color: #68400b;
+      color: #94713c;
    }
    .item {
       margin-top: 0.2rem;
@@ -77,6 +81,14 @@
       .item-progress-bar {
          width: calc(100% - 0.1rem);
       }
+   }
+}
+.rules{
+   padding: .1rem;
+   padding-top: .2rem;
+   color: #88857f;
+   .title{
+      text-align: center;
    }
 }
 .m-bottom-fixed {
@@ -150,20 +162,25 @@
          </div>
          <div class="contact" v-if="inviterWechat" v-clipboard:error="onError" v-clipboard:copy="inviterWechat" v-clipboard:success="contactMaster">联系导师</div>
       </div>
-      <div class="progress">
-         <div class="title">升级进度</div>
-         <div class="item" v-for="mission in missions" :key="mission.type">
-            <div class="item-desc">
-               <div class="item-desc-title">{{mission.name}}</div>
-               <div class="item-desc-schedule">
-                  {{mission.num}}{{mission.unit}}
-                  <span class="purpose">/目标{{mission.target}}{{mission.unit}}</span>
+      <div class="progress-wrap">
+         <div class="progress">
+            <div class="title">升级进度</div>
+            <div class="item" v-for="mission in missions" :key="mission.type">
+               <div class="item-desc">
+                  <div class="item-desc-title">{{mission.name}}</div>
+                  <div class="item-desc-schedule">
+                     {{mission.num}}{{mission.unit}}
+                     <span class="purpose">/目标{{mission.target}}{{mission.unit}}</span>
+                  </div>
+               </div>
+               <div class="item-progress-bar">
+                  <a-progress strokeColor="#d3bb93" :percent="Math.floor((mission.num/mission.target)*100)" status="active" />
                </div>
             </div>
-            <div class="item-progress-bar">
-               <a-progress strokeColor="#b98023" :percent="Math.floor((mission.num/mission.target)*100)" status="active" />
-            </div>
          </div>
+      </div>
+      <div class="rules">
+         <div class="title">-推广员可通过完成任务获得更高的收益-</div>
       </div>
       <div class="m-bottom-fixed">
          <div class="m-infoCover-btFixed">
@@ -223,7 +240,7 @@ export default {
    },
    methods: {
       promoteCopySuccess() {
-            this.$message.success("已复制微推广文案，粘贴分享即可");
+         this.$message.success("已复制微推广文案，粘贴分享即可");
       },
       onError() {
          this.$message.success("复制失败");

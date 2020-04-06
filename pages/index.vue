@@ -303,7 +303,7 @@
       <div class="login-top">
          <div class="login-top-bg">
             <div class="wrap">
-               <div class="login-top-logo"></div>
+               <!-- <div class="login-top-logo"></div> -->
                <nuxt-link to="userinfo" tag="div" v-if="userLogin" class="login-box">
                   <img class="user-pic" src="/male-130.png" />
                   {{userInfo.user.username}}

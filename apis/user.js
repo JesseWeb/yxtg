@@ -50,13 +50,13 @@ export async function getCashList(pageSize = 10, pageNumber = 1) {
 }
 export async function getRebateList(params) {
    let defaultParam = {
-      pageSize: 10, pageNumber: 1, type: "1", form_type: "1", time_type: "5",
+      pageSize: 10, pageNumber: 1, type: "1", from_type: "1", time_type: "5",
    }
-   let { pageSize, pageNumber, type, form_type, time_type } = { ...defaultParam, ...params }
+   let { pageSize, pageNumber, type, from_type, time_type } = { ...defaultParam, ...params }
    return request({
       url: "/api/promote/rebateList",
       method: "get",
-      params: { page: pageNumber, num: pageSize, type, form_type, time_type }
+      params: { page: pageNumber, num: pageSize, type, from_type, time_type }
    })
 }
 export async function getStatistics() {
@@ -107,13 +107,13 @@ export async function drawal(cash_num) {
    })
    
 }
-export async function getRebateStatic(time_type=1,form_type=1,type=1){
+export async function getRebateStatic(time_type=1,from_type=1,type=1){
    return request({
       url:"/api/promote/rebateStatistic",
       method:"get",
       params:{
          time_type,
-         form_type,
+         from_type,
          type
       }
    })
