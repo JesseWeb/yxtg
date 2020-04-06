@@ -398,6 +398,11 @@ export default {
          }
          return new File([u8arr], filename, { type: mime });
       },
+      is_mobile() {
+         return /Android|webOS|iPhone|iPod|BlackBerry/i.test(
+            navigator.userAgent
+         );
+      },
       async authorize() {},
       async sharing() {
          let src = this.magazines[this.magazineIndex];
@@ -406,7 +411,7 @@ export default {
          if (this.type == 1) {
             if (!elem_url) {
                this.$message.error("请先授权");
-               let iframe_url = `${elem_auth_url}`;
+               let iframe_url = `${elem_auth_url}${this.is_mobile()?'&view=wap':''}`;
                setTimeout(() => {
                   this.$router.push({
                      path: "authorize_taobao",
@@ -421,7 +426,7 @@ export default {
                this.$message.error("请选择一张海报");
                return;
             }
-            let { img_x, img_y,url } = this.magazines[this.magazineIndex];
+            let { img_x, img_y, url } = this.magazines[this.magazineIndex];
             this.mergedImgBase64 = await this.mergeImg(
                url,
                elem_url,
@@ -430,7 +435,7 @@ export default {
             );
             this.success(this.mergedImgBase64);
          } else if (this.type == 2) {
-            let { img_x, img_y,url } = this.magazines[this.magazineIndex];
+            let { img_x, img_y, url } = this.magazines[this.magazineIndex];
             let qrcode = jrQrcode.getQrBase64("http://12341234");
             // this.qrcodeImage = qrcode
             this.mergedImgBase64 = await this.mergeImg(

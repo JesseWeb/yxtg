@@ -98,15 +98,15 @@
          display: flex;
          margin-top: 0.2rem;
          color: #fff;
-         padding-left: .7rem;
-         .icon{
+         padding-left: 0.7rem;
+         .icon {
             border-radius: 50%;
-            width: .3rem;
-            height: .3rem;
-            line-height: .3rem;
+            width: 0.3rem;
+            height: 0.3rem;
+            line-height: 0.3rem;
             text-align: center;
             background-color: #3277df;
-            margin-right: .1rem;
+            margin-right: 0.1rem;
          }
          .desc {
             display: flex;
@@ -114,12 +114,11 @@
          }
       }
    }
-   .safari-icon
-    {
+   .safari-icon {
       height: 0.2rem;
       width: 0.2rem;
    }
-   .more-icon{
+   .more-icon {
       height: 0.3rem;
       width: 0.3rem;
    }
@@ -175,7 +174,7 @@
                <img src="~/assets/image/safari.png" alt class="safari-icon" />在safari中打开
             </div>
          </div>
-          <div class="step" v-if="is_android()">
+         <div class="step" v-if="is_android()">
             <div class="icon">2</div>
             <div class="desc">
                选择
@@ -254,6 +253,11 @@ export default {
             return false;
          }
       },
+      is_mobile() {
+         return /Android|webOS|iPhone|iPod|BlackBerry/i.test(
+            navigator.userAgent
+         );
+      },
       handleTaobaoClick() {
          this.$nextTick(() => {
             if (this.is_android()) {
@@ -268,7 +272,7 @@ export default {
       // window.location.href = "https://www.baidu.com"
       var ifm_url = this.$route.query.iframe_url;
       if (ifm_url) {
-         if (!this.is_weixin()) {
+         if (!this.is_weixin()&&!this.is_mobile()) {
             this.modalVisible = true;
          }
          ifm_url = decodeURIComponent(ifm_url);
