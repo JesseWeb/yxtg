@@ -302,7 +302,6 @@
             </div>
          </div>
       </div>
-      <img v-show="qrcodeImage" id="qrcode" :src="qrcodeImage" alt="">
    </div>
 </template>
 <script>
@@ -433,7 +432,7 @@ export default {
          } else if (this.type == 2) {
             let { img_x, img_y,url } = this.magazines[this.magazineIndex];
             let qrcode = jrQrcode.getQrBase64("http://12341234");
-            this.qrcodeImage = qrcode
+            // this.qrcodeImage = qrcode
             this.mergedImgBase64 = await this.mergeImg(
                url,
                qrcode,
