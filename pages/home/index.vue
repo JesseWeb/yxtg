@@ -504,7 +504,7 @@ export default Vue.extend({
       },
       async getRebateList() {
          try {
-            let { data } = await getRebateList();
+            let { data } = await getRebateList({time_type:10});
             this.rebateList = data.data.list;
          } catch (error) {
             console.log(error)

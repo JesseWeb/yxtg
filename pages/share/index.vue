@@ -298,7 +298,15 @@
       <div class="m-bottom-fixed">
          <div class="m-infoCover-btFixed">
             <div class="tab-wrap">
-               <button id="make-poster" @click="sharing" class="tab-item-btn c-darkGold" style="cursor: pointer;">生成海报</button>
+               <button
+                  id="make-poster"
+                  v-clipboard:error="onError"
+                  v-clipboard:copy="promoteTextWithUrl"
+                  v-clipboard:success="onCopy"
+                  @click="sharing"
+                  class="tab-item-btn c-darkGold"
+                  style="cursor: pointer;"
+               >生成海报</button>
             </div>
          </div>
       </div>
@@ -310,7 +318,8 @@ import jrQrcode from "jr-qrcode";
 import {
    getMaterialImages,
    getQrCode,
-   getRandomPromoteText
+   getRandomPromoteText,
+   getUserDetail
 } from "@/apis/user";
 import MC from "mcanvas";
 export default {
@@ -333,6 +342,7 @@ export default {
                type: 2
             }
          ],
+         userid:"",
          magazines: [],
          magazineIndex: 0,
          mergedImgBase64: null,
@@ -341,11 +351,22 @@ export default {
       };
    },
    methods: {
+      getOrigin() {
+         return location.origin;
+      },
       onError() {
          this.$message.error("复制失败");
       },
       onCopy() {
          this.$message.success("复制成功");
+      },
+       async getUserDetail(){
+         try {
+            let {data} = await getUserDetail()
+            this.userid = data.data.user.userid
+         } catch (error) {
+            console.error(error)
+         }
       },
       mergeImg(backgroundImage, qrcodeImage, x, y) {
          return new Promise((res, rej) => {
@@ -411,7 +432,9 @@ export default {
          if (this.type == 1) {
             if (!elem_url) {
                this.$message.error("请先授权");
-               let iframe_url = `${elem_auth_url}${this.is_mobile()?'&view=wap':''}`;
+               let iframe_url = `${elem_auth_url}${
+                  this.is_mobile() ? "&view=wap" : ""
+               }`;
                setTimeout(() => {
                   this.$router.push({
                      path: "authorize_taobao",
@@ -479,6 +502,16 @@ export default {
       async getMaterialImages() {
          let { data } = await getMaterialImages({ type: this.type });
          this.magazines = data.data;
+      }
+   },
+   computed: {
+      promoteTextWithUrl() {
+         return (
+            this.promoteText +
+            `点击加入${this.getOrigin()}/#/?inviter_id=${
+               this.userid
+            }`
+         );
       }
    },
    mounted() {

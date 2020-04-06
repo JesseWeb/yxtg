@@ -9,8 +9,8 @@
       display: flex;
       align-items: center;
       .header-pic {
-         height: 0.4rem;
-         width: 0.4rem;
+         height: 0.43rem;
+         width: 0.43rem;
          img {
             height: 100%;
             width: 100%;
@@ -28,12 +28,12 @@
             font-weight: bold;
          }
          .role {
-            background-color: rgba(255, 255, 255, 0.7);
-            color: #94918b;
             padding: 0 0.05rem;
             border-radius: 0.3rem;
             font-size: 0.12rem;
             width: auto;
+            color: rgba(74, 56, 56, 1);
+            background-color: rgba(255, 241, 219, 1);
             &.level1 {
             }
          }
@@ -43,16 +43,18 @@
       cursor: pointer;
       display: flex;
       align-items: center;
-      background-color: #f0d19e;
-      color: #fff;
       border-radius: 5rem;
       padding: 0.05rem 0.1rem;
+      font-size: 0.12rem;
+      font-weight: bold;
+      color: rgba(74, 56, 56, 1);
+      background-color: rgba(255, 241, 219, 1);
    }
 }
-.progress-wrap{
+.progress-wrap {
    background-color: #f0d19e;
    overflow: hidden;
-   padding: .1rem;
+   padding: 0.1rem;
 }
 .progress {
    padding: 0.1rem;
@@ -61,21 +63,27 @@
    background-color: #fff;
    // background-color: #e6d4b8
    .title {
-      font-size: 0.16rem;
-      text-align: center;
+      color: rgba(143, 96, 25, 1);
+      line-height: 150%;
       font-weight: bold;
-      color: #94713c;
+      font-size: 0.14rem;
+      text-align: center;
    }
    .item {
       margin-top: 0.2rem;
       .item-desc {
          .item-desc-title {
-            font-weight: 600;
+            font-size: 0.12rem;
+            color: rgba(56, 56, 56, 1);
+            font-weight: normal;
          }
          display: flex;
          justify-content: space-between;
          .purpose {
             font-size: 0.12rem;
+            font-size: 0.12rem;
+            color: rgba(56, 56, 56, 1);
+            font-weight: normal;
          }
       }
       .item-progress-bar {
@@ -83,12 +91,43 @@
       }
    }
 }
-.rules{
-   padding: .1rem;
-   padding-top: .2rem;
-   color: #88857f;
-   .title{
+.rules {
+   padding: 0.1rem;
+   padding-top: 0.2rem;
+   padding-bottom:.2rem;
+   color: rgba(134, 134, 134, 1);
+   .main-title {
       text-align: center;
+   }
+   .table-title {
+      color: rgba(143, 96, 25, 1);
+      font-size: 0.16rem;
+      font-weight: bold;
+      padding-left: 0.1rem;
+      margin-top: 0.2rem;
+   }
+   .table-wrap {
+      display: flex;
+      width: 100%;
+      justify-content: center;
+      .table {
+         width: 3.29rem;
+         margin-top: .1rem;
+         border: 1px solid rgba(221, 204, 179, 1);
+         background-color: rgba(255, 244, 226, 1);
+         th {
+            color: #c3925b;
+         }
+         td {
+            color: #333;
+         }
+         td,
+         th {
+            text-align: center;
+            border: 1px solid rgba(221, 204, 179, 1);
+            height: .35rem;
+         }
+      }
    }
 }
 .m-bottom-fixed {
@@ -174,13 +213,103 @@
                   </div>
                </div>
                <div class="item-progress-bar">
-                  <a-progress strokeColor="#d3bb93" :percent="Math.floor((mission.num/mission.target)*100)" status="active" />
+                  <a-progress strokeColor="rgba(243, 213, 167, 1)" :percent="Math.floor((mission.num/mission.target)*100)" status="active" />
                </div>
             </div>
          </div>
       </div>
       <div class="rules">
-         <div class="title">-推广员可通过完成任务获得更高的收益-</div>
+         <div class="main-title">-推广员可通过完成任务获得更高的收益-</div>
+         <div class="table-title">1、升级任务说明</div>
+         <div class="table-wrap">
+            <table class="table" border-collapse="collapse">
+               <tr>
+                  <th class="t-header">会员身份</th>
+                  <th class="t-header">升级要求</th>
+               </tr>
+               <tr>
+                  <td>体验推广员</td>
+                  <td>注册即成为本平台体验推广员</td>
+               </tr>
+               <tr>
+                  <td>初级推广员</td>
+                  <td>邀请6个有效体验推广员或者 自推</td>
+               </tr>
+               <tr>
+                  <td>中级推广员</td>
+                  <td>邀请12个初级推广员</td>
+               </tr>
+               <tr>
+                  <td>高级推广员</td>
+                  <td>邀请20个中级推广员</td>
+               </tr>
+            </table>
+         </div>
+          <div class="table-title">2、等级权益</div>
+         <div class="table-wrap">
+            <table class="table" border-collapse="collapse">
+               <tr>
+                  <th class="t-header">会员身份</th>
+                  <th class="t-header">升级要求</th>
+               </tr>
+               <tr>
+                  <td>体验推广员</td>
+                  <td>注册即成为本平台体验推广员</td>
+               </tr>
+               <tr>
+                  <td>初级推广员</td>
+                  <td>邀请6个有效体验推广员或者 自推</td>
+               </tr>
+               <tr>
+                  <td>中级推广员</td>
+                  <td>邀请12个初级推广员</td>
+               </tr>
+               <tr>
+                  <td>高级推广员</td>
+                  <td>邀请20个中级推广员</td>
+               </tr>
+            </table>
+         </div>
+          <div class="table-title">3、相关管理奖励</div>
+         <div class="table-wrap">
+            <table class="table" border-collapse="collapse">
+               <tr>
+                  <th class="t-header">会员身份</th>
+                  <th class="t-header">管理体验推广员</th>
+                  <th class="t-header">管理初级推广员</th>
+                  <th class="t-header">管理中级推广员</th>
+                  <th class="t-header">管理高级推广员</th>
+               </tr>
+               <tr>
+                  <td>体验推广员</td>
+                  <td>业绩5%协助提成</td>
+                  <td>/</td>
+                  <td>/</td>
+                  <td>/</td>
+               </tr>
+               <tr>
+                  <td>初级推广员</td>
+                  <td>业绩60%的管理提成</td>
+                  <td>业绩5%的协助提成</td>
+                  <td>/</td>
+                  <td>/</td>
+               </tr>
+               <tr>
+                  <td>中级推广员</td>
+                  <td>业绩80%的管理提成</td>
+                  <td>业绩15%的管理提成</td>
+                  <td>业绩5%的协助提成</td>
+                  <td>/</td>
+               </tr>
+               <tr>
+                  <td>高级推广员</td>
+                  <td>业绩90%的管理提成</td>
+                  <td>业绩20%的管理提成</td>
+                  <td>业绩12%的管理提成</td>
+                  <td>业绩5%的协助提成</td>
+               </tr>
+            </table>
+         </div>
       </div>
       <div class="m-bottom-fixed">
          <div class="m-infoCover-btFixed">
