@@ -152,7 +152,7 @@ export async function updateUserInfo(data={wechat:"",ali_account:"",realname:""}
 }
 export async function visitorGetInviterInfoById(userid){
    return request({
-      url:"/api/user/get",
+      url:"/api/index/user",
       method:'get',
       params:{
          userid

@@ -279,7 +279,7 @@
                <button
                   id="word-copy"
                   v-clipboard:error="onError"
-                  v-clipboard:copy="promoteText"
+                  v-clipboard:copy="promoteTextWithUrl"
                   v-clipboard:success="onCopy"
                   class="c-btn-tab c-btn-copy"
                   style="cursor: pointer;"
@@ -290,9 +290,15 @@
       <div class="m-bottom-fixed">
          <div class="m-infoCover-btFixed">
             <div class="tab-wrap">
-               <button id="make-poster" @click="sharing" class="tab-item-btn c-darkGold" style="cursor: pointer;"  v-clipboard:error="onError"
-                  v-clipboard:copy="promoteText"
-                  v-clipboard:success="onCopy" >生成海报</button>
+               <button
+                  id="make-poster"
+                  @click="sharing"
+                  class="tab-item-btn c-darkGold"
+                  style="cursor: pointer;"
+                  v-clipboard:error="onError"
+                  v-clipboard:copy="promoteTextWithUrl"
+                  v-clipboard:success="onCopy"
+               >生成海报</button>
             </div>
          </div>
       </div>
@@ -303,7 +309,8 @@ import GoldTitle from "@/components/GoldTitle";
 import {
    getMaterialImages,
    getQrCode,
-   getRandomPromoteText
+   getRandomPromoteText,
+   getUserDetail
 } from "@/apis/user";
 import MC from "mcanvas";
 import jrQrcode from "jr-qrcode";
@@ -314,7 +321,7 @@ export default {
    },
    data() {
       return {
-         type: 1,
+         type: 0,
          magazines: [],
          magazineIndex: 0,
          mergedImgBase64: null,
@@ -337,7 +344,7 @@ export default {
       onCopy() {
          this.$message.success("复制成功");
       },
-      mergeImg(backgroundImage, qrcodeImage,x,y) {
+      mergeImg(backgroundImage, qrcodeImage, x, y) {
          return new Promise((res, rej) => {
             const mc = new MC({
                width: 660,
@@ -377,20 +384,19 @@ export default {
       async sharing() {
          let src = this.magazines[this.magazineIndex];
          let qrcode = jrQrcode.getQrBase64(
-            `${this.getOrigin}/#/?inviter_id=${this.userDetail.user.userid}`
+            `${this.getOrigin()}/#/?inviter_id=${this.userDetail.user.userid}`
          );
-         let {img_x,img_y,url} = this.magazines[this.magazineIndex]
-         if (this.type == 1) {
-            if (!src) {
-               this.$message.error("请选择一张海报");
-               return;
-            }
-            this.mergedImgBase64 = await this.mergeImg(url,qrcode,img_x,img_y);
-            this.success(this.mergedImgBase64);
-         } else if (this.type == 2) {
-            this.mergedImgBase64 = await this.mergeImg(url, qrcode,img_x,img_y);
-            this.success(this.mergedImgBase64);
+         let { img_x, img_y, url } = this.magazines[this.magazineIndex];
+         if (!src) {
+            this.$message.error("请选择一张海报");
+            return;
          }
+         this.mergedImgBase64 = await this.mergeImg(url, qrcode, img_x, img_y);
+         this.success(this.mergedImgBase64);
+         //  else if (this.type == 2) {
+         //    this.mergedImgBase64 = await this.mergeImg(url, qrcode,img_x,img_y);
+         //    this.success(this.mergedImgBase64);
+         // }
       },
       success(src) {
          this.$success({
@@ -430,10 +436,24 @@ export default {
             promote_type: 1
          });
          this.magazines = data.data;
+      },
+      async getUserDetail(){
+         try {
+            let {data} = await getUserDetail()
+            this.userDetail = data.data
+         } catch (error) {
+            console.error(error)
+         }
+      }
+   },
+   computed:{
+      promoteTextWithUrl (){
+         return this.promoteText+`点击加入${this.getOrigin()}/#/?inviter_id=${this.userDetail.user.userid}`
       }
    },
    mounted() {
       this.getMaterialImages();
+      this.getUserDetail()
       this.getRandomPromoteText();
    }
 };

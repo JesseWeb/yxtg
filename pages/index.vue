@@ -266,7 +266,7 @@
    width: 100%;
    height: 0;
    padding-top: 175.33%;
-   background-image: url("/login-bottomImg.png");
+   background-image: url("/login-buttom-img.png");
    background-repeat: no-repeat;
    background-size: 100%;
 }
