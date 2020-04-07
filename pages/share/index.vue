@@ -342,6 +342,7 @@ export default {
                type: 2
             }
          ],
+         modal:null,
          userid:"",
          magazines: [],
          magazineIndex: 0,
@@ -471,7 +472,7 @@ export default {
          }
       },
       success(src) {
-         this.$success({
+         this.modal = this.$success({
             title: "长按保存图片",
             centered: true,
             okText: "知道了",
@@ -517,6 +518,9 @@ export default {
    mounted() {
       this.getMaterialImages();
       this.getRandomPromoteText();
+   },
+   destroyed(){
+      this.modal?this.modal.destroy():""
    }
 };
 </script>

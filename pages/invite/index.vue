@@ -327,6 +327,7 @@ export default {
          mergedImgBase64: null,
          qrcodeImage: null,
          promoteText: "",
+         modal:null,
          userDetail: {
             user: {
                userid: ""
@@ -399,7 +400,7 @@ export default {
          // }
       },
       success(src) {
-         this.$success({
+         this.modal = this.$success({
             title: "长按保存图片",
             centered: true,
             okText: "知道了",
@@ -455,6 +456,9 @@ export default {
       this.getMaterialImages();
       this.getUserDetail()
       this.getRandomPromoteText();
+   },
+   destroyed(){
+      this.modal?this.modal.destroy():''
    }
 };
 </script>
