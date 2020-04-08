@@ -358,7 +358,7 @@ export default {
          this.$message.error("复制失败");
       },
       onCopy() {
-         this.$message.success("复制成功");
+         // this.$message.success("复制成功");
       },
       async getUserDetail() {
          try {
@@ -428,7 +428,7 @@ export default {
       async sharing() {
          let src = this.magazines[this.magazineIndex];
          let channel = await this.getQrCode();
-         let { elem_url, elem_auth_url } = channel;
+         let { elem_url, elem_auth_url,mt_url } = channel;
          if (this.type == 1) {
             if (!elem_url) {
                this.$message.error("请先授权");
@@ -462,8 +462,14 @@ export default {
             );
             this.success(this.mergedImgBase64);
          } else if (this.type == 2) {
-            let { img_x, img_y, url } = this.magazines[this.magazineIndex];
-            let qrcode = jrQrcode.getQrBase64("http://12341234");
+            let { img_x, img_y, url, img_w, img_h } = this.magazines[
+               this.magazineIndex
+            ];
+            if(!mt_url){
+               this.$message.error('美团红包近期补货，敬请关注')
+               return
+            }
+            let qrcode = jrQrcode.getQrBase64(mt_url);
             // this.qrcodeImage = qrcode
             this.mergedImgBase64 = await this.mergeImg(
                url,
@@ -481,10 +487,9 @@ export default {
             title: "长按保存图片",
             centered: true,
             okText: "知道了",
-            getContainer:() => {
-               return document.querySelector('#popularize')
-            }
-            ,
+            getContainer: () => {
+               return document.querySelector("#popularize");
+            },
             // JSX support
             content: <img src={src} />
          });
@@ -527,7 +532,7 @@ export default {
       this.getRandomPromoteText();
    },
    destroyed() {
-      this.$destroyAll()
+      this.$destroyAll();
    }
 };
 </script>

@@ -340,14 +340,15 @@
       <div class="m-bottom-fixed">
          <div class="m-infoCover-btFixed">
             <div class="tab-wrap">
-               <button
+               <n-link
+                  tag="button"
+                  to="invite"
                   id="make-poster"
                   v-clipboard:error="onError"
                   v-clipboard:copy="promoteText"
                   v-clipboard:success="promoteCopySuccess"
                   class="tab-item-btn c-darkGold"
-                  style="cursor: pointer;"
-               >邀请好友</button>
+               >邀请好友</n-link>
             </div>
          </div>
       </div>
