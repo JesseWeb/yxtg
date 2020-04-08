@@ -94,7 +94,7 @@
 .rules {
    padding: 0.1rem;
    padding-top: 0.2rem;
-   padding-bottom:.2rem;
+   padding-bottom: 0.2rem;
    color: rgba(134, 134, 134, 1);
    .main-title {
       text-align: center;
@@ -112,7 +112,7 @@
       justify-content: center;
       .table {
          width: 3.29rem;
-         margin-top: .1rem;
+         margin-top: 0.1rem;
          border: 1px solid rgba(221, 204, 179, 1);
          background-color: rgba(255, 244, 226, 1);
          th {
@@ -120,12 +120,15 @@
          }
          td {
             color: #333;
+            &:first-child {
+               width: 0.75rem;
+            }
          }
          td,
          th {
             text-align: center;
             border: 1px solid rgba(221, 204, 179, 1);
-            height: .35rem;
+            height: 0.35rem;
          }
       }
    }
@@ -245,7 +248,7 @@
                </tr>
             </table>
          </div>
-          <div class="table-title">2、等级权益</div>
+         <div class="table-title">2、等级权益</div>
          <div class="table-wrap">
             <table class="table" border-collapse="collapse">
                <tr>
@@ -270,7 +273,7 @@
                </tr>
             </table>
          </div>
-          <div class="table-title">3、相关管理奖励</div>
+         <div class="table-title">3、相关管理奖励</div>
          <div class="table-wrap">
             <table class="table" border-collapse="collapse">
                <tr>
@@ -307,6 +310,41 @@
                   <td>业绩20%的管理提成</td>
                   <td>业绩12%的管理提成</td>
                   <td>业绩5%的协助提成</td>
+               </tr>
+            </table>
+         </div>
+         <div class="table-title">4、返佣策略</div>
+         <div class="table-wrap">
+            <table class="table" border-collapse="collapse">
+               <tr>
+                  <th class="t-header">会员身份</th>
+                  <th class="t-header">直推业绩</th>
+                  <th class="t-header">好友消费</th>
+                  <th class="t-header">您的佣金</th>
+               </tr>
+               <tr>
+                  <td>体验推广员</td>
+                  <td>1.5%</td>
+                  <td>¥10000</td>
+                  <td>¥150</td>
+               </tr>
+               <tr>
+                  <td>初级推广员</td>
+                  <td>3.0%</td>
+                  <td>¥10000</td>
+                  <td>¥300</td>
+               </tr>
+               <tr>
+                  <td>中级推广员</td>
+                  <td>3.6%</td>
+                  <td>¥10000</td>
+                  <td>¥360</td>
+               </tr>
+               <tr>
+                  <td>高级推广员</td>
+                  <td>4.0%</td>
+                  <td>¥10000</td>
+                  <td>¥400</td>
                </tr>
             </table>
          </div>
