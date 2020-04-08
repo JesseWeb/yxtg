@@ -12,7 +12,6 @@
       z-index: 999;
       height: 0.44rem;
       line-height: 0.44rem;
-      background: #f0d19e;
       .back-wrap {
          position: absolute;
          top: 50%;
@@ -23,8 +22,9 @@
          align-items: center;
       }
       .c-title {
-         color: #68400b;
-         font-size: 0.16rem;
+         color: rgba(80, 80, 80, 1);
+         font-size: 0.17rem;
+         font-weight: bold;
          text-align: center;
       }
    }
@@ -32,7 +32,7 @@
 </style>
 <template>
    <div data-v-a391f616 class="m-title-bar-wrap">
-      <div data-v-a391f616 class="m-title-base">
+      <div data-v-a391f616 class="m-title-base" :style="{backgroundColor:bgColor}">
          <div class="back-wrap" @click="back">
             <i class="iconfont iconfanhui"></i>
          </div>
@@ -54,6 +54,10 @@ export default {
          required:false,
          default:function(){},
          type:Function
+      },
+      bgColor:{
+         default:"#f0d19e",
+         type:String
       }
    },
    methods:{

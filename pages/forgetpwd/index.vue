@@ -1,4 +1,119 @@
 <style lang="scss">
+#forgetPwd {
+   height: 100vh;
+   background: rgba(243, 213, 167, 1);
+   /deep/ .ant-input {
+      width: 2.4rem;
+      height: 0.44rem;
+      color: rgba(11, 11, 11, 1);
+      box-shadow: rgba(233, 224, 211, 1) solid 2px;
+      border-radius: 0.4rem;
+      font-size: 0.16rem;
+      line-height: 150%;
+      padding-left: 0.3rem;
+      border: 1px solid rgba(243, 213, 167, 1);
+      &:hover {
+         border-color: rgba(243, 213, 167, 1);
+         border-right-width: 1px !important;
+      }
+      &:focus {
+         border-color: rgba(243, 213, 167, 1);
+         border-right-width: 1px !important;
+         outline: 0;
+         box-shadow: 0 0 0 2px rgba(243, 213, 167, 0.2);
+      }
+   }
+   /deep/ .has-error .ant-input:not([disabled]) {
+      &:hover {
+         border-color: #f5222d;
+      }
+      &:focus {
+         border-color: #ff4d4f;
+         border-right-width: 1px !important;
+         outline: 0;
+         box-shadow: 0 0 0 2px rgba(245, 34, 45, 0.2);
+      }
+   }
+   .main-wrap {
+      display: flex;
+      margin-top: -0.4rem;
+      justify-content: center;
+      align-items: center;
+      height: calc(100% - 0.44rem);
+      .main {
+         width: 3.24rem;
+         height: auto;
+         overflow: hidden;
+         color: rgba(74, 56, 56, 1);
+         background-color: rgba(255, 255, 255, 1);
+         border-radius: 0.11rem;
+         font-size: 0.12rem;
+         line-height: 150%;
+         text-align: center;
+         font-weight: bold;
+         .m-pc-title {
+            height: 0.65rem;
+            box-sizing: border-box;
+            position: relative;
+            text-align: center;
+            padding-top: 0.26rem;
+            .title {
+               color: rgba(143, 96, 25, 1);
+               font-size: 0.18rem;
+               line-height: 150%;
+               text-align: center;
+               font-weight: bold;
+            }
+         }
+         .form {
+            padding: 0.2rem;
+            .sms-code-wrap {
+               position: relative;
+               .sms-code-input {
+                  padding-right: 1rem;
+               }
+               .sms-code-btn {
+                  position: absolute;
+                  right: 0;
+                  top: 50%;
+                  transform: translate(-33.5%, -50%);
+                  width: 0.86rem;
+                  height: 0.34rem;
+                  color: rgba(255, 255, 255, 1);
+                  background-color: rgb(243, 213, 167);
+                  border-radius: 0.3rem;
+                  font-size: 0.13rem;
+                  line-height: 150%;
+                  text-align: center;
+                  padding: 0;
+                  outline: #f0d19e;
+                  border: none;
+               }
+            }
+         }
+         #components-form-demo-normal-login .login-form {
+            max-width: 300px;
+         }
+         #components-form-demo-normal-login .login-form-forgot {
+            float: right;
+         }
+         .login-form-button {
+            width: 2.4rem;
+            height: 0.44rem;
+            color: rgba(255, 255, 255, 1);
+            background-color: rgba(207, 176, 128, 1);
+           
+            font-weight: bold;
+            border-radius: 0.4rem;
+            font-size: 0.16rem;
+            line-height: 150%;
+            text-align: center;
+            outline: #f0d19e;
+            border: none;
+         }
+      }
+   }
+}
 .m-goBack {
    height: 0.4rem;
    padding: 0.15rem 0.1rem 0;
@@ -16,79 +131,44 @@
       -moz-osx-font-smoothing: grayscale;
    }
 }
-.main {
-   .m-pc-title {
-      height: 0.65rem;
-      padding-top: 0.14rem;
-      box-sizing: border-box;
-      position: relative;
-      text-align: center;
-      .title {
-         font-size: 0.22rem;
-         color: #333;
-         text-align: center;
-         font-weight: normal;
-      }
-   }
-   .form {
-      padding: 0.2rem;
-   }
-   #components-form-demo-normal-login .login-form {
-      max-width: 300px;
-   }
-   #components-form-demo-normal-login .login-form-forgot {
-      float: right;
-   }
-   .login-form-button {
-      width: 100%;
-   }
-}
 </style>
 <template>
    <div id="forgetPwd">
-      <section class="m-goBack" @click="goBack">
-         <a data-node="goBack" class="c-link" href="javascript:void(0);">
-            <i class="iconfont iconfanhui"></i>
-         </a>
-      </section>
-      <div class="main">
-         <div class="m-pc-title">
-            <h3 class="title">重置密码</h3>
-         </div>
-         <div class="form">
-            <a-form :form="form" @submit="handleSubmit">
-               <a-form-item label="手机号">
-                  <a-input
-                     v-decorator="[
+      <GoldTitle title="忘记密码" bg-color="rgba(243, 213, 167, 1)" />
+      <div class="main-wrap">
+         <div class="main">
+            <div class="m-pc-title">
+               <h3 class="title">重置密码</h3>
+            </div>
+            <div class="form">
+               <a-form :form="form" @submit="handleSubmit">
+                  <a-form-item>
+                     <a-input
+                        v-decorator="[
                         'mobile',
                         {
                            rules: [{ required: true, message: '手机号不能为空' },{validator:this.checkPhoneNumber.bind(this)}],
                         }
                      ]"
-                     style="width: 100%"
-                  ></a-input>
-               </a-form-item>
-               <a-form-item label="验证码">
-                  <a-row :gutter="8">
-                     <a-col :span="12">
+                        placeholder="请输入手机号码"
+                     ></a-input>
+                  </a-form-item>
+                  <a-form-item>
+                     <div class="sms-code-wrap">
                         <a-input
                            v-decorator="[
                            'sms_code',
-                           {rules: [{ required: true, message: '请输入手机验证码' }]}
+                           {rules: [{ required: true, message: '请输入手机验证码' ,}]}
                            ]"
+                           class="sms-code-input"
+                           placeholder="请输入验证码"
                         />
-                     </a-col>
-                     <a-col :span="12">
-                        <countDownBtn ref="countDownBtn" @send-verification-code="getCaptcha" defText="获取验证码"></countDownBtn>
-                        <!-- <send-verification-code :count-down-parent="30" ="sendVerificationCode"></send-verification-code> -->
-
-                        <!-- <a-button type="primary" :loading="!captchaStatus" @click="getCaptcha">获取验证码{{captchaTimer}}</a-button> -->
-                     </a-col>
-                  </a-row>
-               </a-form-item>
-               <a-form-item label="新密码">
-                  <a-input
-                     v-decorator="[
+                        <countDownBtn ref="countDownBtn" class="sms-code-btn" @send-verification-code="getCaptcha" defText="获取验证码"></countDownBtn>
+                     </div>
+                  </a-form-item>
+                  <a-form-item>
+                     <a-input
+                        v-decorator="[
                         'password',
                         {
                            rules: [{
@@ -98,41 +178,45 @@
                            }],
                         }
                      ]"
-                     type="password"
-                  />
-               </a-form-item>
-               <a-form-item label="确认密码">
-                  <a-input
-                     v-decorator="[
-                        'confirm',
-                        {
-                           rules: [{
-                           required: true, message: '请确认您的密码',
-                           }, {
-                           validator: compareToFirstPassword,
-                           }],
-                        }
+                        placeholder="请输入新密码"
+                        type="password"
+                     />
+                  </a-form-item>
+                  <a-form-item>
+                     <a-input
+                        v-decorator="[
+                     'confirm',
+                     {
+                     rules: [{
+                     required: true, message: '请确认您的密码',
+                     }, {
+                     validator: compareToFirstPassword,
+                     }],
+                     }
                      ]"
-                     type="password"
-                     @blur="handleConfirmBlur"
-                  />
-               </a-form-item>
-               <!-- <a-form-item>
+                        type="password"
+                        @blur="handleConfirmBlur"
+                        placeholder="请确认密码"
+                     />
+                  </a-form-item>
+                  <!-- <a-form-item>
                   <a-checkbox v-decorator="['agreement', {valuePropName: 'checked'}]">
                      我已阅读且同意以下协议内容
                      <a href>用户协议</a>
                   </a-checkbox>
-               </a-form-item>-->
-               <a-form-item>
-                  <a-button class="login-form-button" type="primary" html-type="submit">重置密码</a-button>
-               </a-form-item>
-            </a-form>
+                  </a-form-item>-->
+                  <a-form-item>
+                     <a-button class="login-form-button" type="primary" html-type="submit">重置密码</a-button>
+                  </a-form-item>
+               </a-form>
+            </div>
          </div>
       </div>
    </div>
 </template>
 <script>
 import countDownBtn from "@/components/count-down-btn.vue";
+import GoldTitle from "@/components/GoldTitle";
 import { resetPwd, getCaptcha } from "@/apis/user";
 export default {
    name: "ForgetPwd",
@@ -147,7 +231,8 @@ export default {
       };
    },
    components: {
-      countDownBtn
+      countDownBtn,
+      GoldTitle
    },
    methods: {
       checkPhoneNumber(rule, value, callback) {

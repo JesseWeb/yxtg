@@ -327,7 +327,6 @@ export default {
          mergedImgBase64: null,
          qrcodeImage: null,
          promoteText: "",
-         modal:null,
          userDetail: {
             user: {
                userid: ""
@@ -345,7 +344,7 @@ export default {
       onCopy() {
          this.$message.success("复制成功");
       },
-      mergeImg(backgroundImage, qrcodeImage, x, y) {
+      mergeImg(backgroundImage, qrcodeImage, x, y,w,h) {
          return new Promise((res, rej) => {
             const mc = new MC({
                width: 660,
@@ -361,8 +360,8 @@ export default {
                height: 840
             })
                .add(qrcodeImage, {
-                  width: 190 * 1.5,
-                  height: 190 * 1.5,
+                  width: w,
+                  height: h,
                   pos: {
                      y,
                      x
@@ -387,12 +386,12 @@ export default {
          let qrcode = jrQrcode.getQrBase64(
             `${this.getOrigin()}/#/?inviter_id=${this.userDetail.user.userid}`
          );
-         let { img_x, img_y, url } = this.magazines[this.magazineIndex];
+         let { img_x, img_y, url,img_w,img_h } = this.magazines[this.magazineIndex];
          if (!src) {
             this.$message.error("请选择一张海报");
             return;
          }
-         this.mergedImgBase64 = await this.mergeImg(url, qrcode, img_x, img_y);
+         this.mergedImgBase64 = await this.mergeImg(url, qrcode, img_x, img_y,img_w,img_h);
          this.success(this.mergedImgBase64);
          //  else if (this.type == 2) {
          //    this.mergedImgBase64 = await this.mergeImg(url, qrcode,img_x,img_y);
@@ -400,7 +399,7 @@ export default {
          // }
       },
       success(src) {
-         this.modal = this.$success({
+         this.$success({
             title: "长按保存图片",
             centered: true,
             okText: "知道了",
@@ -458,7 +457,7 @@ export default {
       this.getRandomPromoteText();
    },
    destroyed(){
-      this.modal?this.modal.destroy():''
+      this.$destroyAll()
    }
 };
 </script>

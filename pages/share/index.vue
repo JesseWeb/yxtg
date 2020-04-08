@@ -301,7 +301,7 @@
                <button
                   id="make-poster"
                   v-clipboard:error="onError"
-                  v-clipboard:copy="promoteTextWithUrl"
+                  v-clipboard:copy="promoteText"
                   v-clipboard:success="onCopy"
                   @click="sharing"
                   class="tab-item-btn c-darkGold"
@@ -342,8 +342,7 @@ export default {
                type: 2
             }
          ],
-         modal:null,
-         userid:"",
+         userid: "",
          magazines: [],
          magazineIndex: 0,
          mergedImgBase64: null,
@@ -361,15 +360,15 @@ export default {
       onCopy() {
          this.$message.success("复制成功");
       },
-       async getUserDetail(){
+      async getUserDetail() {
          try {
-            let {data} = await getUserDetail()
-            this.userid = data.data.user.userid
+            let { data } = await getUserDetail();
+            this.userid = data.data.user.userid;
          } catch (error) {
-            console.error(error)
+            console.error(error);
          }
       },
-      mergeImg(backgroundImage, qrcodeImage, x, y) {
+      mergeImg(backgroundImage, qrcodeImage, x, y, w, h) {
          return new Promise((res, rej) => {
             const mc = new MC({
                width: 660,
@@ -385,8 +384,8 @@ export default {
                height: 840
             })
                .add(qrcodeImage, {
-                  width: 190 * 1.5,
-                  height: 190 * 1.5,
+                  width: w,
+                  height: h,
                   pos: {
                      y: y,
                      x: x
@@ -450,12 +449,16 @@ export default {
                this.$message.error("请选择一张海报");
                return;
             }
-            let { img_x, img_y, url } = this.magazines[this.magazineIndex];
+            let { img_x, img_y, url, img_w, img_h } = this.magazines[
+               this.magazineIndex
+            ];
             this.mergedImgBase64 = await this.mergeImg(
                url,
                elem_url,
                img_x,
-               img_y
+               img_y,
+               img_w,
+               img_h
             );
             this.success(this.mergedImgBase64);
          } else if (this.type == 2) {
@@ -466,16 +469,22 @@ export default {
                url,
                qrcode,
                img_x,
-               img_y
+               img_y,
+               img_w,
+               img_h
             );
             this.success(this.mergedImgBase64);
          }
       },
       success(src) {
-         this.modal = this.$success({
+         this.$success({
             title: "长按保存图片",
             centered: true,
             okText: "知道了",
+            getContainer:() => {
+               return document.querySelector('#popularize')
+            }
+            ,
             // JSX support
             content: <img src={src} />
          });
@@ -506,21 +515,19 @@ export default {
       }
    },
    computed: {
-      promoteTextWithUrl() {
-         return (
-            this.promoteText +
-            `点击加入${this.getOrigin()}/#/?inviter_id=${
-               this.userid
-            }`
-         );
-      }
+      // promoteTextWithUrl() {
+      //    return (
+      //       this.promoteText +
+      //       `点击加入${this.getOrigin()}/#/?inviter_id=${this.userid}`
+      //    );
+      // }
    },
    mounted() {
       this.getMaterialImages();
       this.getRandomPromoteText();
    },
-   destroyed(){
-      this.modal?this.modal.destroy():""
+   destroyed() {
+      this.$destroyAll()
    }
 };
 </script>
