@@ -82,6 +82,18 @@
    box-sizing: border-box;
    .btn-modify {
       margin-bottom: 0.2rem;
+      display: block;
+      width: 100%;
+      height: 0.45rem;
+      background: rgb(243, 213, 167);;
+      border-radius: 0.05rem;
+      text-align: center;
+      font-size: 0.16rem;
+      color: #fff;
+      line-height: 0.45rem;
+      font-weight: bold;
+      outline: none;
+      border:none;
    }
    .m-outbox-btn {
       display: block;

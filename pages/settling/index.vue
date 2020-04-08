@@ -27,6 +27,7 @@
       width: 3.08rem;
       background-color: #fff;
       padding-bottom: 0.1rem;
+      text-align:left;
       .settle-account-wrap {
          background: rgba(243, 213, 167, 1);
          padding: 0.1rem;
