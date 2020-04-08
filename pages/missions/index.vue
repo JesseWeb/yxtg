@@ -195,7 +195,7 @@
       <div class="user-info">
          <div class="header">
             <div class="header-pic">
-               <img src="~/assets/image/ele.png" />
+               <img src="/male-130.png" />
             </div>
             <div class="head-desc">
                <div class="name">{{userDetail.user.username}}</div>
