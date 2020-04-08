@@ -115,6 +115,10 @@
          margin-top: 0.1rem;
          border: 1px solid rgba(221, 204, 179, 1);
          background-color: rgba(255, 244, 226, 1);
+         .question {
+            color: #1890ff;
+            cursor: pointer;
+         }
          th {
             color: #c3925b;
          }
@@ -223,57 +227,42 @@
       </div>
       <div class="rules">
          <div class="main-title">-推广员可通过完成任务获得更高的收益-</div>
-         <div class="table-title">1、升级任务说明</div>
+         <div class="table-title">等级权益</div>
          <div class="table-wrap">
             <table class="table" border-collapse="collapse">
                <tr>
                   <th class="t-header">会员身份</th>
-                  <th class="t-header">升级要求</th>
+                  <th class="t-header">直推业绩</th>
+                  <th class="t-header">好友消费</th>
+                  <th class="t-header">您的佣金</th>
                </tr>
                <tr>
                   <td>体验推广员</td>
-                  <td>注册即成为本平台体验推广员</td>
+                  <td>1.5%</td>
+                  <td>¥10000</td>
+                  <td>¥150</td>
                </tr>
                <tr>
                   <td>初级推广员</td>
-                  <td>邀请6个有效体验推广员或者 自推</td>
+                  <td>3.0%</td>
+                  <td>¥10000</td>
+                  <td>¥300</td>
                </tr>
                <tr>
                   <td>中级推广员</td>
-                  <td>邀请12个初级推广员</td>
+                  <td>3.6%</td>
+                  <td>¥10000</td>
+                  <td>¥360</td>
                </tr>
                <tr>
                   <td>高级推广员</td>
-                  <td>邀请20个中级推广员</td>
+                  <td>4.0%</td>
+                  <td>¥10000</td>
+                  <td>¥400</td>
                </tr>
             </table>
          </div>
-         <div class="table-title">2、等级权益</div>
-         <div class="table-wrap">
-            <table class="table" border-collapse="collapse">
-               <tr>
-                  <th class="t-header">会员身份</th>
-                  <th class="t-header">升级要求</th>
-               </tr>
-               <tr>
-                  <td>体验推广员</td>
-                  <td>注册即成为本平台体验推广员</td>
-               </tr>
-               <tr>
-                  <td>初级推广员</td>
-                  <td>邀请6个有效体验推广员或者 自推</td>
-               </tr>
-               <tr>
-                  <td>中级推广员</td>
-                  <td>邀请12个初级推广员</td>
-               </tr>
-               <tr>
-                  <td>高级推广员</td>
-                  <td>邀请20个中级推广员</td>
-               </tr>
-            </table>
-         </div>
-         <div class="table-title">3、相关管理奖励</div>
+         <div class="table-title">相关管理奖励</div>
          <div class="table-wrap">
             <table class="table" border-collapse="collapse">
                <tr>
@@ -313,38 +302,37 @@
                </tr>
             </table>
          </div>
-         <div class="table-title">4、返佣策略</div>
+         <div class="table-title">等级任务</div>
          <div class="table-wrap">
             <table class="table" border-collapse="collapse">
                <tr>
                   <th class="t-header">会员身份</th>
-                  <th class="t-header">直推业绩</th>
-                  <th class="t-header">好友消费</th>
-                  <th class="t-header">您的佣金</th>
+                  <th class="t-header">升级要求</th>
                </tr>
                <tr>
                   <td>体验推广员</td>
-                  <td>1.5%</td>
-                  <td>¥10000</td>
-                  <td>¥150</td>
+                  <td>注册即成为本平台体验推广员</td>
                </tr>
                <tr>
                   <td>初级推广员</td>
-                  <td>3.0%</td>
-                  <td>¥10000</td>
-                  <td>¥300</td>
+                  <td>
+                     邀请6位
+                     <a-tooltip placement="topLeft" title="产生了推广收益即为有效推广员">
+                        <span class="question">有效推广员</span>
+                     </a-tooltip>或 总返利订单数大于10单
+                  </td>
                </tr>
                <tr>
                   <td>中级推广员</td>
-                  <td>3.6%</td>
-                  <td>¥10000</td>
-                  <td>¥360</td>
+                  <td>邀请12位初级推广员</td>
                </tr>
                <tr>
                   <td>高级推广员</td>
-                  <td>4.0%</td>
-                  <td>¥10000</td>
-                  <td>¥400</td>
+                  <td>邀请20位中级推广员</td>
+               </tr>
+               <tr>
+                  <td>城市合伙人</td>
+                  <td>敬请期待</td>
                </tr>
             </table>
          </div>
@@ -406,6 +394,7 @@ export default {
       }
    },
    methods: {
+      experience() {},
       promoteCopySuccess() {
          this.$message.success("已复制微推广文案，粘贴分享即可");
       },

@@ -65,6 +65,7 @@ export default {
     'ant-design-vue/lib/input-number/style/css',
     'ant-design-vue/lib/tabs/style/css',
     'ant-design-vue/lib/drawer/style/css',
+    'ant-design-vue/lib/tooltip/style/css',
     {
       src: '@/assets/scss/375-vw.scss',
       lang: "scss"

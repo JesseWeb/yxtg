@@ -11,9 +11,11 @@ import {
    Drawer,
    Tabs,
    Popconfirm,
-   FormModel
+   FormModel,
+   Tooltip
 } from 'ant-design-vue'
 
+Vue.use(Tooltip)
 Vue.use(Modal)
 Vue.use(FormModel)
 Vue.use(Button)
