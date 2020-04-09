@@ -523,7 +523,7 @@ export default {
       // promoteTextWithUrl() {
       //    return (
       //       this.promoteText +
-      //       `点击加入${this.getOrigin()}/#/?inviter_id=${this.userid}`
+      //       `点击加入${this.getOrigin()}/?inviter_id=${this.userid}`
       //    );
       // }
    },

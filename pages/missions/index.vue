@@ -391,7 +391,7 @@ export default {
          return this.userDetail.inviter.wechat;
       },
       promoteText() {
-         return `${window.location.host}/#/register?inviter_id=${this.userDetail.user.userid}`;
+         return `${window.location.host}/register?inviter_id=${this.userDetail.user.userid}`;
       }
    },
    methods: {

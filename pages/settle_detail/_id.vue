@@ -81,6 +81,9 @@ export default {
    name:"settleDetail",
    components:{
       GoldTitle
+   },
+   mounted(){
+      
    }
 }
 </script>

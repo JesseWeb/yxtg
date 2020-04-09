@@ -384,7 +384,7 @@ export default {
       async sharing() {
          let src = this.magazines[this.magazineIndex];
          let qrcode = jrQrcode.getQrBase64(
-            `${this.getOrigin()}/#/?inviter_id=${this.userDetail.user.userid}`
+            `${this.getOrigin()}/?inviter_id=${this.userDetail.user.userid}`
          );
          let { img_x, img_y, url,img_w,img_h } = this.magazines[this.magazineIndex];
          if (!src) {
@@ -448,7 +448,7 @@ export default {
    },
    computed:{
       promoteTextWithUrl (){
-         return this.promoteText+`点击加入${this.getOrigin()}/#/?inviter_id=${this.userDetail.user.userid}`
+         return this.promoteText+`点击加入${this.getOrigin()}/?inviter_id=${this.userDetail.user.userid}`
       }
    },
    mounted() {

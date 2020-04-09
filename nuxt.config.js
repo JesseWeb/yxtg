@@ -41,8 +41,8 @@ export default {
   },
   router: {
     middleware: ['auth'],
-    // mode: "history"
-    mode: "hash"
+    mode: "history"
+    // mode: "hash"
   },
   /*
   ** Customize the progress-bar color
@@ -101,7 +101,7 @@ export default {
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/component-cache',
-    '@nuxtjs/proxy'
+    '@nuxtjs/proxy',
   ],
   /**
    * Render configuration
@@ -134,9 +134,9 @@ export default {
       font: ({ isDev }) => isDev ? '[path][name].[ext]' : 'fonts/[contenthash:7].[ext]',
       video: ({ isDev }) => isDev ? '[path][name].[ext]' : 'videos/[contenthash:7].[ext]'
     },
-    analyze: process.env.mode == "development" ? {
-      analyzerMode: "server"
-    } : false,
+    // analyze: process.env.mode == "development" ? {
+    //   analyzerMode: "server"
+    // } : false,
     optimization: {
       splitChunks: {
         chunks: 'all',
