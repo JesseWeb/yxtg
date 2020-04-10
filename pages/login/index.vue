@@ -1,6 +1,8 @@
 <style lang="scss" scoped>
 #login {
    height: 100vh;
+   overflow-y: auto;
+   padding-bottom: 0.2rem;
    background: rgba(243, 213, 167, 1);
    /deep/ .ant-input {
       width: 2.4rem;
@@ -38,8 +40,8 @@
    display: flex;
    justify-content: center;
    align-items: center;
-   height: calc(100% - 0.44rem);
    flex-direction: column;
+   margin-top: 0.2rem;
 }
 .main {
    width: 3.24rem;
@@ -90,7 +92,7 @@
    }
 }
 .extra-operation {
-   margin: .2rem;
+   margin: 0.2rem;
    color: #fff;
    a {
       color: #fff;
@@ -140,8 +142,7 @@
             </div>
          </div>
          <div class="extra-operation">
-            <n-link to="/forgetpwd">忘记密码</n-link>
-            Or
+            <n-link to="/forgetpwd">忘记密码</n-link>Or
             <n-link :to="`register?inviter_id=${inviterId||''}`" href="javascript:void(0);">注册新用户</n-link>
          </div>
       </div>

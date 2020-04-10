@@ -1,7 +1,10 @@
 <style lang="scss" scoped>
 #forgetPwd {
    height: 100vh;
+   overflow-y: auto;
+   // min-height: 800px;
    background: rgba(243, 213, 167, 1);
+   padding-bottom: 0.2rem;
    /deep/ .ant-input {
       width: 2.4rem;
       height: 0.44rem;
@@ -36,10 +39,9 @@
    }
    .main-wrap {
       display: flex;
-      margin-top: -0.4rem;
       justify-content: center;
-      align-items: center;
-      height: calc(100% - 0.44rem);
+      align-items: flex-start;
+      margin-top: 0.2rem;
       .main {
          width: 3.24rem;
          height: auto;
@@ -102,7 +104,7 @@
             height: 0.44rem;
             color: rgba(255, 255, 255, 1);
             background-color: rgba(207, 176, 128, 1);
-           
+
             font-weight: bold;
             border-radius: 0.4rem;
             font-size: 0.16rem;

@@ -96,6 +96,7 @@
       border: none;
    }
    .m-outbox-btn {
+      outline: none;
       display: block;
       width: 100%;
       height: 0.45rem;
@@ -106,6 +107,8 @@
       color: #bb8b51;
       line-height: 0.45rem;
       font-weight: bold;
+      cursor: pointer;
+      border: none;
    }
 }
 </style>
@@ -142,7 +145,7 @@
       <div class="m-outbox">
          <a-button type="primary" size="large" class="btn-modify" @click="changeInfo">修改个人信息</a-button>
 
-         <a href class="m-outbox-btn" @click="removeToken">退出登录</a>
+         <button class="m-outbox-btn" @click="removeToken">退出登录</button>
       </div>
       <a-modal title="绑定信息" cancelText="取消" okText="确定" v-model="changeZfbModalVisible" @ok="bindZfb">
          <a-form-model ref="form" :rules="rules" layout="vertical" :model="form">

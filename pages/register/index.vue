@@ -18,10 +18,9 @@
 }
 .main-wrap {
    display: flex;
-   margin-top: -0.4rem;
    justify-content: center;
    align-items: center;
-   height: calc(100% - 0.44rem);
+   margin-top: .2rem;
    .main {
       width: 3.24rem;
       height: auto;
@@ -73,6 +72,8 @@
 #register {
    height: 100vh;
    background: rgba(243, 213, 167, 1);
+   overflow-y: auto;
+   padding-bottom: 0.2rem;
    /deep/ .ant-input {
       width: 2.4rem;
       height: 0.44rem;
@@ -227,6 +228,7 @@
                         }
                      ]"
                         placeholder="邀请码（选填）"
+                        :disabled="hasInviter"
                      />
                   </a-form-item>
                   <a-form-item>
@@ -255,7 +257,8 @@ export default {
          captchaDisabled: true,
          captchaTimer: 0,
          inviter_id: "",
-         validate_token: ""
+         validate_token: "",
+         hasInviter:false
       };
    },
    components: {
@@ -309,7 +312,7 @@ export default {
       compareToFirstPassword(rule, value, callback) {
          const form = this.form;
          if (value && value !== form.getFieldValue("password")) {
-            callback("Two passwords that you enter is inconsistent!");
+            callback("确认密码不正确");
          } else {
             callback();
          }
@@ -342,6 +345,9 @@ export default {
    },
    mounted() {
       this.redirectURL = this.$route.query.redirect_url || "/";
+      if(this.$route.query.inviter_id){
+         this.hasInviter = true
+      }
       this.inviter_id = this.$route.query.inviter_id || "";
    }
    // asyncData(){

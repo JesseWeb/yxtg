@@ -51,7 +51,7 @@
       cursor: pointer;
       &.primary {
          color: #fff;
-         background: #1890ff;
+         background: rgb(240, 209, 158);
       }
       &.disabled {
          background-color: #e0e0e0;
