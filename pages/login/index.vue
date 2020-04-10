@@ -41,7 +41,7 @@
    justify-content: center;
    align-items: center;
    flex-direction: column;
-   margin-top: 0.2rem;
+   margin-top: .8rem;
 }
 .main {
    width: 3.24rem;
