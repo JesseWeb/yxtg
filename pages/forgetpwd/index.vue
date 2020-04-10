@@ -1,4 +1,4 @@
-<style lang="scss">
+<style lang="scss" scoped>
 #forgetPwd {
    height: 100vh;
    background: rgba(243, 213, 167, 1);

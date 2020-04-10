@@ -1,4 +1,4 @@
-<style lang="scss">
+<style lang="scss" scoped>
 .m-goBack {
    height: 0.4rem;
    padding: 0.15rem 0.1rem 0;
@@ -108,7 +108,7 @@
 }
 .sms-code-wrap {
    position: relative;
-   .sms-code-input{
+   .sms-code-input {
       padding-right: 1rem;
    }
    .sms-code-btn {
@@ -164,7 +164,7 @@
                   </a-form-item>
                   <a-form-item>
                      <div class="sms-code-wrap">
-                        <a-input 
+                        <a-input
                            v-decorator="[
                            'sms_code',
                            {rules: [{ required: true, message: '请输入手机验证码' ,}]}
