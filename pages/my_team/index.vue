@@ -74,7 +74,7 @@
       background-color: #f7f7f7;
       .item {
          padding: 0.1rem;
-         height: 1.4rem;
+         height: 1rem;
          background-color: #fff;
          margin-bottom: 0.1rem;
          overflow: hidden;
@@ -90,7 +90,20 @@
             justify-content: space-between;
             align-items: center;
             .nickname {
-               font-size: 0.18rem;
+               font-size: 0.14rem;
+               display: flex;
+               align-items: center;
+               .user-type {
+                  font-size: 0.12rem;
+                  margin-left: 0.1rem;
+                  padding: 0 0.1rem;
+                  border-radius: 1rem;
+                  color: #fff;
+                  background-color: rgb(240, 209, 158);
+                  &.new {
+                     background: #2ec7c9;
+                  }
+               }
             }
             .createdtime {
                color: #cccccc;
@@ -188,7 +201,10 @@
                         <div class="item" v-for="item in directTeamList" :key="item.userid">
                            <div class="top">
                               <div class="self-info">
-                                 <div class="nickname">{{item.user.username}}</div>
+                                 <div class="nickname">
+                                    {{item.user.username}}
+                                    <span class="user-type" :class="{new:item.user.new=='1'}">{{item.user.new_desc}}</span>
+                                 </div>
                                  <!-- <div class="createdtime">2020-1-5 15:15:15</div> -->
                               </div>
                               <i class="iconfont iconyou"></i>
@@ -214,7 +230,7 @@
                            <!-- <div class="bottom">
                               邀请明细
                               <i class="iconfont iconyou"></i>
-                           </div> -->
+                           </div>-->
                         </div>
                      </Scroll>
                   </div>
@@ -302,7 +318,7 @@
                            <!-- <div class="bottom">
                               邀请明细
                               <i class="iconfont iconyou"></i>
-                           </div> -->
+                           </div>-->
                         </div>
                      </Scroll>
                   </div>
@@ -341,7 +357,7 @@ export default Vue.extend({
             user_week_count: "0",
             user_month_count: "0",
             first_level_count: "0",
-            sec_level_count: "1",
+            sec_level_count: "0",
             thr_level_count: "0",
             forth_level_count: "0"
          },
@@ -352,7 +368,7 @@ export default Vue.extend({
             user_week_count: "0",
             user_month_count: "0",
             first_level_count: "0",
-            sec_level_count: "1",
+            sec_level_count: "0",
             thr_level_count: "0",
             forth_level_count: "0"
          }
@@ -425,12 +441,16 @@ export default Vue.extend({
       },
       callback(v) {
          this.teamType = v;
+         if (v == 1) {
+            this.getDirectTeamStatistics();
+         } else if (v == 2) {
+            this.getIndirectTeamStatistics();
+         }
       }
    },
    mounted() {
       this.getDirectTeamList();
       this.getIndirectTeamList();
-      this.getDirectTeamStatistics();
    }
 });
 </script>

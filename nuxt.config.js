@@ -20,10 +20,9 @@ export default {
       { "http-equiv": "Cache-Control", content: "no-cache, no-store, must-revalidate" },
       { "http-equiv": "Pragma", content: "no-cache" },
       { "http-equiv": "Expires", content: "0" },
-
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'icon', type: 'image/png', href: '/favicon.png' },
       { rel: 'stylesheet', href: "//at.alicdn.com/t/font_1644987_yodir87xgmk.css" }
     ]
   },
@@ -66,6 +65,7 @@ export default {
     'ant-design-vue/lib/tabs/style/css',
     'ant-design-vue/lib/drawer/style/css',
     'ant-design-vue/lib/tooltip/style/css',
+    'ant-design-vue/lib/spin/style/css',
     {
       src: '@/assets/scss/375-vw.scss',
       lang: "scss"

@@ -12,9 +12,11 @@ import {
    Tabs,
    Popconfirm,
    FormModel,
-   Tooltip
+   Tooltip,
+   Spin
 } from 'ant-design-vue'
 
+Vue.use(Spin)
 Vue.use(Tooltip)
 Vue.use(Modal)
 Vue.use(FormModel)
