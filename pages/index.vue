@@ -313,7 +313,7 @@
             <div class="login-slogan">分享红包 · 分享获利</div>
             <div v-if="inviterId&&inviterName" class="login-invite-title">
                <span class="top-title-inviter">{{inviterName}}</span>
-               <span>邀请您加入个人联盟</span>
+               <span>邀请您加入悦享推广</span>
             </div>
          </div>
          <div class="login-top-icons">
