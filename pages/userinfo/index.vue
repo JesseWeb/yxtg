@@ -85,7 +85,7 @@
       display: block;
       width: 100%;
       height: 0.45rem;
-      background: rgb(243, 213, 167);;
+      background: rgb(243, 213, 167);
       border-radius: 0.05rem;
       text-align: center;
       font-size: 0.16rem;
@@ -93,7 +93,7 @@
       line-height: 0.45rem;
       font-weight: bold;
       outline: none;
-      border:none;
+      border: none;
    }
    .m-outbox-btn {
       display: block;
@@ -299,7 +299,10 @@ export default {
       },
       removeToken() {
          removeToken();
-         this.$router.push("login");
+         this.$message.success('登出成功')
+         setTimeout(() => {
+            this.$router.push("/login");
+         }, 500);
       },
       async getUserDetail() {
          try {

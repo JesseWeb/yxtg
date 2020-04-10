@@ -306,10 +306,13 @@
                   @click="sharing"
                   class="tab-item-btn c-darkGold"
                   style="cursor: pointer;"
-               >生成海报</button>
+               >生成海报并复制文案</button>
             </div>
          </div>
       </div>
+      <a-modal title="长按保存图片" v-model="saveImageModalVisible" :footer="null">
+        <img :src="mergedImgBase64" class="promote-img" /> 
+      </a-modal>
    </div>
 </template>
 <script>
@@ -347,7 +350,8 @@ export default {
          magazineIndex: 0,
          mergedImgBase64: null,
          qrcodeImage: null,
-         promoteText: ""
+         promoteText: "",
+         saveImageModalVisible:false,
       };
    },
    methods: {
@@ -358,7 +362,7 @@ export default {
          this.$message.error("复制失败");
       },
       onCopy() {
-         // this.$message.success("复制成功");
+         this.$message.success("复制文案成功，记得分享哟～");
       },
       async getUserDetail() {
          try {
@@ -428,7 +432,7 @@ export default {
       async sharing() {
          let src = this.magazines[this.magazineIndex];
          let channel = await this.getQrCode();
-         let { elem_url, elem_auth_url,mt_url } = channel;
+         let { elem_auth_url, elem_url, mt_url, elem_share_url } = channel;
          if (this.type == 1) {
             if (!elem_url) {
                this.$message.error("请先授权");
@@ -452,22 +456,24 @@ export default {
             let { img_x, img_y, url, img_w, img_h } = this.magazines[
                this.magazineIndex
             ];
+            let qrcode = jrQrcode.getQrBase64(elem_share_url);
             this.mergedImgBase64 = await this.mergeImg(
                url,
-               elem_url,
+               qrcode,
                img_x,
                img_y,
                img_w,
                img_h
             );
-            this.success(this.mergedImgBase64);
+            this.saveImageModalVisible = true
+            // this.success(this.mergedImgBase64);
          } else if (this.type == 2) {
             let { img_x, img_y, url, img_w, img_h } = this.magazines[
                this.magazineIndex
             ];
-            if(!mt_url){
-               this.$message.error('美团红包近期补货，敬请关注')
-               return
+            if (!mt_url) {
+               this.$message.error("美团红包近期补货，敬请关注");
+               return;
             }
             let qrcode = jrQrcode.getQrBase64(mt_url);
             // this.qrcodeImage = qrcode
@@ -479,14 +485,15 @@ export default {
                img_w,
                img_h
             );
-            this.success(this.mergedImgBase64);
+            this.saveImageModalVisible = true
+            // this.success(this.mergedImgBase64);
          }
       },
       success(src) {
          this.$success({
             title: "长按保存图片",
             centered: true,
-            okText: "知道了",
+            // okText: "知道了",
             getContainer: () => {
                return document.querySelector("#popularize");
             },
