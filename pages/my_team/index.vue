@@ -207,7 +207,7 @@
                                  </div>
                                  <!-- <div class="createdtime">2020-1-5 15:15:15</div> -->
                               </div>
-                              <i class="iconfont iconyou"></i>
+                              <!-- <i class="iconfont iconyou"></i> -->
                            </div>
                            <div class="middle">
                               <div class="count-item">
@@ -295,7 +295,7 @@
                                  <div class="nickname">{{item.user.username}}</div>
                                  <!-- <div class="createdtime">2020-1-5 15:15:15</div> -->
                               </div>
-                              <i class="iconfont iconyou"></i>
+                              <!-- <i class="iconfont iconyou"></i> -->
                            </div>
                            <div class="middle">
                               <div class="count-item">

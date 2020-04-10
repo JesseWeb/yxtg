@@ -78,6 +78,8 @@
       background-color: #fff;
       display: flex;
       justify-content: space-between;
+      border-bottom: 1px solid #e5e5e5;
+      
       .item-left,
       .item-right {
          height: 0.5rem;
@@ -121,7 +123,7 @@
          <div class="settle-history-title">返佣结算记录</div>
          <div class="settle-history-list">
             <empty-list :list="cashList" offsetTop=".3rem"/>
-            <nuxt-link tag="div" :to="'settle_detail/'+item.id" class="item" v-for="(item,index) in cashList" :key="index">
+            <div class="item" v-for="(item,index) in cashList" :key="index">
                <div class="item-left">
                   <div class="item-left-top">周期：2019.08-2019.11</div>
                   <div class="item-left-bottom">{{parseTimeS(item.created)}}</div>
@@ -130,10 +132,10 @@
                   <div class="item-right-top">{{item.remark}}</div>
                   <div class="item-right-bottom">{{item.value}}</div>
                </div>
-               <div class="arrow">
+               <!-- <div class="arrow">
                   <i class="iconfont iconyou"></i>
-               </div>
-            </nuxt-link>
+               </div> -->
+            </div>
          </div>
       </div>
    </div>
