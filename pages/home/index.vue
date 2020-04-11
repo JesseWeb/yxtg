@@ -26,7 +26,7 @@ input[type="tel"] {
       overflow: hidden;
       .header-pic {
          width: 1.5rem;
-         height: 0.25rem;
+         height: 0.22rem;
          img {
             width: auto;
             height: 100%;
@@ -363,7 +363,7 @@ input[type="tel"] {
       <div class="own-newheader">
          <div class="own-newheader-main">
             <div class="header-pic">
-               <img src="@/assets/image/ilm-rowshort-logo.png" />
+               <img src="@/assets/image/logo_2.png" />
             </div>
             <nuxt-link to="rules" tag="a" class="header-quit" rseat="810251_ocm_unionperson_helpCenter">
                <em>帮助中心</em>
