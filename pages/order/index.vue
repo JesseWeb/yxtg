@@ -155,6 +155,9 @@
          width: 25%;
          .digit {
             font-size: 0.14rem;
+            &.money{
+               color:#f5222d;
+            }
          }
          .desc {
             color:#a0a0a0;
@@ -241,7 +244,7 @@
                               <div class="desc">付款金额</div>
                            </div>
                            <div class="item">
-                              <div class="digit">{{order.order_rebate}}</div>
+                              <div class="digit money">{{order.order_rebate}}</div>
                               <div class="desc">预估收入</div>
                            </div>
                            <div class="item">
@@ -304,7 +307,7 @@
                               <div class="desc">付款金额</div>
                            </div>
                            <div class="item">
-                              <div class="digit">{{order.order_rebate}}</div>
+                              <div class="digit money">{{order.order_rebate}}</div>
                               <div class="desc">预估收入</div>
                            </div>
                            <div class="item">

@@ -74,20 +74,27 @@
       cursor: pointer;
       position: relative;
       padding: 0.1rem;
-      padding-right: 0.3rem;
+      // padding-right: 0.3rem;
       background-color: #fff;
       display: flex;
       justify-content: space-between;
+      flex-direction: column;
       border-bottom: 1px solid #e5e5e5;
-      
-      .item-left,
-      .item-right {
+      .money {
+         color: #ff6544;
+      }
+      .item-top,
+      .item-bottom {
          height: 0.5rem;
          display: flex;
-         flex-direction: column;
+         align-items: center;
          justify-content: space-between;
       }
-      .item-right{
+      // .item-bottom{
+      //    justify-content: flex-end;
+      // }
+      .item-top-right,
+      .item-bottom-right {
          text-align: right;
       }
       .item-left-top {
@@ -122,19 +129,22 @@
       <div class="settle-history">
          <div class="settle-history-title">返佣结算记录</div>
          <div class="settle-history-list">
-            <empty-list :list="cashList" offsetTop=".3rem"/>
+            <empty-list :list="cashList" offsetTop=".3rem" />
             <div class="item" v-for="(item,index) in cashList" :key="index">
-               <div class="item-left">
-                  <div class="item-left-top">周期：2019.08-2019.11</div>
-                  <div class="item-left-bottom">{{parseTimeS(item.created)}}</div>
+               <div class="item-top">
+                  <div class="item-top-left">
+                     结算金额：
+                     <span class="money">¥{{item.value}}</span>
+                  </div>
+                  <div class="item-top-right">申请时间：{{parseTimeS(item.created)}}</div>
                </div>
-               <div class="item-right">
-                  <div class="item-right-top">{{item.remark}}</div>
-                  <div class="item-right-bottom">{{item.value}}</div>
+               <div class="item-bottom">
+                  <div class="item-bottom-right">{{item.remark}}</div>
+                  <div class="item-bottom-left">手续费：¥0</div>
                </div>
                <!-- <div class="arrow">
                   <i class="iconfont iconyou"></i>
-               </div> -->
+               </div>-->
             </div>
          </div>
       </div>

@@ -61,8 +61,20 @@
    background-repeat: no-repeat;
    background-size: cover;
 }
-.ant-carousel /deep/ .slick-dots {
-   height: auto;
+
+.ant-carousel /deep/ .custom-slick-arrow {
+   width: 0.35rem;
+   height: 0.35rem;
+   font-size: 0.35rem;
+   color: #fff;
+   opacity: 1;
+   color: #999;
+}
+.ant-carousel /deep/ .custom-slick-arrow:before {
+   display: none;
+}
+.ant-carousel /deep/ .custom-slick-arrow:hover {
+   opacity: 1;
 }
 .ant-carousel /deep/ .slick-slide img {
    border: 0.05rem solid #fff;
@@ -71,21 +83,9 @@
    width: 3.3rem;
    height: 4.2rem;
 }
-// .ant-carousel /deep/ .slick-thumb {
-//    bottom: -0.45rem;
-// }
-// .ant-carousel /deep/ .slick-thumb li {
-//    width: 0.6rem;
-//    height: 0.45rem;
-// }
-// .ant-carousel /deep/ .slick-thumb li img {
-//    width: 100%;
-//    height: 100%;
-//    filter: grayscale(100%);
-// }
-// .ant-carousel /deep/ .slick-thumb li.slick-active img {
-//    filter: grayscale(0%);
-// }
+.ant-carousel /deep/ .slick-dots-bottom {
+   bottom: 0.2rem;
+}
 .m-sameSize-picList {
    width: 100%;
    white-space: nowrap;
@@ -259,10 +259,13 @@
       <div class="m-vipCard-kind">
          <div class="title">选择海报图</div>
          <div class="m-slideShow-cont">
-            <a-carousel :afterChange="magazineChange" ref="carousel">
-               <!-- <a slot="customPaging" slot-scope="props">
-                  <img :src="magazines[props.i]" />
-               </a>-->
+            <a-carousel :afterChange="magazineChange" arrows ref="carousel">
+               <div slot="prevArrow" class="custom-slick-arrow" style="left: 10px;zIndex: 1">
+                  <a-icon type="left" />
+               </div>
+               <div slot="nextArrow" class="custom-slick-arrow" style="right: 10px">
+                  <a-icon type="right" />
+               </div>
                <div class="img-wrap" v-for="(item,index) in magazines" :key="index">
                   <img :src="item.url" />
                </div>
@@ -298,10 +301,13 @@
                   v-clipboard:error="onError"
                   v-clipboard:copy="promoteTextWithUrl"
                   v-clipboard:success="onCopy"
-               >生成海报</button>
+               >生成海报并复制文案</button>
             </div>
          </div>
       </div>
+      <a-modal :bodyStyle="{padding:0}" title="长按保存图片" v-model="saveImageModalVisible" :footer="null">
+         <img :src="mergedImgBase64" class="promote-img" />
+      </a-modal>
    </div>
 </template>
 <script>
@@ -326,6 +332,7 @@ export default {
          magazineIndex: 0,
          mergedImgBase64: null,
          qrcodeImage: null,
+         saveImageModalVisible: false,
          promoteText: "",
          userDetail: {
             user: {
@@ -342,9 +349,9 @@ export default {
          this.$message.error("复制失败");
       },
       onCopy() {
-         this.$message.success("复制成功");
+         this.$message.success("复制文案成功，记得分享哟～");
       },
-      mergeImg(backgroundImage, qrcodeImage, x, y,w,h) {
+      mergeImg(backgroundImage, qrcodeImage, x, y, w, h) {
          return new Promise((res, rej) => {
             const mc = new MC({
                width: 660,
@@ -386,17 +393,22 @@ export default {
          let qrcode = jrQrcode.getQrBase64(
             `${this.getOrigin()}/?inviter_id=${this.userDetail.user.userid}`
          );
-         let { img_x, img_y, url,img_w,img_h } = this.magazines[this.magazineIndex];
+         let { img_x, img_y, url, img_w, img_h } = this.magazines[
+            this.magazineIndex
+         ];
          if (!src) {
             this.$message.error("请选择一张海报");
             return;
          }
-         this.mergedImgBase64 = await this.mergeImg(url, qrcode, img_x, img_y,img_w,img_h);
-         this.success(this.mergedImgBase64);
-         //  else if (this.type == 2) {
-         //    this.mergedImgBase64 = await this.mergeImg(url, qrcode,img_x,img_y);
-         //    this.success(this.mergedImgBase64);
-         // }
+         this.mergedImgBase64 = await this.mergeImg(
+            url,
+            qrcode,
+            img_x,
+            img_y,
+            img_w,
+            img_h
+         );
+         this.saveImageModalVisible = true;
       },
       success(src) {
          this.$success({
@@ -437,27 +449,32 @@ export default {
          });
          this.magazines = data.data;
       },
-      async getUserDetail(){
+      async getUserDetail() {
          try {
-            let {data} = await getUserDetail()
-            this.userDetail = data.data
+            let { data } = await getUserDetail();
+            this.userDetail = data.data;
          } catch (error) {
-            console.error(error)
+            console.error(error);
          }
       }
    },
-   computed:{
-      promoteTextWithUrl (){
-         return this.promoteText+`点击加入${this.getOrigin()}/?inviter_id=${this.userDetail.user.userid}`
+   computed: {
+      promoteTextWithUrl() {
+         return (
+            this.promoteText +
+            `点击加入${this.getOrigin()}/?inviter_id=${
+               this.userDetail.user.userid
+            }`
+         );
       }
    },
    mounted() {
       this.getMaterialImages();
-      this.getUserDetail()
+      this.getUserDetail();
       this.getRandomPromoteText();
    },
-   destroyed(){
-      this.$destroyAll()
+   destroyed() {
+      this.$destroyAll();
    }
 };
 </script>

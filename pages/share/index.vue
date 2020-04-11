@@ -61,8 +61,20 @@
    background-repeat: no-repeat;
    background-size: cover;
 }
-.ant-carousel /deep/ .slick-dots {
-   height: auto;
+.ant-carousel /deep/ .custom-slick-arrow {
+   width: 0.35rem;
+   height: 0.35rem;
+   font-size: 0.35rem;
+   color: #fff;
+   opacity: 1;
+   color: #999;
+
+}
+.ant-carousel /deep/ .custom-slick-arrow:before {
+   display: none;
+}
+.ant-carousel /deep/ .custom-slick-arrow:hover {
+   opacity: 1;
 }
 .ant-carousel /deep/ .slick-slide img {
    border: 0.05rem solid #fff;
@@ -70,6 +82,9 @@
    margin: auto;
    width: 3.3rem;
    height: 4.2rem;
+}
+.ant-carousel /deep/ .slick-dots-bottom{
+   bottom: .2rem;
 }
 // .ant-carousel /deep/ .slick-thumb {
 //    bottom: -0.45rem;
@@ -267,10 +282,13 @@
          </ul>
          <div class="title">选择海报图</div>
          <div class="m-slideShow-cont">
-            <a-carousel :afterChange="magazineChange" ref="carousel">
-               <!-- <a slot="customPaging" slot-scope="props">
-                  <img :src="magazines[props.i]" />
-               </a>-->
+            <a-carousel :afterChange="magazineChange" arrows ref="carousel">
+               <div slot="prevArrow" class="custom-slick-arrow" style="left: 10px;zIndex: 1">
+                  <a-icon type="left" />
+               </div>
+               <div slot="nextArrow" class="custom-slick-arrow" style="right: 10px">
+                  <a-icon type="right" />
+               </div>
                <div class="img-wrap" v-for="(item,index) in magazines" :key="index">
                   <img :src="item.url" />
                </div>
@@ -310,8 +328,8 @@
             </div>
          </div>
       </div>
-      <a-modal title="长按保存图片" v-model="saveImageModalVisible" :footer="null">
-        <img :src="mergedImgBase64" class="promote-img" /> 
+      <a-modal :bodyStyle="{padding:0}" title="长按保存图片" v-model="saveImageModalVisible" :footer="null">
+         <img :src="mergedImgBase64" class="promote-img" />
       </a-modal>
    </div>
 </template>
@@ -351,7 +369,7 @@ export default {
          mergedImgBase64: null,
          qrcodeImage: null,
          promoteText: "",
-         saveImageModalVisible:false,
+         saveImageModalVisible: false
       };
    },
    methods: {
@@ -465,7 +483,7 @@ export default {
                img_w,
                img_h
             );
-            this.saveImageModalVisible = true
+            this.saveImageModalVisible = true;
             // this.success(this.mergedImgBase64);
          } else if (this.type == 2) {
             let { img_x, img_y, url, img_w, img_h } = this.magazines[
@@ -485,7 +503,7 @@ export default {
                img_w,
                img_h
             );
-            this.saveImageModalVisible = true
+            this.saveImageModalVisible = true;
             // this.success(this.mergedImgBase64);
          }
       },

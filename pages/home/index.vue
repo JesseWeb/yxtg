@@ -163,8 +163,8 @@ input[type="tel"] {
       box-sizing: border-box;
       font-size: 0.12rem;
       margin-bottom: 0.1rem;
-      .own-predict-money{
-         line-height: .12rem;
+      .own-predict-money {
+         line-height: 0.12rem;
       }
       .own-predict-wrap {
          display: flex;
@@ -174,10 +174,27 @@ input[type="tel"] {
          width: calc((100% / 3));
       }
    }
-   .own-info-text {
+   .own-opretion-text {
       margin: 0 0.18rem;
       border-top: 1px solid #f0f0f0;
       text-align: center;
+      display: flex;
+      justify-content: space-around;
+      .item {
+         cursor: pointer;
+         height: 1rem;
+         width: 50%;
+         display: flex;
+         justify-content: center;
+         flex-direction: column;
+         .icon {
+            font-size: 0.28rem;
+            color: #e0b66d;
+         }
+         .desc {
+            font-size: 0.12rem;
+         }
+      }
    }
    .own-missions {
       // display: flex;
@@ -187,6 +204,7 @@ input[type="tel"] {
          margin-bottom: 0.2rem;
       }
    }
+
    .info {
       font-size: 0.13rem;
       color: #999;
@@ -323,6 +341,23 @@ input[type="tel"] {
       }
    }
 }
+.copyOperation {
+   cursor: pointer;
+   color: #1890ff;
+}
+.wechat {
+   margin-bottom: 0.2rem;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   cursor:pointer;
+}
+.qq {
+   display: flex;
+   align-items: center;
+   cursor:pointer;
+   justify-content: center;
+}
 </style>
 <template>
    <div id="home">
@@ -366,7 +401,7 @@ input[type="tel"] {
                      <a-button type="link" class="own-predict-money">¥{{statistics?statistics.today_count:"0"}}</a-button>
                      <div class="own-predict-desc">今日预估</div>
                   </div>
-                   <div class="own-predict-wrap yestoday">
+                  <div class="own-predict-wrap yestoday">
                      <a-button type="link" class="own-predict-money">¥{{statistics?statistics.last_day_count:"0"}}</a-button>
                      <div class="own-predict-desc">昨日预估</div>
                   </div>
@@ -383,11 +418,14 @@ input[type="tel"] {
                   <a-progress type="line" class="own-mission" :percent="75" :format="percent => `${percent}个推广`" />
                   <a-progress type="line" class="own-mission" :percent="100" :format="() => '完成'" />
                </div>-->
-               <div class="own-info-text" v-if="config">
-                  <div class="info">
-                     {{config.withdrawal.cycle}}
-                     <br />
-                     {{config.settlement.cycle}}
+               <div class="own-opretion-text">
+                  <div class="item">
+                     <i class="iconfont icon iconhongbao-"></i>
+                     <div class="desc">自用红包</div>
+                  </div>
+                  <div class="item" @click="contactCustService">
+                     <i class="iconfont icon iconkefu"></i>
+                     <div class="desc">联系客服</div>
                   </div>
                </div>
             </div>
@@ -403,16 +441,13 @@ input[type="tel"] {
       <div class="m-navlist">
          <ul class="nav-list">
             <nuxt-link to="invite" tag="li" class="list-item">
-               <button
-                  id="share-btn"
-                  class="item-link"
-               >
+               <button id="share-btn" class="item-link">
                   <span class="c-icon c-invite"></span>
                   <i class="c-txt">邀请推广</i>
                </button>
             </nuxt-link>
             <li class="list-item">
-               <nuxt-link tag="a" to="/my_team" class="item-link" >
+               <nuxt-link tag="a" to="/my_team" class="item-link">
                   <span class="c-icon c-myteam"></span>
                   <i class="c-txt">我的好友</i>
                </nuxt-link>
@@ -424,13 +459,13 @@ input[type="tel"] {
                </nuxt-link>
             </li>
             <li class="list-item">
-               <nuxt-link to="/settle" tag="a" class="item-link" >
+               <nuxt-link to="/settle" tag="a" class="item-link">
                   <span class="c-icon c-count"></span>
                   <i class="c-txt">结算记录</i>
                </nuxt-link>
             </li>
             <li class="list-item">
-               <nuxt-link to="/order" tag="a" class="item-link" >
+               <nuxt-link to="/order" tag="a" class="item-link">
                   <span class="c-icon c-detail"></span>
                   <i class="c-txt">收入明细</i>
                </nuxt-link>
@@ -456,6 +491,15 @@ input[type="tel"] {
             </ul>
          </div>
       </div>
+      <a-modal title="联系客服" :bodyStyle="{textAlign:'center'}" v-model="custServiceModalVisible" :footer="null">
+         <!-- <img :src="mergedImgBase64" class="promote-img" /> -->
+         <div class="wechat" v-clipboard:error="onError" v-clipboard:copy="custServiceWechat" v-clipboard:success="onCopy">
+            <a-icon style="color:#3BB035;font-size:.2rem;" type="wechat" />
+         </div>
+         <div class="qq" @click="openUrl">
+            <a-icon style="color:#009FF8;font-size:.2rem;" type="qq"></a-icon>
+         </div>
+      </a-modal>
    </div>
 </template>
 <script>
@@ -471,22 +515,34 @@ export default Vue.extend({
    name: "home",
    data() {
       return {
+         custServiceWechat: "23874928379",
          config: null,
          userDetail: null,
          rebateList: [],
-         statistics: null
+         statistics: null,
+         custServiceModalVisible: false,
+         qqCustServiceUrl: "//qq.com"
       };
    },
-   computed: {
-      promoteText() {
-         if (this.userDetail) {
-            return `月入10000元的副业，邀你进入：${window.location.host}/#/register?inviter_id=${this.userDetail.user.userid}`;
-         } else {
-            return "获取信息失败，请刷新后重试";
-         }
-      }
-   },
+   computed: {},
    methods: {
+      contactCustService() {
+         this.custServiceModalVisible = true;
+      },
+      openUrl() {
+         if (this.qqCustServiceUrl) {
+            location.href = this.qqCustServiceUrl;
+         } else {
+            this.$message.error("获取客服失败，请稍后尝试");
+         }
+      },
+      onError() {
+         this.$message.error("复制失败，请手动复制");
+      },
+      onCopy() {
+         this.$message.success("复制成功");
+      },
+      custService() {},
       cashOut() {
          this.$router.push("settling");
       },
@@ -504,10 +560,10 @@ export default Vue.extend({
       },
       async getRebateList() {
          try {
-            let { data } = await getRebateList({time_type:10});
+            let { data } = await getRebateList({ time_type: 10 });
             this.rebateList = data.data.list;
          } catch (error) {
-            console.log(error)
+            console.log(error);
          }
       },
       async getStatistics() {
@@ -515,7 +571,7 @@ export default Vue.extend({
             let { data } = await getStatistics();
             this.statistics = data.data;
          } catch (error) {
-            console.log(error)
+            console.log(error);
          }
       }
    },
@@ -527,8 +583,8 @@ export default Vue.extend({
          this.getUserDetail();
          this.getStatistics();
       } catch (error) {
-         console.log(error)
+         console.log(error);
       }
-   },
+   }
 });
 </script>
