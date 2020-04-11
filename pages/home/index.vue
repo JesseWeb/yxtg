@@ -346,7 +346,6 @@ input[type="tel"] {
    color: #1890ff;
 }
 .wechat {
-   margin-bottom: 0.2rem;
    display: flex;
    align-items: center;
    justify-content: center;
@@ -491,7 +490,7 @@ input[type="tel"] {
             </ul>
          </div>
       </div>
-      <a-modal title="联系客服" :bodyStyle="{textAlign:'center'}" v-model="custServiceModalVisible" :footer="null">
+      <a-modal title="联系客服" :bodyStyle="{alignItems:'center',display:'flex',justifyContent:'space-around'}" v-model="custServiceModalVisible" :footer="null">
          <!-- <img :src="mergedImgBase64" class="promote-img" /> -->
          <div class="wechat" v-clipboard:error="onError" v-clipboard:copy="custServiceWechat" v-clipboard:success="onCopy">
             <a-icon style="color:#3BB035;font-size:.2rem;" type="wechat" />
