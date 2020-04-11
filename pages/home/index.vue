@@ -448,7 +448,7 @@ input[type="tel"] {
             <li class="list-item">
                <nuxt-link tag="a" to="/my_team" class="item-link">
                   <span class="c-icon c-myteam"></span>
-                  <i class="c-txt">我的好友</i>
+                  <i class="c-txt">我的团队</i>
                </nuxt-link>
             </li>
             <li class="list-item">

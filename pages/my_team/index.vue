@@ -451,6 +451,8 @@ export default Vue.extend({
    mounted() {
       this.getDirectTeamList();
       this.getIndirectTeamList();
+      this.getDirectTeamStatistics();
+      this.getIndirectTeamStatistics();
    }
 });
 </script>
