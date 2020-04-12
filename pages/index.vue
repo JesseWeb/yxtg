@@ -1,32 +1,48 @@
-<style lang="scss">
+<style lang="scss" scope>
+#home {
+   background-color: rgb(243, 243, 243);
+}
 .login-top {
    position: relative;
    .login-top-bg {
       width: 100%;
-      height: 2.09rem;
+      height: 1.81rem;
       overflow: hidden;
-      background-color: #f0d3a4;
+      background: url("~assets/image/index-top-bg.png");
+      background-size: contain;
       position: relative;
+      border: none;
+      padding-top: 0.13rem;
       .login-slogan {
-         color: #683f0b;
-         position: absolute;
-         top: 0.5rem;
-         font-size: 0.32rem;
-         font-weight: bold;
-         text-align: center;
-         width: 100%;
+         display: flex;
+         justify-content: center;
+         .logo {
+            height: 0.26rem;
+            width: 1.21rem;
+         }
       }
       .wrap {
          display: flex;
-         margin: 0.1rem 0.1rem 0;
+         position: absolute;
+         top: 0.14rem;
+         right: 0.17rem;
          .login-top-logo {
             width: 1.5rem;
             height: 0.24rem;
             background: url(~assets/image/ilm-row-logo.png) no-repeat;
             background-size: contain;
          }
+         .login-box-login {
+            width: 0.47rem;
+            height: 0.2rem;
+            color: rgba(143, 96, 25, 1);
+            background-color: rgba(255, 236, 206, 1);
+            border-radius: 0.16rem;
+            font-size: 0.12rem;
+            line-height: 0.2rem;
+            text-align: center;
+         }
          .login-box {
-            width: calc(100% - 1.5rem - 0.06rem);
             flex: 1;
             line-height: 0.24rem;
             font-size: 0.14rem;
@@ -73,7 +89,7 @@
          }
       }
    }
-   .login-top-icons {
+   .login-top-banner {
       width: 100%;
       padding: 0 0.175rem;
       height: 1.14rem;
@@ -81,87 +97,32 @@
       -moz-box-sizing: border-box;
       box-sizing: border-box;
       position: absolute;
-      top: 1.64rem;
+      top: 0.54rem;
       left: 0;
       z-index: 100;
-      .login-top-icons-main {
-         height: 1.14rem;
-         background: #fff;
-         border-radius: 0.07rem;
-         position: relative;
-         -webkit-box-shadow: 0 0.01rem 0.1rem #e9e9e9;
-         box-shadow: 0 0.01rem 0.1rem #e9e9e9;
-         .top-icons-main-line {
-            width: 100%;
-            height: 0.23rem;
-            background: url(//www.iqiyipic.com/common/fix/qiyimeng2.1-rotate-line02.png)
-               no-repeat;
-            background-size: 100% auto;
-            position: absolute;
-            top: 50%;
-            left: 0;
-            margin-top: -0.115rem;
-         }
-         .top-icons-list {
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-            display: flex;
-            display: -webkit-flex;
-            display: -moz-flex;
-            justify-content: space-around;
-            -webkit-justify-content: space-around;
-            -moz-justify-content: space-around;
-            li {
-               text-align: center;
-               &:first-child {
-                  margin-left: 0.05rem;
-               }
-               em {
-                  font-size: 0.13rem;
-                  color: #333;
-                  line-height: 0.38rem;
-                  font-weight: bold;
-               }
-               .top-icons-icon {
-                  display: block;
-                  width: 0.6rem;
-                  height: 0.6rem;
-                  margin: 0.13rem auto 0;
-               }
-            }
-         }
-      }
    }
    .login-top-btn {
       width: 100%;
-      height: 0.45rem;
       padding: 0 0.175rem;
-      -webkit-box-sizing: border-box;
-      -moz-box-sizing: border-box;
-      box-sizing: border-box;
-      margin-top: 0.83rem;
+      margin-top: 0.27rem;
+
       .login-top-btn-main {
-         display: block;
-         height: 100%;
-         border-radius: 0.07rem;
-         -webkit-box-shadow: 0 0 0.3rem 0.01rem #e9e9e9;
-         box-shadow: 0 0 0.3rem 0.01rem #e9e9e9;
-         background: #0bbe06;
+         width: 3.4rem;
+         height: 0.4rem;
+         color: rgba(255, 255, 255, 1);
+         background-color: rgba(231, 197, 144, 1);
+         border-radius: 0.06rem;
+         font-size: 0.16rem;
+         line-height: 0.4rem;
          text-align: center;
-         line-height: 0.45rem;
-         color: #68400b;
-         font-size: 0.18rem;
-         background-image: -webkit-linear-gradient(
-            left,
-            #f0d19e 0,
-            #e7bc77 100%
-         );
-         background-image: -o-linear-gradient(left, #f0d19e 0, #e7bc77 100%);
-         background-image: linear-gradient(to right, #f0d19e 0, #e7bc77 100%);
-         background-repeat: repeat-x;
+         font-weight: bold;
+      }
+      .self-get-rp-btn {
+         color: rgba(143, 96, 25, 1);
+         font-size: 0.14rem;
+         text-align: center;
+         height: 0.4rem;
+         line-height: 0.4rem;
       }
    }
    .login-top-agreement {
@@ -263,12 +224,24 @@
    }
 }
 .m-flow {
-   width: 100%;
-   height: 0;
-   padding-top: 175.33%;
+   display: flex;
+   justify-content: center;
+   margin: 0 0.17rem;
+   width: calc(100% - 0.34rem);
+   height: 6.54rem;
+   border-radius: 0.11rem;
+   line-height: 150%;
+   box-shadow: 0px 0.11rem 0.25rem 0px rgba(0, 0, 0, 0.1);
+   background-color: #fff;
    background-image: url("/login-buttom-img.png");
    background-repeat: no-repeat;
-   background-size: 100%;
+   background-size: contain;
+   background-position: 0 0.3rem;
+   .income {
+      margin-top: .11rem;
+      height: 0.29rem;
+      width: 1.24rem;
+   }
 }
 .flow-join-btn {
    height: 0.45rem;
@@ -297,47 +270,68 @@
       }
    }
 }
+.ant-carousel /deep/ .slick-slide {
+   text-align: center;
+   height: 1.47rem;
+   line-height: 1.47rem;
+   background: #ccc;
+   overflow: hidden;
+}
+
+.ant-carousel /deep/ .custom-slick-arrow {
+   width: 0.25rem;
+   height: 0.25rem;
+   font-size: 0.25rem;
+   opacity: 0.8;
+   color: #999;
+}
+.ant-carousel /deep/ .custom-slick-arrow:before {
+   display: none;
+}
+.ant-carousel /deep/ .custom-slick-arrow:hover {
+   opacity: 1;
+}
+
+.ant-carousel /deep/ .slick-slide h3 {
+   color: #fff;
+}
 </style>
 <template>
    <div id="home">
       <div class="login-top">
          <div class="login-top-bg">
+            <div class="login-slogan">
+               <img class="logo" src="~/assets/image/logo_2.png" alt />
+            </div>
             <div class="wrap">
                <!-- <div class="login-top-logo"></div> -->
                <nuxt-link to="userinfo" tag="div" v-if="userLogin" class="login-box">
                   <img class="user-pic" src="/male-130.png" />
                   {{userInfo.user.username}}
                </nuxt-link>
-               <nuxt-link v-else class="login-box cursor-pointer" :to="`login?inviter_id=${inviterId||''}`" tag="div">登录</nuxt-link>
+               <nuxt-link v-else class="login-box-login cursor-pointer" :to="`login?inviter_id=${inviterId||''}`" tag="div">登录</nuxt-link>
             </div>
-            <div class="login-slogan">分享红包 · 分享获利</div>
             <div v-if="inviterId&&inviterName" class="login-invite-title">
                <span class="top-title-inviter">{{inviterName}}</span>
                <span>邀请您加入悦享推广</span>
             </div>
          </div>
-         <div class="login-top-icons">
-            <div class="login-top-icons-main">
-               <div class="top-icons-main-line" style="background-image: url(/arrowbar.png); background-repeat: no-repeat no-repeat;"></div>
-               <ul class="top-icons-list">
-                  <li>
-                     <img src="/login-icon01.png" alt class="top-icons-icon icon-cost" />
-                     <em>免费加盟</em>
-                  </li>
-                  <li>
-                     <img src="/login-icon02.png" alt class="top-icons-icon icon-way" />
-                     <em>建立团队</em>
-                  </li>
-                  <li>
-                     <img src="/login-icon03.png" alt class="top-icons-icon icon-rake-back" />
-                     <em>获得佣金</em>
-                  </li>
-               </ul>
-            </div>
+         <div class="login-top-banner">
+            <a-carousel>
+               <!-- <div slot="prevArrow" class="custom-slick-arrow" style="left: 10px;zIndex: 1">
+                  <a-icon type="left" />
+               </div>
+               <div slot="nextArrow" class="custom-slick-arrow" style="right: 10px">
+                  <a-icon type="right" />
+               </div>-->
+               <img src="@/assets/image/banner-1.jpg" alt />
+               <img src="@/assets/image/banner-2.jpg" alt />
+            </a-carousel>
          </div>
          <div class="login-top-btn">
-            <nuxt-link v-if="userInfo.user.userid" tag="span" :to="`home`" id="join-party-1" class="login-top-btn-main">进入首页</nuxt-link>
-            <nuxt-link tag="span" v-else :to="`login?inviter_id=${inviterId||''}`" id="join-party-1" class="login-top-btn-main">现在加入</nuxt-link>
+            <nuxt-link v-if="userInfo.user.userid" tag="div" :to="`home`" id="join-party-1" class="login-top-btn-main">进入首页</nuxt-link>
+            <nuxt-link tag="div" v-else :to="`login?inviter_id=${inviterId||''}`" id="join-party-1" class="login-top-btn-main">加入推广获取佣金</nuxt-link>
+            <div class="self-get-rp-btn">领取外卖大红包</div>
          </div>
          <!-- <div class="login-top-agreement">
             <p class="login-top-agreement-text">
@@ -345,6 +339,9 @@
                <nuxt-link to="/commission" class="vip-rake-back-agreement">《爱奇艺i联盟成员佣金与行为规则》</nuxt-link>
             </p>
          </div>-->
+      </div>
+      <div class="m-flow">
+         <img class="income" src="@/assets/image/shouyi.png" alt />
       </div>
       <div class="rake-back">
          <div class="rake-back-main">
@@ -397,7 +394,6 @@
             </p>
          </div>
       </div>
-      <div class="m-flow"></div>
       <div class="flow-join-btn">
          <nuxt-link v-if="userInfo.user.userid" :to="`home`" class="flow-join-btnMain" tag="div" :class="showJoin2?'am-up':'am-down'">进入首页</nuxt-link>
          <nuxt-link v-else :to="`login?inviter_id=${inviterId||''}`" class="flow-join-btnMain" tag="div" :class="showJoin2?'am-up':'am-down'">现在加入</nuxt-link>

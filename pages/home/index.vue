@@ -349,12 +349,12 @@ input[type="tel"] {
    display: flex;
    align-items: center;
    justify-content: center;
-   cursor:pointer;
+   cursor: pointer;
 }
 .qq {
    display: flex;
    align-items: center;
-   cursor:pointer;
+   cursor: pointer;
    justify-content: center;
 }
 </style>
@@ -418,7 +418,7 @@ input[type="tel"] {
                   <a-progress type="line" class="own-mission" :percent="100" :format="() => '完成'" />
                </div>-->
                <div class="own-opretion-text">
-                  <div class="item">
+                  <div class="item" @click="selfGetRp">
                      <i class="iconfont icon iconhongbao-"></i>
                      <div class="desc">自用红包</div>
                   </div>
@@ -525,6 +525,13 @@ export default Vue.extend({
    },
    computed: {},
    methods: {
+      selfGetRp() {
+         if (this.userDetail?.channel?.elem_share_url) {
+            window.location.href = this.userDetail.channel.elem_share_url;
+         }else{
+            this.$message.error('跳转领取页失败，请稍后尝试')
+         }
+      },
       contactCustService() {
          this.custServiceModalVisible = true;
       },
