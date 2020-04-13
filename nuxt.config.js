@@ -20,6 +20,7 @@ export default {
       { "http-equiv": "Cache-Control", content: "no-cache, no-store, must-revalidate" },
       { "http-equiv": "Pragma", content: "no-cache" },
       { "http-equiv": "Expires", content: "0" },
+      { "name": "x5-fullscreen", content: true },
     ],
     link: [
       { rel: 'icon', type: 'image/png', href: '/favicon.png' },

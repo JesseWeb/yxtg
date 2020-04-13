@@ -33,14 +33,17 @@
             background-size: contain;
          }
          .login-box-login {
+            display: flex;
+            justify-content: center;
+            align-items: center;
             width: 0.47rem;
             height: 0.2rem;
             color: rgba(143, 96, 25, 1);
             background-color: rgba(255, 236, 206, 1);
             border-radius: 0.16rem;
             font-size: 0.12rem;
-            line-height: 0.2rem;
-            text-align: center;
+            // line-height: 0.2rem;
+            // text-align: center;
          }
          .login-box {
             line-height: 0.24rem;
@@ -48,12 +51,9 @@
             color: #68400b;
             width: 1rem;
             overflow: hidden;
-            text-overflow: ellipsis;
+            // text-overflow: ellipsis;
             white-space: nowrap;
             text-align: right;
-            span{
-               display: inline-block;
-            }
             .user-pic {
                width: 0.16rem;
                height: 0.16rem;
@@ -308,7 +308,7 @@
                <!-- <div class="login-top-logo"></div> -->
                <nuxt-link to="userinfo" tag="div" v-if="userLogin" class="login-box">
                   <img class="user-pic" src="/male-130.png" />
-                  <span>{{userInfo.user.username}}</span>
+                  {{userInfo.user.username}}
                </nuxt-link>
                <nuxt-link v-else class="login-box-login cursor-pointer" :to="`login?inviter_id=${inviterId||''}`" tag="div">登录</nuxt-link>
             </div>
