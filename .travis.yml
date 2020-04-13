@@ -1,0 +1,22 @@
+language: node_js
+node_js:
+  - 10
+
+os:
+  - linux
+
+cache:
+  directories:
+    - node_modules
+
+install:
+  - npm install
+
+script:
+  - node --version
+  - npm --version
+
+# notifications:
+#   email:
+#     on_success: change
+#     on_failure: change
