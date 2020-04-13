@@ -555,7 +555,6 @@ export default Vue.extend({
             return;
          }
       },
-      async getRP() {},
       onConfirm(index) {
          if (index == `饿了么`) {
             window.location.href = this.userDetail.channel.elem_origin_url;

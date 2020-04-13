@@ -9,7 +9,7 @@
       height: 1.81rem;
       overflow: hidden;
       background: url("~assets/image/index-top-bg.png");
-      background-size: contain;
+      background-size: cover;
       position: relative;
       border: none;
       padding-top: 0.13rem;
