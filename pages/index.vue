@@ -43,21 +43,21 @@
             text-align: center;
          }
          .login-box {
-            display: flex;
             line-height: 0.24rem;
             font-size: 0.14rem;
             color: #68400b;
-            margin-left: 0.06rem;
             width: 1rem;
-            justify-content: flex-end;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
+            text-align: right;
+            span{
+               display: inline-block;
+            }
             .user-pic {
                width: 0.16rem;
                height: 0.16rem;
                border-radius: 100%;
-               margin-right: 0.07rem;
                display: inline-block;
                vertical-align: text-top;
                background-size: cover;
@@ -308,7 +308,7 @@
                <!-- <div class="login-top-logo"></div> -->
                <nuxt-link to="userinfo" tag="div" v-if="userLogin" class="login-box">
                   <img class="user-pic" src="/male-130.png" />
-                  {{userInfo.user.username}}
+                  <span>{{userInfo.user.username}}</span>
                </nuxt-link>
                <nuxt-link v-else class="login-box-login cursor-pointer" :to="`login?inviter_id=${inviterId||''}`" tag="div">登录</nuxt-link>
             </div>
@@ -447,7 +447,7 @@ export default {
                elem: `饿了么`,
                mt: `美团`
             },
-            onConfirm: index => this.onConfirm(index),
+            onConfirm: index => this.onConfirm(index)
          });
       },
       onConfirm(index) {
