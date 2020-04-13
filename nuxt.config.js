@@ -77,6 +77,10 @@ export default {
     {
       src: '@/assets/scss/common.scss',
       lang: "scss"
+    },
+    {
+      src: '@/assets/scss/huawei-bug.scss',
+      lang: "scss"
     }
   ],
   /*

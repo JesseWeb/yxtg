@@ -200,6 +200,7 @@
 .m-bottom-fixed {
    height: 0.45rem;
    .m-infoCover-btFixed {
+      position: absolute;
       position: fixed;
       // left: 0;
       // right: 0;
