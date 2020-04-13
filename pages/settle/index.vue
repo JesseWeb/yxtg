@@ -96,6 +96,11 @@
       .item-top-right,
       .item-bottom-right {
          text-align: right;
+         width:auto;
+         white-space: nowrap;
+         width: 50%;
+         text-overflow: ellipsis;
+         overflow: hidden;
       }
       .item-left-top {
          font-weight: bold;
@@ -168,7 +173,7 @@ export default {
    },
    methods: {
       parseTimeS(v) {
-         return moment(v * 1000).format("YYYY年M月D日");
+         return moment(v * 1000).format("YYYY/M/D");
       },
       async getUserDetail() {
          try {

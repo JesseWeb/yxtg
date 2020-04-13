@@ -1,5 +1,5 @@
 <style lang="scss" scope>
-#home {
+#introduce {
    background-color: rgb(243, 243, 243);
 }
 .login-top {
@@ -43,15 +43,16 @@
             text-align: center;
          }
          .login-box {
-            flex: 1;
+            display: flex;
             line-height: 0.24rem;
             font-size: 0.14rem;
             color: #68400b;
-            text-align: right;
             margin-left: 0.06rem;
-            // overflow: hidden;
-            // text-overflow: ellipsis;
-            // white-space: nowrap;
+            width: 1rem;
+            justify-content: flex-end;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
             .user-pic {
                width: 0.16rem;
                height: 0.16rem;
@@ -238,7 +239,7 @@
    background-size: contain;
    background-position: 0 0.3rem;
    .income {
-      margin-top: .11rem;
+      margin-top: 0.11rem;
       height: 0.29rem;
       width: 1.24rem;
    }
@@ -297,7 +298,7 @@
 }
 </style>
 <template>
-   <div id="home">
+   <div id="introduce">
       <div class="login-top">
          <div class="login-top-bg">
             <div class="login-slogan">
@@ -331,7 +332,7 @@
          <div class="login-top-btn">
             <nuxt-link v-if="userInfo.user.userid" tag="div" :to="`home`" id="join-party-1" class="login-top-btn-main">进入首页</nuxt-link>
             <nuxt-link tag="div" v-else :to="`login?inviter_id=${inviterId||''}`" id="join-party-1" class="login-top-btn-main">加入推广获取佣金</nuxt-link>
-            <div class="self-get-rp-btn">领取外卖大红包</div>
+            <div class="self-get-rp-btn" @click="getRP">领取外卖大红包</div>
          </div>
          <!-- <div class="login-top-agreement">
             <p class="login-top-agreement-text">
@@ -440,6 +441,24 @@ export default {
    },
    computed: {},
    methods: {
+      async getRP() {
+         this.$vactionsheet.show({
+            menus: {
+               elem: `饿了么`,
+               mt: `美团`
+            },
+            onConfirm: index => this.onConfirm(index),
+         });
+      },
+      onConfirm(index) {
+         if (index == `饿了么`) {
+            location.href =
+               "https://s.click.ele.me/t?&e=-s024QHwFDHComuu5V0qW20fD6wgHkCD0KXzxE0EXUTi6qudbuAsZbFHCTnXsHy79CCbsoVl6ASSW7Lh0XcAJ5qpccWUkPNdo5wMmnrDqMKSUpwKjbz8SmI2KUHnLwFdRCeu3WrJOjki4fjYr2VDFfYqWamngh26EFcYmu0RxTPJGdzVfOFvTyLdi0UIK5dPrmZGUjuxn8YOvWIo9VInSURTpbUp2M5q8pUvk6Pl2uD27KdcDmMOmHSjqyFTvGz8tu5CYpARPoKoYWADcXiNn3GwaYy8J1WPWdD50FpmYdAWRfeSaGTmPWcxiVtBy7rFgPeaHmei9Qcs0knXkKVIQKDs16GuMQyiGehFUPhKmhjYTl8w4PPvv6FDtKVUfJEDUm8Ondr4CX2D9jyj2BLpWC7SVf61agqitgIu1B3h44bciITAE2DJBDKliPgKXgvlKQLFsIq4VfFd5qJTJ6MjCGVk2k8zVUhOXVxxbCGWJMV881WveQ29skdU1GHUagFnzHjekaWyvBderML6m1CxUMPLCXzfoy&&union_lens=lensId%3AMAPI%401585808167%400b8476a6_0e8f_1713988527d_227a%4001";
+         } else {
+            location.href =
+               "https://act.meituan.com/clover/page/adunioncps/second_cashback?access_token=9fe0b401fd6402a342e8d88d4fea50b4&activity=ZW7vZsYZXl&requestId=21111586510909445&timestamp=1586510909&utmMedium=b3087d28b49fc471813533e05cdd7e58&utmSource=2111&version=1.0";
+         }
+      },
       async getInviterInfo() {
          try {
             let inviterId = this.inviterId;

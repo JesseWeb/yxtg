@@ -1,3 +1,5 @@
 import Vue from "vue"
 import emptyList from "@/components/empty-list"
-Vue.component(`empty-list`,emptyList)
+import { VActionSheet } from "vue-gl-actionsheet";
+Vue.use(VActionSheet);
+Vue.component(`empty-list`, emptyList)

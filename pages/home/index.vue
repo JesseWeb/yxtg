@@ -525,11 +525,42 @@ export default Vue.extend({
    },
    computed: {},
    methods: {
+      is_mobile() {
+         return /Android|webOS|iPhone|iPod|BlackBerry/i.test(
+            navigator.userAgent
+         );
+      },
       selfGetRp() {
-         if (this.userDetail?.channel?.elem_share_url) {
-            window.location.href = this.userDetail.channel.elem_share_url;
-         }else{
-            this.$message.error('跳转领取页失败，请稍后尝试')
+         if (this.userDetail?.channel?.rid) {
+            this.$vactionsheet.show({
+               menus: {
+                  elem: `饿了么`,
+                  mt: `美团`
+               },
+               onConfirm: index => this.onConfirm(index)
+            });
+         } else {
+            this.$message.error("请先授权！");
+            let iframe_url = `${this.userDetail.channel.elem_auth_url}${
+               this.is_mobile() ? "&view=wap" : ""
+            }`;
+            setTimeout(() => {
+               this.$router.push({
+                  path: "authorize_taobao",
+                  query: {
+                     iframe_url
+                  }
+               });
+            }, 500);
+            return;
+         }
+      },
+      async getRP() {},
+      onConfirm(index) {
+         if (index == `饿了么`) {
+            window.location.href = this.userDetail.channel.elem_origin_url;
+         } else {
+            window.location.href = this.userDetail.channel.mt_origin_url;
          }
       },
       contactCustService() {

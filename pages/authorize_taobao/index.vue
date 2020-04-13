@@ -272,7 +272,7 @@ export default {
       // window.location.href = "https://www.baidu.com"
       var ifm_url = this.$route.query.iframe_url;
       if (ifm_url) {
-         if (!this.is_weixin()&&!this.is_mobile()) {
+         if (!this.is_weixin()&&this.is_mobile()) {
             this.modalVisible = true;
          }
          ifm_url = decodeURIComponent(ifm_url);

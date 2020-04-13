@@ -20,6 +20,7 @@
     "moment": "^2.24.0",
     "nuxt": "^2.11.0",
     "vue-clipboard2": "^0.3.1",
+    "vue-gl-actionsheet": "^0.1.1",
     "vue-slim-better-scroll": "^1.7.1"
   },
   "devDependencies": {
