@@ -36,7 +36,7 @@ jobs:
           name: deploy
           command: |
             if [ "${CIRCLE_BRANCH}" = "master" ]; then
-              rsync -avce dist $SSH_USER@$SSH_IP:/root/yxtg && SSH_USER@$SSH_IP "pm2 update 0"
+              rsync -avce 'ssh -p 13524' dist $SSH_USER@$SSH_IP:/root/yxtg && SSH_USER@$SSH_IP "pm2 update 0"
             else
               echo "Not master branch, dry run only"
             fi
