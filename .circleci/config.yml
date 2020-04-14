@@ -32,13 +32,12 @@ jobs:
             - "13:88:ca:bf:5a:73:31:98:dc:b2:a4:c0:9b:f0:d0:8a"
       - run: echo StrictHostKeyChecking no \n echo UserKnownHostsFile /dev/null >> ~/.ssh/known_hosts
       - run: ls
-      # - deploy:
-      #     name: deploy
-      #     command: |
-      #       if [ "${CIRCLE_BRANCH}" = "master" ]; then
-      #         rsync -avce ssh build $SSH_USER@$SSH_IP:/root/yxtg
-      #         npm 
-      #       else
-      #         echo "Not master branch, dry run only"
-      #       fi
-      # - run: echo '部署完毕'
+      - deploy:
+          name: deploy
+          command: |
+            if [ "${CIRCLE_BRANCH}" = "master" ]; then
+              rsync -avce dist $SSH_USER@$SSH_IP:/root/yxtg && SSH_USER@$SSH_IP "pm2 update 0"
+            else
+              echo "Not master branch, dry run only"
+            fi
+      - run: echo '部署完毕'
