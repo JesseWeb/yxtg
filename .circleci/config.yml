@@ -20,7 +20,6 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
           paths:
             - node_modules
-      - run: echo '部署开始'
       - run : npm run build
       - run: sudo apt-get update && sudo apt-get install rsync
       - restore_cache:
@@ -32,11 +31,12 @@ jobs:
             - "21:4a:d0:4d:bd:ca:73:5f:00:fb:4d:15:2c:bb:bb:f2"
       - run: echo [$SSH_IP]:$SSH_PORT $REMOTE_HOSTKEY >> ~/.ssh/known_hosts
       - run: ls && cat ~/.ssh/known_hosts
+      - run: echo '部署开始'
       - deploy:
           name: deploy
           command: |
             if [ "${CIRCLE_BRANCH}" = "master" ]; then
-              ssh -p $SSH_PORT $SSH_USER@$SSH_IP "rm -rf /root/yxtg/dist"&&rsync -avce "ssh -p $SSH_PORT" dist/ $SSH_USER@$SSH_IP:/root/yxtg/dist &&ssh -p $SSH_PORT $SSH_USER@$SSH_IP " cd /root/yxtg && pm2 update 0"
+              ssh -p $SSH_PORT $SSH_USER@$SSH_IP "rm -rf /root/yxtg/dist" && rsync -avce "ssh -p $SSH_PORT" dist/ $SSH_USER@$SSH_IP:/root/yxtg/dist && ssh -p $SSH_PORT $SSH_USER@$SSH_IP " cd /root/yxtg && pm2 update 0"
             else
               echo "Not master branch, dry run only"
             fi
