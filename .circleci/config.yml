@@ -39,14 +39,3 @@ jobs:
               echo "Not master branch, dry run only"
             fi
       - run: echo '部署完毕'
-workflows:
-  version: 2
-  scheduled-workflow:
-    triggers:
-      - schedule:
-          cron: "0 0 * * *"
-          filters:
-            branches:
-              only: master
-    jobs:
-      - build
