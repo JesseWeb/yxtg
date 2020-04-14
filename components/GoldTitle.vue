@@ -33,7 +33,7 @@
 <template>
    <div data-v-a391f616 class="m-title-bar-wrap">
       <div data-v-a391f616 class="m-title-base" :style="{backgroundColor:bgColor}">
-         <div class="back-wrap" @click="back">
+         <div class="back-wrap" @click="backClick()||back">
             <i class="iconfont iconfanhui"></i>
          </div>
          <div data-v-a391f616 class="c-title" @click="titleClick" v-if="title">{{title}}</div>
@@ -58,6 +58,9 @@ export default {
       bgColor:{
          default:"#f0d19e",
          type:String
+      },
+      backClick:{
+         default:Function,
       }
    },
    methods:{

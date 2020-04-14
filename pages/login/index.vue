@@ -103,7 +103,7 @@
 </style>
 <template>
    <div id="login">
-      <GoldTitle title="登录" bg-color="rgba(243, 213, 167, 1)" />
+      <GoldTitle :backClick="backClick" title="登录" bg-color="rgba(243, 213, 167, 1)" />
       <!-- <section class="m-goBack" @click="goBack">
          <div data-node="goBack" class="c-link">
             <i class="iconfont iconfanhui"></i>
@@ -167,6 +167,9 @@ export default {
       };
    },
    methods: {
+      backClick(){
+         this.$router.push('/')
+      },
       checkPhoneNumber(rule, value, callback) {
          var reg = /^1[3|4|5|6|7|8|9][0-9]{9}$/;
          var flag = reg.test(value);
