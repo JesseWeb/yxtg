@@ -3,7 +3,9 @@ jobs:
   build:
     docker:
       - image: circleci/node:10.15.3
-    working_directory: ~/circleci-demo-workflows
+    filters:
+      branches:
+        only: master
     steps:
       - checkout
       - restore_cache:
@@ -21,7 +23,7 @@ jobs:
       - run: echo '部署开始'
       - run: sudo apt-get update && sudo apt-get install rsync
       - restore_cache:
-          keys: 
+          keys:
             - v1-dependencies-{{ checksum "package.json" }}
             - v1-dependencies
       - add_ssh_keys:
