@@ -103,7 +103,7 @@
 </style>
 <template>
    <div id="login">
-      <GoldTitle :backClick="backClick" title="登录" bg-color="rgba(243, 213, 167, 1)" />
+      <GoldTitle title="登录" bg-color="rgba(243, 213, 167, 1)" />
       <!-- <section class="m-goBack" @click="goBack">
          <div data-node="goBack" class="c-link">
             <i class="iconfont iconfanhui"></i>

@@ -63,7 +63,15 @@
 
 <script>
 export default {
-   props: ["error"]
+   props: ["error"],
    // layout: 'blog' // 你可以为错误页面指定自定义的布局
+   mounted() {
+      if (this.error.statusCode == 403) {
+         this.$message.error("您没有权限访问此页面");
+         setTimeout(() => {
+            this.$router.push("/");
+         }, 300);
+      }
+   }
 };
 </script>

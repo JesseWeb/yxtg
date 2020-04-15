@@ -304,8 +304,8 @@ export default {
          removeToken();
          this.$message.success('登出成功')
          setTimeout(() => {
-            this.$router.push("/login");
-         }, 500);
+            this.$router.push("/");
+         }, 200);
       },
       async getUserDetail() {
          try {

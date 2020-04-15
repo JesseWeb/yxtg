@@ -5,7 +5,7 @@
    .m-title-base {
       // position: fixed;
       position: relative;
-      width:100%;
+      width: 100%;
       top: 0;
       left: 0;
       right: 0;
@@ -13,6 +13,7 @@
       height: 0.44rem;
       line-height: 0.44rem;
       .back-wrap {
+         cursor: pointer;
          position: absolute;
          top: 50%;
          transform: translate(0, -50%);
@@ -33,11 +34,13 @@
 <template>
    <div data-v-a391f616 class="m-title-bar-wrap">
       <div data-v-a391f616 class="m-title-base" :style="{backgroundColor:bgColor}">
-         <div class="back-wrap" @click="backClick||back">
+         <div class="back-wrap" @click="back">
             <i class="iconfont iconfanhui"></i>
          </div>
          <div data-v-a391f616 class="c-title" @click="titleClick" v-if="title">{{title}}</div>
-         <div data-v-a391f616 class="c-title" @click="titleClick" v-else><slot></slot></div>
+         <div data-v-a391f616 class="c-title" @click="titleClick" v-else>
+            <slot></slot>
+         </div>
       </div>
    </div>
 </template>
@@ -50,23 +53,27 @@ export default {
          default: "",
          type: String
       },
-      titleClick:{
-         required:false,
-         default:function(){},
-         type:Function
+      titleClick: {
+         required: false,
+         default: function() {},
+         type: Function
       },
-      bgColor:{
-         default:"#f0d19e",
-         type:String
+      bgColor: {
+         default: "#f0d19e",
+         type: String
       },
-      backClick:{
-         type:Function,
-         default:null
+      backUrl: {
+         type: String,
+         default: null
       }
    },
-   methods:{
-      back(){
-         this.$router.back()
+   methods: {
+      back() {
+         if (this.backUrl) {
+            this.$router.push(this.backUrl)
+         } else {
+            this.$router.back();
+         }
       }
    }
 };
