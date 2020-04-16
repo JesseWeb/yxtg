@@ -4,11 +4,11 @@ html{
    display: flex;
    justify-content: center;
 }
-@media screen and (min-width: 640px) {
+@media screen and (min-width: 1024px) {
    html {
-      font-size: 170px;
+      font-size: 273px;
    }
    body{
-      width: 640px!important;
+      width: 1024px!important;
    }
  }

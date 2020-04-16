@@ -260,7 +260,7 @@
       text-align: center;
       line-height: 0.45rem;
       // height: 0;
-      max-width: 640px;
+      max-width: 1024px;
       &.am-up {
          height: 0.45rem;
          transition: height 0.3s;

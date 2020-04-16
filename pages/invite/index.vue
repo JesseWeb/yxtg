@@ -209,7 +209,7 @@
       z-index: 999;
       height: 0.45rem;
       background: #fff;
-      max-width: 640px;
+      max-width: 1024px;
       // left
       .tab-wrap {
          display: flex;
@@ -343,6 +343,21 @@ export default {
       };
    },
    methods: {
+      getImageSizeFromUrl(src) {
+         let img = new Image();
+         img.src = src;
+         return new Promise((res, rej) => {
+            img.onload = () => {
+               res({
+                  width: img.width,
+                  height: img.height
+               });
+            };
+            img.onerror = () => {
+               rej(new Error("获取图像尺寸失败"));
+            };
+         });
+      },
       getOrigin() {
          return location.origin;
       },
@@ -352,41 +367,46 @@ export default {
       onCopy() {
          this.$message.success("复制文案成功，记得分享哟～");
       },
-      mergeImg(backgroundImage, qrcodeImage, x, y, w, h) {
-         return new Promise((res, rej) => {
-            const mc = new MC({
-               width: 660,
-               height: 840,
-               backgroundColor: "#fff"
-            });
-            mc.background(backgroundImage, {
-               left: 0,
-               top: 0,
-               color: "#000000",
-               type: "crop",
-               width: 660,
-               height: 840
-            })
-               .add(qrcodeImage, {
-                  width: w,
-                  height: h,
-                  pos: {
-                     y,
-                     x
-                  }
-               })
-               // .text("扫码领取红包", {
-               //    width: "300px",
-               //    align: "center",
-               //    pos: {
-               //       x: 330 - 150,
-               //       y: 562 + 0
-               //    }
-               // })
-               .draw(b64 => {
-                  res(b64);
+      async mergeImg(backgroundImage, qrcodeImage, x, y, w, h) {
+         try {
+            let wh = await this.getImageSizeFromUrl(backgroundImage);
+            return new Promise((res, rej) => {
+               const mc = new MC({
+                  width: wh.width,
+                  height: wh.height,
+                  backgroundColor: "#fff"
                });
-         });
+               mc.background(backgroundImage, {
+                  left: 0,
+                  top: 0,
+                  color: "#000000",
+                  type: "crop",
+                  width: wh.width,
+                  height: wh.height
+               })
+                  .add(qrcodeImage, {
+                     width: w,
+                     height: h,
+                     pos: {
+                        y,
+                        x
+                     }
+                  })
+                  // .text("扫码领取红包", {
+                  //    width: "300px",
+                  //    align: "center",
+                  //    pos: {
+                  //       x: 330 - 150,
+                  //       y: 562 + 0
+                  //    }
+                  // })
+                  .draw(b64 => {
+                     res(b64);
+                  });
+            });
+         } catch (error) {
+            this.$message.error(error.message);
+         }
       },
       async authorize() {},
       async sharing() {
