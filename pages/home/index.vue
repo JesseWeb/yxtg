@@ -557,9 +557,9 @@ export default Vue.extend({
       },
       onConfirm(index) {
          if (index == `饿了么`) {
-            window.location.href = this.userDetail.channel.elem_origin_url;
+            window.location.href = this.userDetail.channel.elem_share_url;
          } else {
-            window.location.href = this.userDetail.channel.mt_origin_url;
+            window.location.href = this.userDetail.channel.mt_share_url;
          }
       },
       contactCustService() {
