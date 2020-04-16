@@ -61,6 +61,9 @@
    background-repeat: no-repeat;
    background-size: cover;
 }
+.ant-carousel {
+   min-height: 4.2rem;
+}
 
 .ant-carousel /deep/ .custom-slick-arrow {
    width: 0.35rem;

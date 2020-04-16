@@ -492,7 +492,7 @@ input[type="tel"] {
       </div>
       <a-modal title="联系客服" :bodyStyle="{alignItems:'center',display:'flex',justifyContent:'space-around'}" v-model="custServiceModalVisible" :footer="null">
          <!-- <img :src="mergedImgBase64" class="promote-img" /> -->
-         <div class="wechat" v-clipboard:error="onError" v-clipboard:copy="custServiceWechat" v-clipboard:success="onCopy">
+         <div class="wechat" v-clipboard:error="onError" v-clipboard:copy="config?config.connect.wx:''" v-clipboard:success="onCopy">
             <a-icon style="color:#3BB035;font-size:.2rem;" type="wechat" />
          </div>
          <div class="qq" @click="openUrl">
@@ -514,7 +514,7 @@ export default Vue.extend({
    name: "home",
    data() {
       return {
-         custServiceWechat: "23874928379",
+         // custServiceWechat: "23874928379",
          config: null,
          userDetail: null,
          rebateList: [],
@@ -535,7 +535,8 @@ export default Vue.extend({
             this.$vactionsheet.show({
                menus: {
                   elem: `饿了么`,
-                  mt: `美团`
+                  elemShop: `饿了么商超果蔬`,
+                  mt: `美团`,
                },
                onConfirm: index => this.onConfirm(index)
             });
@@ -558,16 +559,18 @@ export default Vue.extend({
       onConfirm(index) {
          if (index == `饿了么`) {
             window.location.href = this.userDetail.channel.elem_share_url;
-         } else {
+         } else if(index=="美团") {
             window.location.href = this.userDetail.channel.mt_share_url;
+         }else if(index=='饿了么商超果蔬'){
+            window.location.href = this.userDetail.channel.elem_shop_url;
          }
       },
       contactCustService() {
          this.custServiceModalVisible = true;
       },
       openUrl() {
-         if (this.qqCustServiceUrl) {
-            location.href = this.qqCustServiceUrl;
+         if (this.config) {
+            location.href = this.config.connect.qq;
          } else {
             this.$message.error("获取客服失败，请稍后尝试");
          }
@@ -596,7 +599,7 @@ export default Vue.extend({
       },
       async getRebateList() {
          try {
-            let { data } = await getRebateList({ time_type: 10 });
+            let { data } = await getRebateList({ time_type: 3 });
             this.rebateList = data.data.list;
          } catch (error) {
             console.log(error);
@@ -610,6 +613,9 @@ export default Vue.extend({
             console.log(error);
          }
       }
+   },
+   destroyed(){
+      this.$vactionsheet.hide()
    },
    async mounted() {
       try {

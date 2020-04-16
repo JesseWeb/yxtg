@@ -26,12 +26,7 @@
          position: absolute;
          top: 0.14rem;
          right: 0.17rem;
-         .login-top-logo {
-            width: 1.5rem;
-            height: 0.24rem;
-            background: url(~assets/image/ilm-row-logo.png) no-repeat;
-            background-size: contain;
-         }
+       
          .login-box-login {
             display: flex;
             justify-content: center;
@@ -51,9 +46,10 @@
             color: #68400b;
             width: 1rem;
             overflow: hidden;
-            // text-overflow: ellipsis;
+            text-overflow: ellipsis;
             white-space: nowrap;
-            text-align: right;
+            text-align: center;
+            display: inline-block;
             .user-pic {
                width: 0.16rem;
                height: 0.16rem;
@@ -331,7 +327,13 @@
          </div>
          <div class="login-top-btn">
             <nuxt-link v-if="userInfo.user.userid" tag="div" :to="`home`" id="join-party-1" class="login-top-btn-main">进入首页</nuxt-link>
-            <nuxt-link tag="div" v-else :to="`login?inviter_id=${inviterId||''}`" id="join-party-1" class="login-top-btn-main">加入推广获取佣金</nuxt-link>
+            <nuxt-link
+               tag="div"
+               v-else
+               :to="`/login?inviter_id=${inviterId}&resource_from=${resourceFrom}&openid=${openid}&resource_tag=${resourceTag}`"
+               id="join-party-1"
+               class="login-top-btn-main"
+            >加入推广获取佣金</nuxt-link>
             <div class="self-get-rp-btn" @click="getRP">领取外卖大红包</div>
          </div>
          <!-- <div class="login-top-agreement">
@@ -397,7 +399,13 @@
       </div>
       <div class="flow-join-btn">
          <nuxt-link v-if="userInfo.user.userid" :to="`home`" class="flow-join-btnMain" tag="div" :class="showJoin2?'am-up':'am-down'">进入首页</nuxt-link>
-         <nuxt-link v-else :to="`login?inviter_id=${inviterId||''}`" class="flow-join-btnMain" tag="div" :class="showJoin2?'am-up':'am-down'">现在加入</nuxt-link>
+         <nuxt-link
+            v-else
+            :to="`/login?inviter_id=${inviterId||''}&resource_from=${resourceFrom}&openid=${openid}&resource_tag=${resourceTag}`"
+            class="flow-join-btnMain"
+            tag="div"
+            :class="showJoin2?'am-up':'am-down'"
+         >现在加入</nuxt-link>
       </div>
    </div>
 </template>
@@ -412,7 +420,10 @@ export default {
       if (this.userLogin) {
          this.getUserInfo();
       }
-      this.inviterId = this.$route.query.inviter_id;
+      this.inviterId = this.$route.query.inviter_id || "";
+      this.resourceFrom = this.$route.query.resource_from || "";
+      this.openid = this.$route.query.openid || "";
+      this.resourceTag = this.$route.query.resource_tag || "";
       if (this.inviterId) {
          this.getInviterInfo();
       }
@@ -436,7 +447,10 @@ export default {
          showJoin2: false,
          redirectUrl: "",
          inviterId: "",
-         inviterName: ""
+         inviterName: "",
+         resourceFrom: "",
+         openid: "",
+         resourceTag: ""
       };
    },
    computed: {},

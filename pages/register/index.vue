@@ -257,6 +257,9 @@ export default {
          captchaDisabled: true,
          captchaTimer: 0,
          inviter_id: "",
+         resource_from: "",
+         openid: "",
+         resource_tag: "",
          validate_token: "",
          hasInviter:false
       };
@@ -329,7 +332,7 @@ export default {
          this.form.validateFields((err, values) => {
             if (!err) {
                this.btnloading = true;
-               register({ ...values, validate_token: this.validate_token })
+               register({ ...values, validate_token: this.validate_token,resource_from:this.resource_from,openid:this.openid,resource_tag:this.resource_tag })
                   .then(res => {
                      this.$router.push("home");
                   })
@@ -348,6 +351,9 @@ export default {
       if(this.$route.query.inviter_id){
          this.hasInviter = true
       }
+      this.resource_from = this.$route.query.resource_from || "";
+      this.openid = this.$route.query.openid || "";
+      this.resource_tag = this.$route.query.resource_tag || "";
       this.inviter_id = this.$route.query.inviter_id || "";
    }
    // asyncData(){

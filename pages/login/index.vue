@@ -41,7 +41,7 @@
    justify-content: center;
    align-items: center;
    flex-direction: column;
-   margin-top: .8rem;
+   margin-top: 0.8rem;
 }
 .main {
    width: 3.24rem;
@@ -143,7 +143,7 @@
          </div>
          <div class="extra-operation">
             <n-link to="/forgetpwd">忘记密码</n-link>Or
-            <n-link :to="`register?inviter_id=${inviterId||''}`" href="javascript:void(0);">注册新用户</n-link>
+            <n-link :to="`/register?inviter_id=${inviterId||''}&resource_from=${resourceFrom}&openid=${openid}&resource_tag=${resourceTag}`" href="javascript:void(0);">注册新用户</n-link>
          </div>
       </div>
    </div>
@@ -163,12 +163,16 @@ export default {
          url: "/login",
          redirectURL: "/",
          form: this.$form.createForm(this),
-         inviterId: ""
+         inviterId: "",
+         inviterId: "",
+         resourceFrom: "",
+         openid: "",
+         resourceTag: ""
       };
    },
    methods: {
-      backClick(){
-         this.$router.push('/')
+      backClick() {
+         this.$router.push("/");
       },
       checkPhoneNumber(rule, value, callback) {
          var reg = /^1[3|4|5|6|7|8|9][0-9]{9}$/;
@@ -203,7 +207,10 @@ export default {
    async mounted() {
       this.redirectURL = this.$route.query.redirect_url || "/";
       this.url = this.$route.path;
-      this.inviterId = this.$route.query.inviter_id;
+      this.inviterId = this.$route.query.inviter_id || "";
+      this.resourceFrom = this.$route.query.resource_from || "";
+      this.openid = this.$route.query.openid || "";
+      this.resourceTag = this.$route.query.resource_tag || "";
       if (getToken()) {
          await message.loading("您已登录", 1);
          this.$router.push("home");

@@ -61,6 +61,9 @@
    background-repeat: no-repeat;
    background-size: cover;
 }
+.ant-carousel {
+   min-height: 4.2rem;
+}
 .ant-carousel /deep/ .custom-slick-arrow {
    width: 0.35rem;
    height: 0.35rem;
@@ -357,6 +360,11 @@ export default {
                type: 1
             },
             {
+               name: "饿了么果蔬",
+               img: require("@/assets/image/fruits.png"),
+               type: 3
+            },
+            {
                name: "美   团",
                img: require("@/assets/image/meituan.png"),
                type: 2
@@ -469,7 +477,13 @@ export default {
       async sharing() {
          let src = this.magazines[this.magazineIndex];
          let channel = await this.getQrCode();
-         let { elem_auth_url, elem_url, mt_url, elem_share_url } = channel;
+         let {
+            elem_auth_url,
+            elem_url,
+            mt_url,
+            elem_share_url,
+            elem_shop_url
+         } = channel;
          if (this.type == 1) {
             if (!elem_url) {
                this.$message.error("请先授权");
@@ -524,6 +538,39 @@ export default {
             );
             this.saveImageModalVisible = true;
             // this.success(this.mergedImgBase64);
+         } else if (this.type == 3) {
+            if (!elem_shop_url) {
+               this.$message.error("请先授权");
+               let iframe_url = `${elem_auth_url}${
+                  this.is_mobile() ? "&view=wap" : ""
+               }`;
+               setTimeout(() => {
+                  this.$router.push({
+                     path: "authorize_taobao",
+                     query: {
+                        iframe_url
+                     }
+                  });
+               }, 500);
+               return;
+            }
+            if (!src) {
+               this.$message.error("请选择一张海报");
+               return;
+            }
+            let { img_x, img_y, url, img_w, img_h } = this.magazines[
+               this.magazineIndex
+            ];
+            // let qrcode = jrQrcode.getQrBase64(elem_share_url);
+            this.mergedImgBase64 = await this.mergeImg(
+               url,
+               elem_shop_url,
+               img_x,
+               img_y,
+               img_w,
+               img_h
+            );
+            this.saveImageModalVisible = true;
          }
       },
       success(src) {
