@@ -330,7 +330,7 @@
             </div>
          </div>
       </div>
-      <a-modal :bodyStyle="{padding:0}" title="长按保存图片" v-model="saveImageModalVisible" :footer="null">
+      <a-modal centered :bodyStyle="{padding:0}" title="长按保存图片" v-model="saveImageModalVisible" :footer="null">
          <img :src="mergedImgBase64" class="promote-img" />
       </a-modal>
    </div>
