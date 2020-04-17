@@ -560,10 +560,10 @@ export default {
             let { img_x, img_y, url, img_w, img_h } = this.magazines[
                this.magazineIndex
             ];
-            // let qrcode = jrQrcode.getQrBase64(elem_share_url);
+            let qrcode = jrQrcode.getQrBase64(elem_shop_url);
             this.mergedImgBase64 = await this.mergeImg(
                url,
-               elem_shop_url,
+               qrcode,
                img_x,
                img_y,
                img_w,
