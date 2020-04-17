@@ -62,7 +62,7 @@
    background-size: cover;
 }
 .ant-carousel {
-   min-height: 4.2rem;
+   min-height: 2.1rem;
 }
 
 .ant-carousel /deep/ .custom-slick-arrow {
@@ -81,16 +81,16 @@
 }
 .ant-carousel /deep/ .slick-slide {
       text-align: center;
-      min-height: 4.2rem;
-      background: #ccc;
+      min-height: 2.1rem;
+      // background: #ccc;
       overflow: hidden;
    }
-.ant-carousel /deep/ .slick-slide img {
+.ant-carousel /deep/ .slick-slide .magazine {
    border: 0.05rem solid #fff;
    display: block;
    margin: auto;
-   width: 3.3rem;
-   height: 4.2rem;
+   width: 1.65rem;
+   height: 2.1rem;
 }
 .ant-carousel /deep/ .slick-dots-bottom {
    bottom: 0.2rem;
@@ -277,7 +277,7 @@
                   <a-icon type="right" />
                </div>
                <div class="img-wrap" v-for="(item,index) in magazines" :key="index">
-                  <img :src="item.url" />
+                  <img :src="item.url" class="magazine" alt="">
                </div>
             </a-carousel>
          </div>

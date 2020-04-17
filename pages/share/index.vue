@@ -62,7 +62,7 @@
    background-size: cover;
 }
 .ant-carousel {
-   min-height: 4.2rem;
+   min-height: 2.1rem;
 }
 .ant-carousel /deep/ .custom-slick-arrow {
    width: 0.35rem;
@@ -70,7 +70,6 @@
    font-size: 0.35rem;
    color: #fff;
    opacity: 1;
-   color: #999;
 }
 .ant-carousel /deep/ .custom-slick-arrow:before {
    display: none;
@@ -82,8 +81,8 @@
    border: 0.05rem solid #fff;
    display: block;
    margin: auto;
-   width: 3.3rem;
-   height: 4.2rem;
+   width: 1.65rem;
+   height: 2.1rem;
 }
 .ant-carousel /deep/ .slick-dots-bottom {
    bottom: 0.2rem;
