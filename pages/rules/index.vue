@@ -4,9 +4,9 @@
       padding: 0.1rem;
    }
    .rule-wrap {
-      margin-top: .1rem;
-      padding: 0 .1rem;
-      &:first-child{
+      margin-top: 0.1rem;
+      padding: 0 0.1rem;
+      &:first-child {
          margin-top: 0;
       }
       .label {
@@ -69,6 +69,10 @@
          </div>
          <div class="rule-wrap">
             <span class="label">4、奖励机制：</span>推广员通过完成任务升级可获得更高的收益~
+         </div>
+         <div class="rule-wrap">
+            <span class="label">5、提现说明：</span>
+            {{config.settlement.cycle}}
          </div>
          <div class="table-title">等级权益</div>
          <div class="table-wrap">
@@ -184,10 +188,23 @@
 </template>
 <script>
 import GoldTitle from "@/components/GoldTitle";
+import { config } from "../../apis/user";
 export default {
    name: "rules",
+   data() {
+      return {
+         config: {
+            withdrawal: { cycle: "" },
+            settlement: { cycle: "" },
+         }
+      };
+   },
    components: {
       GoldTitle
+   },
+   async mounted() {
+      const { data } = await config();
+      this.config = data.data;
    }
 };
 </script>

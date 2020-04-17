@@ -79,6 +79,12 @@
 .ant-carousel /deep/ .custom-slick-arrow:hover {
    opacity: 1;
 }
+.ant-carousel /deep/ .slick-slide {
+      text-align: center;
+      min-height: 4.2rem;
+      background: #ccc;
+      overflow: hidden;
+   }
 .ant-carousel /deep/ .slick-slide img {
    border: 0.05rem solid #fff;
    display: block;

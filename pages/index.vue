@@ -26,7 +26,7 @@
          position: absolute;
          top: 0.14rem;
          right: 0.17rem;
-       
+
          .login-box-login {
             display: flex;
             justify-content: center;
@@ -267,30 +267,32 @@
       }
    }
 }
-.ant-carousel /deep/ .slick-slide {
-   text-align: center;
-   height: 1.47rem;
-   line-height: 1.47rem;
-   background: #ccc;
-   overflow: hidden;
-}
+#introduce {
+   .ant-carousel /deep/ .slick-slide {
+      text-align: center;
+      height: 1.47rem;
+      line-height: 1.47rem;
+      background: #ccc;
+      overflow: hidden;
+   }
 
-.ant-carousel /deep/ .custom-slick-arrow {
-   width: 0.25rem;
-   height: 0.25rem;
-   font-size: 0.25rem;
-   opacity: 0.8;
-   color: #999;
-}
-.ant-carousel /deep/ .custom-slick-arrow:before {
-   display: none;
-}
-.ant-carousel /deep/ .custom-slick-arrow:hover {
-   opacity: 1;
-}
+   .ant-carousel /deep/ .custom-slick-arrow {
+      width: 0.25rem;
+      height: 0.25rem;
+      font-size: 0.25rem;
+      opacity: 0.8;
+      color: #999;
+   }
+   .ant-carousel /deep/ .custom-slick-arrow:before {
+      display: none;
+   }
+   .ant-carousel /deep/ .custom-slick-arrow:hover {
+      opacity: 1;
+   }
 
-.ant-carousel /deep/ .slick-slide h3 {
-   color: #fff;
+   .ant-carousel /deep/ .slick-slide h3 {
+      color: #fff;
+   }
 }
 </style>
 <template>
