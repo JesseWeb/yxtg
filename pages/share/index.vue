@@ -479,13 +479,12 @@ export default {
          let channel = await this.getQrCode();
          let {
             elem_auth_url,
-            elem_url,
             mt_url,
             elem_share_url,
             elem_shop_url
          } = channel;
          if (this.type == 1) {
-            if (!elem_url) {
+            if (!elem_share_url) {
                this.$message.error("请先授权");
                let iframe_url = `${elem_auth_url}${
                   this.is_mobile() ? "&view=wap" : ""
