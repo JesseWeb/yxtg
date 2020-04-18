@@ -439,12 +439,12 @@ input[type="tel"] {
       </div>
       <div class="m-navlist">
          <ul class="nav-list">
-            <nuxt-link to="invite" tag="li" class="list-item">
-               <button id="share-btn" class="item-link">
+            <li class="list-item">
+               <nuxt-link to="invite" tag="li" class="item-link">
                   <span class="c-icon c-invite"></span>
                   <i class="c-txt">邀请推广</i>
-               </button>
-            </nuxt-link>
+               </nuxt-link>
+            </li>
             <li class="list-item">
                <nuxt-link tag="a" to="/my_team" class="item-link">
                   <span class="c-icon c-myteam"></span>
@@ -536,7 +536,7 @@ export default Vue.extend({
                menus: {
                   elem: `饿了么`,
                   elemShop: `饿了么商超果蔬`,
-                  mt: `美团`,
+                  mt: `美团`
                },
                onConfirm: index => this.onConfirm(index)
             });
@@ -559,9 +559,9 @@ export default Vue.extend({
       onConfirm(index) {
          if (index == `饿了么`) {
             window.location.href = this.userDetail.channel.elem_share_url;
-         } else if(index=="美团") {
+         } else if (index == "美团") {
             window.location.href = this.userDetail.channel.mt_share_url;
-         }else if(index=='饿了么商超果蔬'){
+         } else if (index == "饿了么商超果蔬") {
             window.location.href = this.userDetail.channel.elem_shop_url;
          }
       },
@@ -614,8 +614,8 @@ export default Vue.extend({
          }
       }
    },
-   destroyed(){
-      this.$vactionsheet.hide()
+   destroyed() {
+      this.$vactionsheet.hide();
    },
    async mounted() {
       try {
