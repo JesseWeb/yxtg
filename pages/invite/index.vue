@@ -80,11 +80,11 @@
    opacity: 1;
 }
 .ant-carousel /deep/ .slick-slide {
-      text-align: center;
-      min-height: 2.1rem;
-      // background: #ccc;
-      overflow: hidden;
-   }
+   text-align: center;
+   min-height: 2.1rem;
+   // background: #ccc;
+   overflow: hidden;
+}
 .ant-carousel /deep/ .slick-slide .magazine {
    border: 0.05rem solid #fff;
    display: block;
@@ -206,6 +206,22 @@
       }
    }
 }
+.qrcode-title {
+   display: flex;
+   justify-content: space-between;
+   .operation,
+   .question-circle {
+      color: #edce97;
+   }
+   .switch-qrcode-type {
+      font-size: 0.13rem;
+      display: flex;
+   }
+   .qrcode-type {
+      width: 0.7rem;
+      text-align: right;
+   }
+}
 .m-bottom-fixed {
    height: 0.45rem;
    .m-infoCover-btFixed {
@@ -267,7 +283,18 @@
    <div id="popularize">
       <GoldTitle title="邀请推广" />
       <div class="m-vipCard-kind">
-         <div class="title">选择海报图</div>
+         <div class="title qrcode-title">
+            <span>选择海报图</span>
+            <div class="switch-qrcode-type">
+               <span @click="switchQrcode" class="operation">切换二维码：</span>
+               <a-tooltip placement="topLeft" :title="qrcodeTypes[qrcodeTypeIndex].desc" arrowPointAtCenter>
+                  <div class="qrcode-type">
+                     {{qrcodeTypes[qrcodeTypeIndex].title}}
+                     <a-icon class="question-circle" type="question-circle" />
+                  </div>
+               </a-tooltip>
+            </div>
+         </div>
          <div class="m-slideShow-cont">
             <a-carousel :afterChange="magazineChange" arrows ref="carousel">
                <div slot="prevArrow" class="custom-slick-arrow" style="left: 10px;zIndex: 1">
@@ -277,7 +304,7 @@
                   <a-icon type="right" />
                </div>
                <div class="img-wrap" v-for="(item,index) in magazines" :key="index">
-                  <img :src="item.url" class="magazine" alt="">
+                  <img :src="item.url" class="magazine" alt />
                </div>
             </a-carousel>
          </div>
@@ -347,11 +374,27 @@ export default {
          userDetail: {
             user: {
                userid: ""
+            },
+            channel:{
+               promote_share_url:""
             }
-         }
+         },
+         qrcodeTypeIndex: 0,
+         qrcodeTypes: [
+            {
+               title: "公众号",
+               desc: `公众号教学更便捷 减少您的教学时间`
+            },
+            { title: "H5链接", desc: "扫码注册即加入" }
+         ]
       };
    },
    methods: {
+      switchQrcode() {
+         this.qrcodeTypeIndex == 0
+            ? (this.qrcodeTypeIndex = 1)
+            : (this.qrcodeTypeIndex = 0);
+      },
       getImageSizeFromUrl(src) {
          let img = new Image();
          img.src = src;
@@ -420,9 +463,19 @@ export default {
       async authorize() {},
       async sharing() {
          let src = this.magazines[this.magazineIndex];
-         let qrcode = jrQrcode.getQrBase64(
-            `${this.getOrigin()}/?inviter_id=${this.userDetail.user.userid}`
-         );
+         let qrcode;
+         if(!this.userDetail){
+            this.$message.error('获取地址失败，请稍后重试')
+            return
+         }
+         let { promote_share_url } = this.userDetail.channel;
+         if (this.qrcodeTypeIndex == 0) {
+            qrcode = promote_share_url;
+         } else {
+            qrcode = jrQrcode.getQrBase64(
+               `${this.getOrigin()}/?inviter_id=${this.userDetail.user.userid}`
+            );
+         }
          let { img_x, img_y, url, img_w, img_h } = this.magazines[
             this.magazineIndex
          ];

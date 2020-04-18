@@ -61,6 +61,22 @@
    background-repeat: no-repeat;
    background-size: cover;
 }
+.qrcode-title {
+   display: flex;
+   justify-content: space-between;
+   .operation,
+   .question-circle {
+      color: #edce97;
+   }
+   .switch-qrcode-type {
+      font-size: 0.13rem;
+      display: flex;
+   }
+   .qrcode-type {
+      width: 0.7rem;
+      text-align: right;
+   }
+}
 .ant-carousel {
    min-height: 2.1rem;
 }
@@ -281,7 +297,18 @@
                <span class="c-des">{{entity.name}}</span>
             </li>
          </ul>
-         <div class="title">选择海报图</div>
+         <div class="title qrcode-title">
+            <span>选择海报图</span>
+            <div class="switch-qrcode-type">
+               <span @click="switchQrcode" class="operation">切换二维码：</span>
+               <a-tooltip placement="topLeft" :title="qrcodeTypes[qrcodeTypeIndex].desc" arrowPointAtCenter>
+                  <div class="qrcode-type">
+                     {{qrcodeTypes[qrcodeTypeIndex].title}}
+                     <a-icon class="question-circle" type="question-circle" />
+                  </div>
+               </a-tooltip>
+            </div>
+         </div>
          <div class="m-slideShow-cont">
             <a-carousel :afterChange="magazineChange" arrows ref="carousel">
                <div slot="prevArrow" class="custom-slick-arrow" style="left: 10px;zIndex: 1">
@@ -369,6 +396,14 @@ export default {
                type: 2
             }
          ],
+         qrcodeTypeIndex: 0,
+         qrcodeTypes: [
+            {
+               title: "公众号",
+               desc: `好友关注公众号领红包从此不迷路`
+            },
+            { title: "红包链接", desc: "好友保存图片、扫码即领包" }
+         ],
          userid: "",
          magazines: [],
          magazineIndex: 0,
@@ -379,6 +414,11 @@ export default {
       };
    },
    methods: {
+      switchQrcode() {
+         this.qrcodeTypeIndex == 0
+            ? (this.qrcodeTypeIndex = 1)
+            : (this.qrcodeTypeIndex = 0);
+      },
       getImageSizeFromUrl(src) {
          let img = new Image();
          img.src = src;
@@ -480,7 +520,9 @@ export default {
             elem_auth_url,
             mt_url,
             elem_share_url,
-            elem_shop_url
+            elem_shop_url,
+            promote_share_url,
+            customer_share_url
          } = channel;
          if (this.type == 1) {
             if (!elem_share_url) {
@@ -505,7 +547,12 @@ export default {
             let { img_x, img_y, url, img_w, img_h } = this.magazines[
                this.magazineIndex
             ];
-            let qrcode = jrQrcode.getQrBase64(elem_share_url);
+            let qrcode;
+            if (this.qrcodeTypeIndex == 1) {
+               qrcode = jrQrcode.getQrBase64(elem_share_url);
+            } else {
+               qrcode = customer_share_url;
+            }
             this.mergedImgBase64 = await this.mergeImg(
                url,
                qrcode,
@@ -520,12 +567,17 @@ export default {
             let { img_x, img_y, url, img_w, img_h } = this.magazines[
                this.magazineIndex
             ];
-            if (!mt_url) {
-               this.$message.error("美团红包近期补货，敬请关注");
-               return;
+            let qrcode;
+            if (this.qrcodeTypeIndex == 1) {
+               if (!mt_url) {
+                  this.$message.error("美团红包近期补货，敬请关注");
+                  return;
+               }
+               qrcode = jrQrcode.getQrBase64(mt_url);
+            } else {
+               qrcode = customer_share_url;
             }
-            let qrcode = jrQrcode.getQrBase64(mt_url);
-            // this.qrcodeImage = qrcode
+
             this.mergedImgBase64 = await this.mergeImg(
                url,
                qrcode,
@@ -559,7 +611,12 @@ export default {
             let { img_x, img_y, url, img_w, img_h } = this.magazines[
                this.magazineIndex
             ];
-            let qrcode = jrQrcode.getQrBase64(elem_shop_url);
+            let qrcode;
+            if (this.qrcodeTypeIndex == 1) {
+               qrcode = jrQrcode.getQrBase64(elem_shop_url);
+            } else {
+               qrcode = customer_share_url;
+            }
             this.mergedImgBase64 = await this.mergeImg(
                url,
                qrcode,
