@@ -173,19 +173,6 @@
       padding-bottom: 0.15rem;
       .btn-wrap {
          padding-top: 0.15rem;
-         .c-btn-tab {
-            font-size: 0.12rem;
-            color: #666;
-            width: 0.7rem;
-            height: 0.22rem;
-            line-height: 0.22rem;
-            display: inline-block;
-            border-radius: 0.1rem;
-            vertical-align: top;
-            text-align: center;
-            border: 1px solid #f8f8f8;
-            box-sizing: border-box;
-         }
          .c-btn-tab.c-btn-copy {
             border: 0;
             background: #f5f5f5;
@@ -195,13 +182,13 @@
          .c-btn-tab {
             font-size: 0.12rem;
             color: #666;
-            width: 0.7rem;
             height: 0.22rem;
-            line-height: 0.22rem;
-            display: inline-block;
+            // line-height: 0.22rem;
+            padding: 0 0.1rem;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
             border-radius: 0.1rem;
-            vertical-align: top;
-            text-align: center;
             border: 1px solid #f8f8f8;
             box-sizing: border-box;
          }
@@ -290,7 +277,7 @@
    <div id="popularize">
       <GoldTitle title="分享红包" />
       <div class="m-vipCard-kind">
-         <div class="title">选择售卖卡种</div>
+         <div class="title">选择红包类型</div>
          <ul class="list-item">
             <li @click="changeType(entity)" :class="{'selected':entity.type==type}" v-for="entity in typeEentities" :key="entity.type">
                <img class="c-icon" :src="entity.img" />

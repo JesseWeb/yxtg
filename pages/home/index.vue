@@ -579,7 +579,7 @@ export default Vue.extend({
          this.$message.error("复制失败，请手动复制");
       },
       onCopy() {
-         this.$message.success("复制成功");
+         this.$message.success("复制客服微信号成功");
       },
       custService() {},
       cashOut() {
