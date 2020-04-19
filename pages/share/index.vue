@@ -514,15 +514,15 @@ export default {
          if (this.type == 1) {
             if (!elem_share_url) {
                this.$message.error("请先授权");
-               let iframe_url = `${elem_auth_url}${
-                  this.is_mobile() ? "&view=wap" : ""
-               }`;
+               // let iframe_url = `${elem_auth_url}${
+               //    this.is_mobile() ? "&view=wap" : ""
+               // }`;
                setTimeout(() => {
                   this.$router.push({
-                     path: "authorize_taobao",
-                     query: {
-                        iframe_url
-                     }
+                     path: "authorize"
+                     // query: {
+                     //    iframe_url
+                     // }
                   });
                }, 500);
                return;
@@ -578,15 +578,15 @@ export default {
          } else if (this.type == 3) {
             if (!elem_shop_url) {
                this.$message.error("请先授权");
-               let iframe_url = `${elem_auth_url}${
-                  this.is_mobile() ? "&view=wap" : ""
-               }`;
+               // let iframe_url = `${elem_auth_url}${
+               //    this.is_mobile() ? "&view=wap" : ""
+               // }`;
                setTimeout(() => {
                   this.$router.push({
-                     path: "authorize_taobao",
-                     query: {
-                        iframe_url
-                     }
+                     path: "authorize"
+                     // query: {
+                     //    iframe_url
+                     // }
                   });
                }, 500);
                return;

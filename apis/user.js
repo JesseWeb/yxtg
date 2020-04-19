@@ -159,3 +159,15 @@ export async function visitorGetInviterInfoById(userid){
       }
    })
 }
+export async function getTaobaoAuthCode(){
+   return request({
+      url:"/api/promote/inviteCode",
+   })
+}
+
+export async function checkAuthResult(){
+   return request({
+      url:"/api/promote/checkAuthResult",
+      method:"post"
+   })
+}

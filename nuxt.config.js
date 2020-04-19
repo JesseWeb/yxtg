@@ -24,7 +24,7 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/png', href: '/favicon.png' },
-      { rel: 'stylesheet', href: "//at.alicdn.com/t/font_1644987_of8c2u1xpr.css" }
+      { rel: 'stylesheet', href: "//at.alicdn.com/t/font_1644987_nb0ve27kypq.css" }
     ]
   },
   proxy: {
@@ -94,7 +94,7 @@ export default {
   ** Nuxt.js dev-modules
   */
   buildModules: [
-    // '@nuxt/typescript-build'
+    '@nuxt/typescript-build'
   ],
   /*
   ** Nuxt.js modules

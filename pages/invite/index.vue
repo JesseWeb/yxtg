@@ -385,7 +385,7 @@ export default {
                title: "公众号",
                desc: `公众号教学更便捷 减少您的教学时间`
             },
-            { title: "H5链接", desc: "扫码注册即加入" }
+            { title: "推广链接", desc: "扫码注册即加入" }
          ]
       };
    },

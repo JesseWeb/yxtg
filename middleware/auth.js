@@ -1,6 +1,6 @@
 import { getToken } from '../tools/token'
 export default async ({ app, route, error }) => {
-  const whiteList = ["/login", "/","/register","/forgetpwd",'/commission','/rules']
+  const whiteList = ["/login", "/","/register","/forgetpwd",'/commission','/rules','/authorize_taobao']
   if (!whiteList.includes(route.path)) {
     if (process.client) {
       if (!getToken()) {
