@@ -122,10 +122,10 @@
                      <a-input type="primary" placeholder="请输入手机号" v-model="form.mobile" />
                   </a-form-model-item>
                   <a-form-model-item prop="password">
-                     <a-input type="password" placeholder="请输入密码" v-model="form.password" />
+                     <a-input type="password" @keydown.enter="handleSubmit" placeholder="请输入密码" v-model="form.password" />
                   </a-form-model-item>
                   <a-form-model-item class="btn-wrap">
-                     <a-button type="primary" html-type="submit" @click="handleSubmit" class="login-form-button">登录</a-button>
+                     <a-button type="primary" @click="handleSubmit" class="login-form-button">登录</a-button>
                   </a-form-model-item>
                </a-form-model>
                <!-- <a-form id="components-form-demo-normal-login" :form="form" class="login-form" @submit="handleSubmit">
@@ -230,7 +230,6 @@ export default {
          callback();
       },
       async handleSubmit(e) {
-         e.preventDefault();
          this.$refs.form.validate(async valid => {
             if (valid) {
                try {

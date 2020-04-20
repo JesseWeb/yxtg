@@ -15,6 +15,9 @@
 /deep/ .header {
    height: auto;
 }
+.tabs-wrap{
+   height: .45rem;
+}
 .counts {
    display: flex;
    flex-direction: column;
