@@ -397,7 +397,7 @@ export default {
    methods: {
       experience() {},
       promoteCopySuccess() {
-         this.$message.success("已复制微推广文案，粘贴分享即可");
+         this.$message.success("已复制推广文案，粘贴分享即可");
       },
       onError() {
          this.$message.success("复制失败");

@@ -480,7 +480,7 @@ export default {
          let guoshu, elem, mt;
          if (this.userLogin) {
             if(!this.userInfo.channel.rid){
-               this.$message.error('您还未授权，授权后才能获得反佣哟～')
+               this.$message.error('您还未授权，授权后才能获得返佣哟～')
                setTimeout(() => {
                   this.$router.push('/authorize')
                }, 500);

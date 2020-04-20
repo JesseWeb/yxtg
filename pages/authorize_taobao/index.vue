@@ -285,7 +285,7 @@ export default {
             this.tbUrl = tb_url;
          }
       } else {
-         this.$message.error("链接不对");
+         this.$message.error("授权参数错误，即将返回");
          setTimeout(() => {
             this.$router.back();
          }, 500);
