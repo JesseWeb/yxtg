@@ -46,6 +46,7 @@
 .main {
    width: 3.24rem;
    height: auto;
+   min-height:3.15rem;
    overflow: hidden;
    color: rgba(74, 56, 56, 1);
    background-color: rgba(255, 255, 255, 1);
