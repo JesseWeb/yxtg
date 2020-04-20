@@ -143,74 +143,32 @@
                <h3 class="title">重置密码</h3>
             </div>
             <div class="form">
-               <a-form :form="form" @submit="handleSubmit">
-                  <a-form-item>
-                     <a-input
-                        v-decorator="[
-                        'mobile',
-                        {
-                           rules: [{ required: true, message: '手机号不能为空' },{validator:this.checkPhoneNumber.bind(this)}],
-                        }
-                     ]"
-                        placeholder="请输入手机号码"
-                     ></a-input>
-                  </a-form-item>
-                  <a-form-item>
+               <a-form-model :rules="rules" ref="form" layout="vertical" :model="form">
+                  <a-form-model-item prop="mobile">
+                     <a-input placeholder="请输入手机号码" v-model="form.mobile"></a-input>
+                  </a-form-model-item>
+                  <a-form-model-item prop="sms_code">
                      <div class="sms-code-wrap">
-                        <a-input
-                           v-decorator="[
-                           'sms_code',
-                           {rules: [{ required: true, message: '请输入手机验证码' ,}]}
-                           ]"
-                           class="sms-code-input"
-                           placeholder="请输入验证码"
-                        />
+                        <a-input v-model="form.sms_code" class="sms-code-input" placeholder="请输入验证码" />
                         <countDownBtn ref="countDownBtn" class="sms-code-btn" @send-verification-code="getCaptcha" defText="获取验证码"></countDownBtn>
                      </div>
-                  </a-form-item>
-                  <a-form-item>
-                     <a-input
-                        v-decorator="[
-                        'password',
-                        {
-                           rules: [{
-                           required: true, message: '请输入您的新密码',
-                           }, {
-                           validator: validateToNextPassword,
-                           }],
-                        }
-                     ]"
-                        placeholder="请输入新密码"
-                        type="password"
-                     />
-                  </a-form-item>
-                  <a-form-item>
-                     <a-input
-                        v-decorator="[
-                     'confirm',
-                     {
-                     rules: [{
-                     required: true, message: '请确认您的密码',
-                     }, {
-                     validator: compareToFirstPassword,
-                     }],
-                     }
-                     ]"
-                        type="password"
-                        @blur="handleConfirmBlur"
-                        placeholder="请确认密码"
-                     />
-                  </a-form-item>
-                  <!-- <a-form-item>
+                  </a-form-model-item>
+                  <a-form-model-item prop="password">
+                     <a-input placeholder="请输入新密码" type="password" v-model="form.password" />
+                  </a-form-model-item>
+                  <a-form-model-item prop="confirm">
+                     <a-input type="password" placeholder="请确认密码" v-model="form.confirm" />
+                  </a-form-model-item>
+                  <!-- <a-form-model-item>
                   <a-checkbox v-decorator="['agreement', {valuePropName: 'checked'}]">
                      我已阅读且同意以下协议内容
                      <a href>用户协议</a>
                   </a-checkbox>
-                  </a-form-item>-->
-                  <a-form-item>
-                     <a-button class="login-form-button" type="primary" html-type="submit">重置密码</a-button>
-                  </a-form-item>
-               </a-form>
+                  </a-form-model-item>-->
+                  <a-form-model-item>
+                     <a-button class="login-form-button" type="primary" @click="handleSubmit">重置密码</a-button>
+                  </a-form-model-item>
+               </a-form-model>
             </div>
          </div>
       </div>
@@ -225,11 +183,51 @@ export default {
    data() {
       return {
          redirectURL: "/",
-         form: this.$form.createForm(this),
+         form: {
+            mobile: "",
+            sms_code: "",
+            password: "",
+            confirm: ""
+         },
          captchaText: "获取验证码",
          captchaDisabled: true,
          captchaTimer: 0,
-         validate_token: ""
+         validate_token: "",
+         rules: {
+            mobile: [
+               {
+                  required: true,
+                  message: "请输入手机号",
+                  trigger: "blur"
+               },
+
+               {
+                  validator: this.checkPhoneNumber,
+                  trigger: "change"
+               }
+            ],
+            sms_code: [{ required: true, message: "请输入手机验证码" }],
+            password: [
+               {
+                  required: true,
+                  message: "请输入您的新密码"
+               },
+               {
+                  validator: this.validateToNextPassword,
+                  trigger: "change"
+               }
+            ],
+            confirm: [
+               {
+                  required: true,
+                  message: "请确认您的密码"
+               },
+               {
+                  validator: this.compareToFirstPassword,
+                  trigger: "change"
+               }
+            ]
+         }
       };
    },
    components: {
@@ -246,8 +244,7 @@ export default {
          callback();
       },
       async getCaptcha() {
-         // console.log(this.form.getFieldValue(`mobile`))
-         let mobile = this.form.getFieldValue("mobile");
+         let mobile = this.form.mobile;
          var reg = /^1[3|4|5|6|7|8|9][0-9]{9}$/;
          var flag = reg.test(mobile);
          if (!mobile) {
@@ -278,41 +275,38 @@ export default {
          this.confirmDirty = this.confirmDirty || !!value;
       },
       compareToFirstPassword(rule, value, callback) {
-         const form = this.form;
-         if (value && value !== form.getFieldValue("password")) {
-            callback("Two passwords that you enter is inconsistent!");
+         if (value && value !== this.form.password) {
+            callback("两次密码不一致");
          } else {
             callback();
          }
       },
       validateToNextPassword(rule, value, callback) {
-         const form = this.form;
-         if (value && this.confirmDirty) {
-            form.validateFields(["confirm"], { force: true });
+         if (this.form.confirm !== "") {
+            this.$refs.form.validateField("confirm");
          }
          callback();
       },
       handleSubmit(e) {
          e.preventDefault();
-         this.form.validateFields(
-            async (err, { mobile, password, sms_code }) => {
-               if (!err) {
-                  try {
-                     await resetPwd({
-                        mobile,
-                        password,
-                        sms_code,
-                        validate_token: this.validate_token
-                     });
-                     this.$message.success("重置成功");
-                     setTimeout(() => {
-                        this.$router.push("/login");
-                     }, 1000);
-                  } catch (error) {}
-                  // console.log("Received values of form: ", values);
-               }
+         this.$refs.form.validate(async valid => {
+            if (valid) {
+               let { mobile, password, sms_code } = this.form;
+               try {
+                  await resetPwd({
+                     mobile,
+                     password,
+                     sms_code,
+                     validate_token: this.validate_token
+                  });
+                  this.$message.success("重置成功");
+                  setTimeout(() => {
+                     this.$router.push("/login");
+                  }, 1000);
+               } catch (error) {}
+               // console.log("Received values of form: ", values);
             }
-         );
+         });
       },
       goBack() {
          this.$router.go(-1);

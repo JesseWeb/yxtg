@@ -20,7 +20,7 @@
    display: flex;
    justify-content: center;
    align-items: center;
-   margin-top: .2rem;
+   margin-top: 0.2rem;
    .main {
       width: 3.24rem;
       height: auto;
@@ -140,37 +140,17 @@
                <h3 class="title">注册悦享推广会员</h3>
             </div>
             <div class="form">
-               <a-form :form="form" @submit="handleSubmit">
-                  <!-- <a-form-item>
-                  <span slot="label">昵称</span>
-                  <a-input
-                     v-decorator="[
-                        'nickname',
-                        {
-                           rules: [{ required: true, message: '请输入昵称', whitespace: true }]
-                        }
-                     ]"
-                  />
-                  </a-form-item>-->
-                  <a-form-item>
-                     <a-input
-                        v-decorator="[
-                        'mobile',
-                        {
-                           rules: [{ required: true, message: '手机号不能为空' },{validator:this.checkPhoneNumber.bind(this)}],
-                        }
-                     ]"
-                        placeholder="请输入手机号"
-                     ></a-input>
-                  </a-form-item>
-                  <a-form-item>
+               <a-form-model :model="form" ref="form" :rules="rules">
+                  <a-form-model-item prop="mobile">
+                     <a-input placeholder="请输入手机号" v-model="form.mobile"></a-input>
+                  </a-form-model-item>
+                  <a-form-model-item :autoLink="false" ref="smsCode" prop="sms_code">
                      <div class="sms-code-wrap">
                         <a-input
-                           v-decorator="[
-                           'sms_code',
-                           {rules: [{ required: true, message: '请输入手机验证码' ,}]}
-                           ]"
                            class="sms-code-input"
+                           @blur="() => {$refs.smsCode.onFieldBlur()}"
+                           @change="() => {$refs.smsCode.onFieldChange()}"
+                           v-model="form.sms_code"
                            placeholder="请输入验证码"
                         />
                         <countDownBtn ref="countDownBtn" class="sms-code-btn" @send-verification-code="getCaptcha" defText="获取验证码"></countDownBtn>
@@ -178,63 +158,26 @@
                      <!-- <send-verification-code :count-down-parent="30" ="sendVerificationCode"></send-verification-code> -->
 
                      <!-- <a-button type="primary" :loading="!captchaStatus" @click="getCaptcha">获取验证码{{captchaTimer}}</a-button> -->
-                  </a-form-item>
-                  <a-form-item>
-                     <a-input
-                        v-decorator="[
-                        'password',
-                        {
-                           rules: [{
-                           required: true, message: '请输入您的密码',
-                           }, {
-                           validator: validateToNextPassword,
-                           }],
-                        }
-                     ]"
-                        type="password"
-                        placeholder="请输入密码"
-                     />
-                  </a-form-item>
-                  <a-form-item>
-                     <a-input
-                        v-decorator="[
-                        'confirm',
-                        {
-                           rules: [{
-                           required: true, message: '请确认您的密码',
-                           }, {
-                           validator: compareToFirstPassword,
-                           }],
-                        }
-                     ]"
-                        type="password"
-                        @blur="handleConfirmBlur"
-                        placeholder="请确认密码"
-                     />
-                  </a-form-item>
-                  <!-- <a-form-item>
+                  </a-form-model-item>
+                  <a-form-model-item prop="password">
+                     <a-input v-model="form.password" type="password" placeholder="请输入密码" />
+                  </a-form-model-item>
+                  <a-form-model-item prop="confirm">
+                     <a-input type="password" v-model="form.confirm" @blur="handleConfirmBlur" placeholder="请确认密码" />
+                  </a-form-model-item>
+                  <!-- <a-form-model-item>
                   <a-checkbox v-decorator="['agreement', {valuePropName: 'checked'}]">
                      我已阅读且同意以下协议内容
                      <a href>用户协议</a>
                   </a-checkbox>
-                  </a-form-item>-->
-                  <a-form-item>
-                     <a-input
-                        v-decorator="[
-                        'inviter_id',
-                        { initialValue: inviter_id },
-                        {
-                           rules: [{ required: false, message: '输入邀请码', whitespace: false }]
-                        }
-                     ]"
-                        placeholder="邀请码（选填）"
-                        :disabled="hasInviter"
-                     />
-                  </a-form-item>
-                  <a-form-item>
-                     <a-button class="login-form-button" :loading="btnloading" type="primary" html-type="submit">注册</a-button>
-                  </a-form-item>
-               </a-form>
+                  </a-form-model-item>-->
+                  <a-form-model-item prop="inviter_id">
+                     <a-input placeholder="邀请码（选填）" v-model="form.inviter_id" :disabled="hasInviter" />
+                  </a-form-model-item>
+                  <a-form-model-item>
+                     <a-button class="login-form-button" @click="handleSubmit" :loading="btnloading" type="primary">注册</a-button>
+                  </a-form-model-item>
+               </a-form-model>
             </div>
          </div>
       </div>
@@ -252,7 +195,13 @@ export default {
       return {
          btnloading: false,
          redirectURL: "/",
-         form: this.$form.createForm(this),
+         form: {
+            mobile: "",
+            sms_code: "",
+            password: "",
+            confirm: "",
+            inviter_id: ""
+         },
          captchaText: "获取验证码",
          captchaDisabled: true,
          captchaTimer: 0,
@@ -261,7 +210,37 @@ export default {
          openid: "",
          resource_tag: "",
          validate_token: "",
-         hasInviter:false
+         hasInviter: false,
+         rules: {
+            mobile: [
+               { required: true, message: "手机号不能为空" },
+               { validator: this.checkPhoneNumber, trigger: "change" }
+            ],
+            sms_code: [{ required: true, message:'请输入手机验证码' }],
+            password: [
+               {
+                  required: true,
+                  message: "请输入您的密码"
+               },
+               {
+                  validator: this.validateToNextPassword,
+                  trigger: "change"
+               }
+            ],
+            confirm: [
+               {
+                  required: true,
+                  message: "请确认您的密码"
+               },
+               {
+                  validator: this.compareToFirstPassword,
+                  trigger: "change"
+               }
+            ],
+            inviter_id: [
+               { required: false, message: "输入邀请码", whitespace: false }
+            ]
+         }
       };
    },
    components: {
@@ -269,6 +248,13 @@ export default {
       GoldTitle
    },
    methods: {
+      // checkSmsCode(rule, value, callback) {
+      //    if (value === "") {
+      //       callback("请输入手机验证码");
+      //       return;
+      //    }
+      //    callback();
+      // },
       checkPhoneNumber(rule, value, callback) {
          var reg = /^1[3|4|5|6|7|8|9][0-9]{9}$/;
          var flag = reg.test(value);
@@ -313,26 +299,34 @@ export default {
          this.confirmDirty = this.confirmDirty || !!value;
       },
       compareToFirstPassword(rule, value, callback) {
-         const form = this.form;
-         if (value && value !== form.getFieldValue("password")) {
-            callback("确认密码不正确");
+         if (value && value !== this.form.password) {
+            callback("两次密码不一致");
          } else {
             callback();
          }
       },
       validateToNextPassword(rule, value, callback) {
-         const form = this.form;
-         if (value && this.confirmDirty) {
-            form.validateFields(["confirm"], { force: true });
+         if (this.form.confirm !== "") {
+            this.$refs.form.validateField("confirm");
          }
          callback();
       },
       handleSubmit(e) {
          e.preventDefault();
-         this.form.validateFields((err, values) => {
-            if (!err) {
+         this.$refs.form.validate(valid => {
+            if (valid) {
                this.btnloading = true;
-               register({ ...values, validate_token: this.validate_token,resource_from:this.resource_from,openid:this.openid,resource_tag:this.resource_tag })
+               let { sms_code, mobile, password, inviter_id } = this.form;
+               register({
+                  sms_code,
+                  mobile,
+                  password,
+                  inviter_id,
+                  validate_token: this.validate_token,
+                  resource_from: this.resource_from,
+                  openid: this.openid,
+                  resource_tag: this.resource_tag
+               })
                   .then(res => {
                      this.$router.push("home");
                   })
@@ -348,13 +342,13 @@ export default {
    },
    mounted() {
       this.redirectURL = this.$route.query.redirect_url || "/";
-      if(this.$route.query.inviter_id){
-         this.hasInviter = true
+      if (this.$route.query.inviter_id) {
+         this.hasInviter = true;
       }
       this.resource_from = this.$route.query.resource_from || "";
       this.openid = this.$route.query.openid || "";
       this.resource_tag = this.$route.query.resource_tag || "";
-      this.inviter_id = this.$route.query.inviter_id || "";
+      this.form.inviter_id = this.$route.query.inviter_id || "";
    }
    // asyncData(){
    //    register().then((res) => {
