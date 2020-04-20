@@ -225,14 +225,14 @@
    justify-content: center;
    margin: 0 0.17rem;
    width: calc(100% - 0.34rem);
-   height: 6.54rem;
+   // height: 6.54rem;
    border-radius: 0.11rem;
    line-height: 150%;
    box-shadow: 0px 0.11rem 0.25rem 0px rgba(0, 0, 0, 0.1);
    background-color: #fff;
-   background-image: url("/login-buttom-img.png");
-   background-repeat: no-repeat;
-   background-size: contain;
+   // background-image: url("/login-bottom-img.png");
+   // background-repeat: no-repeat;
+   // background-size: contain;
    background-position: 0 0.3rem;
    .income {
       margin-top: 0.11rem;
@@ -346,7 +346,7 @@
          </div>-->
       </div>
       <div class="m-flow">
-         <img class="income" src="@/assets/image/shouyi.png" alt />
+         <img src="/login-bottom-img.png" alt="">
       </div>
       <div class="rake-back">
          <div class="rake-back-main">
