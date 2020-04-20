@@ -61,20 +61,26 @@
    background-repeat: no-repeat;
    background-size: cover;
 }
-.qrcode-title {
+
+.switch-qrcode-type {
+   font-size: 0.13rem;
    display: flex;
-   justify-content: space-between;
-   .operation,
-   .question-circle {
-      color: #edce97;
-   }
-   .switch-qrcode-type {
-      font-size: 0.13rem;
-      display: flex;
-   }
+   flex-direction: column;
+   align-items: center;
    .qrcode-type {
-      width: 0.7rem;
-      text-align: right;
+      font-weight: bold;
+   }
+   .qrcode-desc {
+      color: #999;
+   }
+   .switch-qrcode-button{
+      background-color: rgb(240, 209, 158);
+      color: #fff;
+      padding: .03rem .2rem;
+      border-radius: .2rem;
+      font-size: .16rem;
+      cursor: pointer;
+      margin-top: .2rem;
    }
 }
 .ant-carousel {
@@ -286,15 +292,6 @@
          </ul>
          <div class="title qrcode-title">
             <span>选择海报图</span>
-            <div class="switch-qrcode-type">
-               <span @click="switchQrcode" class="operation">切换二维码：</span>
-               <a-tooltip placement="topLeft" :title="qrcodeTypes[qrcodeTypeIndex].desc" arrowPointAtCenter>
-                  <div class="qrcode-type">
-                     {{qrcodeTypes[qrcodeTypeIndex].title}}
-                     <a-icon class="question-circle" type="question-circle" />
-                  </div>
-               </a-tooltip>
-            </div>
          </div>
          <div class="m-slideShow-cont">
             <a-carousel :afterChange="magazineChange" arrows ref="carousel">
@@ -308,6 +305,11 @@
                   <img :src="item.url" />
                </div>
             </a-carousel>
+         </div>
+         <div class="switch-qrcode-type">
+            <div @click="switchQrcode" class="qrcode-type">二维码类型：{{qrcodeTypes[qrcodeTypeIndex].title}}</div>
+            <div class="qrcode-desc">{{qrcodeTypes[qrcodeTypeIndex].desc}}</div>
+            <div class="switch-qrcode-button" @click="switchQrcode">切换类型</div>
          </div>
          <div class="title recommend">
             推荐文案
@@ -386,10 +388,10 @@ export default {
          qrcodeTypeIndex: 0,
          qrcodeTypes: [
             {
-               title: "公众号",
+               title: "关注公众号",
                desc: `好友关注公众号领红包从此不迷路`
             },
-            { title: "红包链接", desc: "好友保存图片、扫码即领包" }
+            { title: "即扫即领", desc: "好友保存图片、扫码即领包" }
          ],
          userid: "",
          magazines: [],

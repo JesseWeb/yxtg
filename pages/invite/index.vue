@@ -206,20 +206,25 @@
       }
    }
 }
-.qrcode-title {
+.switch-qrcode-type {
+   font-size: 0.13rem;
    display: flex;
-   justify-content: space-between;
-   .operation,
-   .question-circle {
-      color: #edce97;
-   }
-   .switch-qrcode-type {
-      font-size: 0.13rem;
-      display: flex;
-   }
+   flex-direction: column;
+   align-items: center;
    .qrcode-type {
-      width: 0.7rem;
-      text-align: right;
+      font-weight: bold;
+   }
+   .qrcode-desc {
+      color: #999;
+   }
+   .switch-qrcode-button {
+      background-color: rgb(240, 209, 158);
+      color: #fff;
+      padding: 0.03rem 0.2rem;
+      border-radius: 0.2rem;
+      font-size: 0.16rem;
+      cursor: pointer;
+      margin-top: 0.2rem;
    }
 }
 .m-bottom-fixed {
@@ -285,16 +290,8 @@
       <div class="m-vipCard-kind">
          <div class="title qrcode-title">
             <span>选择海报图</span>
-            <div class="switch-qrcode-type">
-               <span @click="switchQrcode" class="operation">切换二维码：</span>
-               <a-tooltip placement="topLeft" :title="qrcodeTypes[qrcodeTypeIndex].desc" arrowPointAtCenter>
-                  <div class="qrcode-type">
-                     {{qrcodeTypes[qrcodeTypeIndex].title}}
-                     <a-icon class="question-circle" type="question-circle" />
-                  </div>
-               </a-tooltip>
-            </div>
          </div>
+
          <div class="m-slideShow-cont">
             <a-carousel :afterChange="magazineChange" arrows ref="carousel">
                <div slot="prevArrow" class="custom-slick-arrow" style="left: 10px;zIndex: 1">
@@ -307,6 +304,11 @@
                   <img :src="item.url" class="magazine" alt />
                </div>
             </a-carousel>
+         </div>
+         <div class="switch-qrcode-type">
+            <div @click="switchQrcode" class="qrcode-type">二维码类型：{{qrcodeTypes[qrcodeTypeIndex].title}}</div>
+            <div class="qrcode-desc">{{qrcodeTypes[qrcodeTypeIndex].desc}}</div>
+            <div class="switch-qrcode-button" @click="switchQrcode">切换类型</div>
          </div>
          <div class="title recommend">
             推荐文案
@@ -375,14 +377,14 @@ export default {
             user: {
                userid: ""
             },
-            channel:{
-               promote_share_url:""
+            channel: {
+               promote_share_url: ""
             }
          },
          qrcodeTypeIndex: 0,
          qrcodeTypes: [
             {
-               title: "公众号",
+               title: "关注公众号",
                desc: `公众号教学更便捷 减少您的教学时间`
             },
             { title: "推广链接", desc: "扫码注册即加入" }
@@ -464,9 +466,9 @@ export default {
       async sharing() {
          let src = this.magazines[this.magazineIndex];
          let qrcode;
-         if(!this.userDetail){
-            this.$message.error('获取地址失败，请稍后重试')
-            return
+         if (!this.userDetail) {
+            this.$message.error("获取地址失败，请稍后重试");
+            return;
          }
          let { promote_share_url } = this.userDetail.channel;
          if (this.qrcodeTypeIndex == 0) {
