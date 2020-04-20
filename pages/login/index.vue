@@ -72,6 +72,7 @@
    .form {
       padding: 0.2rem;
       padding-bottom: 0.05rem;
+      min-height: 2.4rem;
    }
    #components-form-demo-normal-login .login-form {
       max-width: 300px;
