@@ -46,7 +46,7 @@
 .main {
    width: 3.24rem;
    height: auto;
-   min-height:3.15rem;
+   min-height: 3.15rem;
    overflow: hidden;
    color: rgba(74, 56, 56, 1);
    background-color: rgba(255, 255, 255, 1);
@@ -72,6 +72,7 @@
    .form {
       padding: 0.2rem;
       padding-bottom: 0.05rem;
+      min-height: 2.4rem;
    }
    #components-form-demo-normal-login .login-form {
       max-width: 300px;
@@ -116,7 +117,18 @@
                <h3 class="title">登录悦享推广会员</h3>
             </div>
             <div class="form">
-               <a-form id="components-form-demo-normal-login" :form="form" class="login-form" @submit="handleSubmit">
+               <a-form-model id="components-form-demo-normal-login" ref="form" :rules="rules" layout="vertical" :model="form">
+                  <a-form-model-item prop="mobile">
+                     <a-input type="primary" placeholder="请输入手机号" v-model="form.mobile" />
+                  </a-form-model-item>
+                  <a-form-model-item prop="password">
+                     <a-input type="password" placeholder="请输入密码" v-model="form.password" />
+                  </a-form-model-item>
+                  <a-form-model-item class="btn-wrap">
+                     <a-button type="primary" html-type="submit" @click="handleSubmit" class="login-form-button">登录</a-button>
+                  </a-form-model-item>
+               </a-form-model>
+               <!-- <a-form id="components-form-demo-normal-login" :form="form" class="login-form" @submit="handleSubmit">
                   <a-form-item>
                      <a-input
                         v-decorator="[
@@ -139,12 +151,15 @@
                   <a-form-item class="btn-wrap">
                      <a-button type="primary" html-type="submit" class="login-form-button">登录</a-button>
                   </a-form-item>
-               </a-form>
+               </a-form>-->
             </div>
          </div>
          <div class="extra-operation">
             <n-link to="/forgetpwd">忘记密码</n-link>Or
-            <n-link :to="`/register?inviter_id=${inviterId||''}&resource_from=${resourceFrom}&openid=${openid}&resource_tag=${resourceTag}`" href="javascript:void(0);">注册新用户</n-link>
+            <n-link
+               :to="`/register?inviter_id=${inviterId||''}&resource_from=${resourceFrom}&openid=${openid}&resource_tag=${resourceTag}`"
+               href="javascript:void(0);"
+            >注册新用户</n-link>
          </div>
       </div>
    </div>
@@ -163,7 +178,35 @@ export default {
       return {
          url: "/login",
          redirectURL: "/",
-         form: this.$form.createForm(this),
+         form: {
+            password: "",
+            mobile: ""
+         },
+         rules: {
+            mobile: [
+               {
+                  required: true,
+                  message: "请输入手机号",
+                  trigger: "blur"
+               },
+              
+               {
+                  validator:this.checkPhoneNumber,
+                  trigger:'change'
+               }
+            ],
+            password: [
+               {
+                  required: true,
+                  message: "请输入密码",
+                  trigger: "blur"
+               },
+                {
+                  min:6,max:20,message:"长度应在6-20位",
+                  trigger:'change'
+               },
+            ]
+         },
          inviterId: "",
          inviterId: "",
          resourceFrom: "",
@@ -188,10 +231,10 @@ export default {
       },
       async handleSubmit(e) {
          e.preventDefault();
-         this.form.validateFields(async (err, values) => {
-            if (!err) {
+         this.$refs.form.validate(async valid => {
+            if (valid) {
                try {
-                  await login(values);
+                  await login(this.form);
                   await message.success("登录成功", 1);
                   this.$router.push("home");
                } catch (error) {
