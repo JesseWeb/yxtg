@@ -241,10 +241,11 @@ input[type="tel"] {
 }
 .m-navlist {
    padding: 0.145rem 0 0.1rem;
+   padding-bottom: 0;
    background: #fff;
    .nav-list {
       display: flex;
-      padding-bottom: 0.125rem;
+      margin-bottom: .1rem;
       .list-item {
          flex: 1;
          &:first-child {
@@ -252,7 +253,9 @@ input[type="tel"] {
          }
          .item-link {
             background: transparent;
-            display: block;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
             margin: 0 auto;
             color: #333;
             cursor: pointer;
@@ -440,7 +443,7 @@ input[type="tel"] {
       <div class="m-navlist">
          <ul class="nav-list">
             <li class="list-item">
-               <nuxt-link to="invite" tag="li" class="item-link">
+               <nuxt-link to="invite" tag="a" class="item-link">
                   <span class="c-icon c-invite"></span>
                   <i class="c-txt">邀请推广</i>
                </nuxt-link>

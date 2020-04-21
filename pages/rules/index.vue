@@ -15,11 +15,9 @@
    }
 
    .table-title {
+      text-align: center;
       color: rgba(143, 96, 25, 1);
-      font-size: 0.16rem;
-      font-weight: bold;
-      padding-left: 0.1rem;
-      margin-top: 0.2rem;
+      margin: 0.2rem 0 0.1rem 0;
    }
    .table-wrap {
       display: flex;
@@ -51,6 +49,31 @@
          }
       }
    }
+   .wrap {
+      padding: 0.2rem;
+      margin: 0 auto;
+      width: calc(100% - 0.3rem);
+      background-color: #fff;
+      border-radius: 0.07rem;
+      box-shadow: 0 0 0.3rem 0.01rem #e9e9e9;
+      margin-bottom: 0.1rem;
+      .item {
+         margin-bottom: 0.2rem;
+         &:last-child {
+            margin-bottom: 0;
+         }
+         .question {
+            color: #8f6019;
+            font-size: 0.14rem;
+            font-weight: bold;
+            line-height: 2;
+         }
+         .answer {
+            color: #848484;
+            font-size: 0.13rem;
+         }
+      }
+   }
 }
 </style>
 <template>
@@ -74,7 +97,26 @@
             <span class="label">5、提现说明：</span>
             {{config.settlement.cycle}}
          </div>
-         <div class="table-title">等级权益</div>
+         <div class="table-title">———— 常见问题 ————</div>
+         <div class="wrap">
+            <div class="item">
+               <div class="question">领取的红包每天都有吗？</div>
+               <div class="answer">是的，我们是美团/饿了么的合作平台，红包真实可用，每天都能够领取5-9元的大包！</div>
+            </div>
+            <div class="item">
+               <div class="question">分享好友返现是什么意思呢？</div>
+               <div class="answer">我们平台与美团/饿了么深度合作，让利给平台的推广者，只要分享给好友领取红包或者邀请成为推广者，有关联的使用红包订单，您就会有相关返现。</div>
+            </div>
+            <div class="item">
+               <div class="question">分享好友能挣多少钱呢？</div>
+               <div class="answer">因为领红包点外卖是一个强需求，频次很高，好友点单100元，资深的推广者就能获得4元返现，自己带领推广团队也能让您获益颇丰，积少成多，月入万元零花钱的推广者也不在少数！</div>
+            </div>
+            <div class="item">
+               <div class="question">平台真实可信吗？</div>
+               <div class="answer">平台作为美团/饿了么的合作方，仅收取部分技术服务费（5%以内），作为一个长期平台，不用担心相关安全性问题，如使用过程中有任何问题可与平台客服联系！</div>
+            </div>
+         </div>
+         <div class="table-title">———— 等级权益 ————</div>
          <div class="table-wrap">
             <table class="table" border-collapse="collapse">
                <tr>
@@ -109,7 +151,7 @@
                </tr>
             </table>
          </div>
-         <div class="table-title">相关管理奖励</div>
+         <div class="table-title">———— 相关管理奖励 ————</div>
          <div class="table-wrap">
             <table class="table" border-collapse="collapse">
                <tr>
@@ -149,7 +191,7 @@
                </tr>
             </table>
          </div>
-         <div class="table-title">等级任务</div>
+         <div class="table-title">———— 等级任务 ————</div>
          <div class="table-wrap">
             <table class="table" border-collapse="collapse">
                <tr>
@@ -195,7 +237,7 @@ export default {
       return {
          config: {
             withdrawal: { cycle: "" },
-            settlement: { cycle: "" },
+            settlement: { cycle: "" }
          }
       };
    },

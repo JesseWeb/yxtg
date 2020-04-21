@@ -21,7 +21,7 @@
             width: 1.21rem;
          }
       }
-      .wrap {
+      .login-wrap {
          display: flex;
          position: absolute;
          top: 0.14rem;
@@ -147,16 +147,19 @@
    -webkit-box-sizing: border-box;
    -moz-box-sizing: border-box;
    box-sizing: border-box;
-   margin-top: 0.15rem;
+   // margin-top: 0.15rem;
    .rake-back-main {
       border-radius: 0.07rem;
       -webkit-box-shadow: 0 0 0.3rem 0.01rem #e9e9e9;
       box-shadow: 0 0 0.3rem 0.01rem #e9e9e9;
       background: #fff;
-      padding: 0 0.1rem;
+      padding: 0.1rem;
+      padding-top: 0.2rem;
+      padding-bottom: 0;
       -webkit-box-sizing: border-box;
       -moz-box-sizing: border-box;
       box-sizing: border-box;
+      overflow: hidden;
       .rake-back-main-title {
          font-size: 0.14rem;
          line-height: 0.455rem;
@@ -165,7 +168,7 @@
          font-weight: 600;
       }
       .detail-rules {
-         padding: 0.15rem 0;
+         // padding: 0.15rem 0;
          text-align: center;
          display: flex;
          justify-content: center;
@@ -294,6 +297,36 @@
       color: #fff;
    }
 }
+.title {
+   text-align: center;
+   color: rgba(143, 96, 25, 1);
+   margin: 0.2rem 0 0.1rem 0;
+}
+.wrap {
+   padding: 0.2rem;
+   margin: 0 auto;
+   width: calc(100% - 0.35rem);
+   background-color: #fff;
+   border-radius: 0.07rem;
+   box-shadow: 0 0 0.3rem 0.01rem #e9e9e9;
+   margin-bottom: 0.1rem;
+   .item {
+      margin-bottom: 0.2rem;
+      &:last-child {
+         margin-bottom: 0;
+      }
+      .question {
+         color: #8f6019;
+         font-size: 0.14rem;
+         font-weight: bold;
+         line-height: 2;
+      }
+      .answer {
+         color: #848484;
+         font-size: 0.13rem;
+      }
+   }
+}
 </style>
 <template>
    <div id="introduce">
@@ -302,7 +335,7 @@
             <div class="login-slogan">
                <img class="logo" src="~/assets/image/logo_2.png" alt />
             </div>
-            <div class="wrap">
+            <div class="login-wrap">
                <!-- <div class="login-top-logo"></div> -->
                <nuxt-link to="userinfo" tag="div" v-if="userLogin" class="login-box">
                   <img class="user-pic" src="/male-130.png" />
@@ -346,11 +379,11 @@
          </div>-->
       </div>
       <div class="m-flow">
-         <img src="/login-bottom-img.png" alt="">
+         <img src="/login-bottom-img.png" alt />
       </div>
+      <div class="title">———— 反佣策略 ————</div>
       <div class="rake-back">
          <div class="rake-back-main">
-            <em class="rake-back-main-title">悦享推广返佣策略</em>
             <ul class="rake-back-list">
                <li class="rake-back-list-item">
                   <ul class="rake-back-row-list">
@@ -397,6 +430,25 @@
                <nuxt-link to="rules" tag="a" class="detail-rules-text" rseat="810251_ocm_unionperson_openRules">详细返佣规则请参看帮助页面</nuxt-link>
                <span class="detail-rules-angle"></span>
             </p>
+         </div>
+      </div>
+      <div class="title">———— 常见问题 ————</div>
+      <div class="wrap">
+         <div class="item">
+            <div class="question">领取的红包每天都有吗？</div>
+            <div class="answer">是的，我们是美团/饿了么的合作平台，红包真实可用，每天都能够领取5-9元的大包！</div>
+         </div>
+         <div class="item">
+            <div class="question">分享好友返现是什么意思呢？</div>
+            <div class="answer">我们平台与美团/饿了么深度合作，让利给平台的推广者，只要分享给好友领取红包或者邀请成为推广者，有关联的使用红包订单，您就会有相关返现。</div>
+         </div>
+         <div class="item">
+            <div class="question">分享好友能挣多少钱呢？</div>
+            <div class="answer">因为领红包点外卖是一个强需求，频次很高，好友点单100元，资深的推广者就能获得4元返现，自己带领推广团队也能让您获益颇丰，积少成多，月入万元零花钱的推广者也不在少数！</div>
+         </div>
+         <div class="item">
+            <div class="question">平台真实可信吗？</div>
+            <div class="answer">平台作为美团/饿了么的合作方，仅收取部分技术服务费（5%以内），作为一个长期平台，不用担心相关安全性问题，如使用过程中有任何问题可与平台客服联系！</div>
          </div>
       </div>
       <div class="flow-join-btn">
@@ -479,12 +531,12 @@ export default {
       onConfirm(index) {
          let guoshu, elem, mt;
          if (this.userLogin) {
-            if(!this.userInfo.channel.rid){
-               this.$message.error('您还未授权，授权后才能获得返佣哟～')
+            if (!this.userInfo.channel.rid) {
+               this.$message.error("您还未授权，授权后才能获得返佣哟～");
                setTimeout(() => {
-                  this.$router.push('/authorize')
+                  this.$router.push("/authorize");
                }, 500);
-               return
+               return;
             }
             guoshu = this.userInfo.channel.elem_shop_url;
             elem = this.userInfo.channel.elem_share_url;
