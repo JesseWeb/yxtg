@@ -268,7 +268,7 @@ export default {
       },
       async getCaptcha() {
          // console.log(this.form.getFieldValue(`mobile`))
-         let mobile = this.form.getFieldValue("mobile");
+         let mobile = this.form.mobile;
          var reg = /^1[3|4|5|6|7|8|9][0-9]{9}$/;
          var flag = reg.test(mobile);
          if (!mobile) {

@@ -599,7 +599,7 @@ export default Vue.extend({
       },
       async getRebateList() {
          try {
-            let { data } = await getRebateList({ time_type: 5 });
+            let { data } = await getRebateList({ time_type: 5,type:"0" });
             this.rebateList = data.data.list;
          } catch (error) {
             console.log(error);
