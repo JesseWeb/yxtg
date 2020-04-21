@@ -41,8 +41,9 @@ export default {
   },
   router: {
     middleware: ['auth'],
-    mode: "history"
+    mode: "history",
     // mode: "hash"
+    fallback:true
   },
   /*
   ** Customize the progress-bar color
@@ -86,7 +87,8 @@ export default {
   plugins: [
     '@/plugins/ant-design-vue',
     '@/plugins/vue-clipboard',
-    '@/plugins/main'
+    '@/plugins/main',
+    '@/plugins/babel-polyfill'
     // "@/plugins/auth",
     // "@/plugins/axios"
   ],
