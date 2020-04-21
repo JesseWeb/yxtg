@@ -560,7 +560,7 @@ export default Vue.extend({
          if (index == `饿了么`) {
             window.location.href = this.userDetail.channel.elem_share_url;
          } else if (index == "美团") {
-            window.location.href = this.userDetail.channel.mt_share_url;
+            window.location.href = this.userDetail.channel.mt_url;
          } else if (index == "饿了么商超果蔬") {
             window.location.href = this.userDetail.channel.elem_shop_url;
          }
