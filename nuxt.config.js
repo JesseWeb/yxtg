@@ -6,7 +6,6 @@ export default {
     // port: 8000, // default: 3000
     host: '0.0.0.0' // default: localhost
   },
-
   /*
   ** Headers of the page
   */
@@ -43,7 +42,7 @@ export default {
     middleware: ['auth'],
     mode: "history",
     // mode: "hash"
-    fallback:true
+    fallback: true
   },
   /*
   ** Customize the progress-bar color
@@ -53,24 +52,9 @@ export default {
   ** Global CSS
   */
   css: [
-    'ant-design-vue/lib/input/style/css',
-    'ant-design-vue/lib/button/style/css',
-    'ant-design-vue/lib/message/style/css',
-    'ant-design-vue/lib/progress/style/css',
-    'ant-design-vue/lib/row/style/css',
-    'ant-design-vue/lib/col/style/css',
-    'ant-design-vue/lib/form/style/css',
-    'ant-design-vue/lib/icon/style/css',
-    'ant-design-vue/lib/carousel/style/css',
-    'ant-design-vue/lib/modal/style/css',
-    'ant-design-vue/lib/input-number/style/css',
-    'ant-design-vue/lib/tabs/style/css',
-    'ant-design-vue/lib/drawer/style/css',
-    'ant-design-vue/lib/tooltip/style/css',
-    'ant-design-vue/lib/spin/style/css',
     {
       src: '@/assets/scss/375-vw.scss',
-      lang: "scss"
+      lang: "scss",
     },
     {
       src: '@/assets/scss/reset.scss',
@@ -79,7 +63,8 @@ export default {
     {
       src: '@/assets/scss/common.scss',
       lang: "scss"
-    }
+    },
+
   ],
   /*
   ** Plugins to load before mounting the App
@@ -166,6 +151,20 @@ export default {
           },
         }
       }
+    },
+    loaders: {
+      less: {
+        javascriptEnabled:true
+      }
+    },
+    babel: {
+      presets: ["@nuxt/babel-preset-app"],
+      plugins: [
+        [
+          "import",
+          { libraryName: "ant-design-vue", libraryDirectory: "es", style: true }
+        ]
+      ],
     },
     extend(config, ctx) {
     }
