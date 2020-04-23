@@ -366,7 +366,7 @@ export default {
             },
             {
                type: 1,
-               name: "昨日"
+               name: "昨 日"
             },
             {
                type: 5,

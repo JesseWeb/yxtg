@@ -484,8 +484,7 @@ input[type="tel"] {
                <li v-for="item in rebateList" :key="item.id">
                   <em>{{parseTimeS(item.created_time)}}</em>
                   <div class="m-list-info">
-                     {{item.from_user.username}}购买了
-                     <span class="card-type">在{{item.source_type_name}}消费金额：{{item.order_price}}元</span>。您获得佣金
+                     <span class="card-type">{{item.source_type_name}}用户消费：{{item.order_price}}元</span>。您获得佣金
                      <span class="card-money">{{item.order_rebate}}</span>元
                      <span v-if="item.status=='3'" class="card-status">（{{item.status_name}}）</span>
                   </div>
