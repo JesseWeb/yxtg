@@ -34,7 +34,7 @@ jobs:
           name: deploy
           command: |
             if [ "${CIRCLE_BRANCH}" = "master" ]; then
-              ssh -p $SSH_PORT $SSH_USER@$SSH_IP "rm -rf /root/yxtg/dist.tar" && rsync -avce "ssh -p $SSH_PORT" dist.tar $SSH_USER@$SSH_IP:/root/yxtg && ssh -p $SSH_PORT $SSH_USER@$SSH_IP "rm -rf /root/yxtg/dist /root/yxtg/.nuxt" && ssh -p $SSH_PORT $SSH_USER@$SSH_IP "cd /root/yxtg && tar -zxvf dist.tar && pm2 restart tfkz"
+              ssh -p $SSH_PORT $SSH_USER@$SSH_IP "rm -rf /root/yxtg/dist.tar" && rsync -avce "ssh -p $SSH_PORT" dist.tar $SSH_USER@$SSH_IP:/root/yxtg && ssh -p $SSH_PORT $SSH_USER@$SSH_IP "rm -rf /root/yxtg/dist /root/yxtg/.nuxt" && ssh -p $SSH_PORT $SSH_USER@$SSH_IP "cd /root/yxtg && tar -zxvf dist.tar && pm2 restart yxtg"
             else
               echo "Not master branch, dry run only"
             fi
