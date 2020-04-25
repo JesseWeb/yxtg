@@ -406,6 +406,7 @@ export default {
       },
       handlleTabChange(key) {
          this.choosedTab = key;
+
       },
       async getRebateStatic() {
          let choosedTimeRange;
@@ -534,6 +535,7 @@ export default {
       this.getOwnRebateList();
       this.getGroupRebateList();
       this.getRebateStatic();
+      this.getOwnRebateList();
    }
 };
 </script>
