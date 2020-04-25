@@ -73,14 +73,14 @@
    .qrcode-desc {
       color: #999;
    }
-   .switch-qrcode-button{
+   .switch-qrcode-button {
       background-color: rgb(240, 209, 158);
       color: #fff;
-      padding: .03rem .2rem;
-      border-radius: .2rem;
-      font-size: .16rem;
+      padding: 0.03rem 0.2rem;
+      border-radius: 0.2rem;
+      font-size: 0.16rem;
       cursor: pointer;
-      margin-top: .2rem;
+      margin-top: 0.2rem;
    }
 }
 .ant-carousel {
@@ -393,13 +393,20 @@ export default {
             },
             { title: "即扫即领", desc: "好友保存图片、扫码即领包" }
          ],
-         userid: "",
          magazines: [],
          magazineIndex: 0,
          mergedImgBase64: null,
          qrcodeImage: null,
          promoteText: "",
-         saveImageModalVisible: false
+         saveImageModalVisible: false,
+         userDetail: {
+            user: {
+               userid: ""
+            },
+            channel: {
+               promote_share_url: ""
+            }
+         }
       };
    },
    methods: {
@@ -407,6 +414,7 @@ export default {
          this.qrcodeTypeIndex == 0
             ? (this.qrcodeTypeIndex = 1)
             : (this.qrcodeTypeIndex = 0);
+         this.getRandomPromoteText();
       },
       getImageSizeFromUrl(src) {
          let img = new Image();
@@ -435,7 +443,7 @@ export default {
       async getUserDetail() {
          try {
             let { data } = await getUserDetail();
-            this.userid = data.data.user.userid;
+            this.userDetail = data.data
          } catch (error) {
             console.error(error);
          }
@@ -465,14 +473,18 @@ export default {
                         x: x
                      }
                   })
-                  // .text("扫码领取红包", {
-                  //    width: "300px",
-                  //    align: "center",
-                  //    pos: {
-                  //       x: 330 - 150,
-                  //       y: 562 + 0
-                  //    }
-                  // })
+                  .text(`${this.userDetail.user.userid}`, {
+                     width: "200",
+                     align: "center",
+                     normalStyle: {
+                        color: "rgba(255,255,255,.3)",
+                        // font:"50px"
+                     },
+                     pos: {
+                        x: 20,
+                        y: 5
+                     }
+                  })
                   .draw(b64 => {
                      res(b64);
                   });
@@ -521,7 +533,7 @@ export default {
                // }`;
                setTimeout(() => {
                   this.$router.push({
-                     path: "authorize"
+                     path: "authorize_v2"
                      // query: {
                      //    iframe_url
                      // }
@@ -630,7 +642,10 @@ export default {
          });
       },
       async getRandomPromoteText() {
-         let { data } = await getRandomPromoteText({ type: this.type });
+         let { data } = await getRandomPromoteText({
+            type: this.type,
+            source_type: this.qrcodeTypeIndex == 0 ? "1" : "2"
+         });
          let promoteText = data.data.content;
          this.promoteText = promoteText;
       },
@@ -664,6 +679,7 @@ export default {
    },
    mounted() {
       this.getMaterialImages();
+      this.getUserDetail();
       this.getRandomPromoteText();
    },
    destroyed() {

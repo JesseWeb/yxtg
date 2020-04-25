@@ -171,7 +171,7 @@ input[type="tel"] {
          flex-direction: column;
          justify-content: space-between;
          align-items: center;
-         width: calc((100% / 3));
+         width: calc((100% / 4));
       }
    }
    .own-opretion-text {
@@ -544,15 +544,9 @@ export default Vue.extend({
             });
          } else {
             this.$message.error("请先授权！");
-            let iframe_url = `${this.userDetail.channel.elem_auth_url}${
-               this.is_mobile() ? "&view=wap" : ""
-            }`;
             setTimeout(() => {
                this.$router.push({
-                  path: "authorize_taobao",
-                  query: {
-                     iframe_url
-                  }
+                  path: "authorize_v2",
                });
             }, 500);
             return;

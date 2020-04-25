@@ -88,7 +88,8 @@ export async function getQrCode() {
 export async function getRandomPromoteText(params) {
    let defaultParams = {
       type: "1",
-      promote_type: "2"
+      promote_type: "2",
+      source_type:"1"
    }
    params = { ...defaultParams, ...params }
    return request({

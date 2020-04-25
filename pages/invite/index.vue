@@ -350,7 +350,7 @@
    </div>
 </template>
 <script>
-import GoldTitle from "@/components/GoldTitle";
+import GoldTitle from "@/components/GoldTitle.vue";
 import {
    getMaterialImages,
    getQrCode,
@@ -396,6 +396,7 @@ export default {
          this.qrcodeTypeIndex == 0
             ? (this.qrcodeTypeIndex = 1)
             : (this.qrcodeTypeIndex = 0);
+         this.getRandomPromoteText();
       },
       getImageSizeFromUrl(src) {
          let img = new Image();
@@ -446,14 +447,18 @@ export default {
                         x
                      }
                   })
-                  // .text("扫码领取红包", {
-                  //    width: "300px",
-                  //    align: "center",
-                  //    pos: {
-                  //       x: 330 - 150,
-                  //       y: 562 + 0
-                  //    }
-                  // })
+                  .text(this.userDetail.user.userid, {
+                     width: "200",
+                     align: "center",
+                     normalStyle: {
+                        color: "rgba(255,255,255,.3)",
+                        font: ""
+                     },
+                     pos: {
+                        x: 20,
+                        y: 5
+                     }
+                  })
                   .draw(b64 => {
                      res(b64);
                   });
@@ -507,7 +512,8 @@ export default {
       async getRandomPromoteText() {
          let { data } = await getRandomPromoteText({
             type: this.type,
-            promote_type: 1
+            promote_type: 1,
+            source_type: this.qrcodeTypeIndex == 0 ? "1" : "2"
          });
          let promoteText = data.data.content;
          this.promoteText = promoteText;

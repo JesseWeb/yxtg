@@ -8,6 +8,7 @@
     "dev": "cross-env mode=development nuxt",
     "build": "cross-env mode=production nuxt build",
     "start": "cross-env mode=production nuxt start",
+    "pm2": "pm2 start npm --name yxtg -- run start",
     "generate": "cross-env mode=production nuxt generate",
     "deploy": "cross-env mode=production && nuxt build && pm2 start npm -- run start "
   },

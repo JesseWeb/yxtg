@@ -534,7 +534,7 @@ export default {
             if (!this.userInfo.channel.rid) {
                this.$message.error("您还未授权，授权后才能获得返佣哟～");
                setTimeout(() => {
-                  this.$router.push("/authorize");
+                  this.$router.push("/authorize_v2");
                }, 500);
                return;
             }
