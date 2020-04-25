@@ -452,7 +452,6 @@ export default {
                      align: "center",
                      normalStyle: {
                         color: "rgba(255,255,255,.3)",
-                        font: ""
                      },
                      pos: {
                         x: 20,
