@@ -534,8 +534,6 @@ export default {
    mounted() {
       this.getOwnRebateList();
       this.getGroupRebateList();
-      this.getRebateStatic();
-      this.getOwnRebateList();
    }
 };
 </script>
