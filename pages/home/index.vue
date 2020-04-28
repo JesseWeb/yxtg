@@ -90,6 +90,11 @@ input[type="tel"] {
          .bottom {
             margin-left: 0.07rem;
             font-size: 0.12rem;
+            .btn-mini {
+               padding: 0.02rem 0.1rem;
+               border-radius: 0.5rem;
+               background-color: $mainColor;
+            }
          }
       }
       .own-info-photo {
@@ -245,7 +250,7 @@ input[type="tel"] {
    background: #fff;
    .nav-list {
       display: flex;
-      margin-bottom: .1rem;
+      margin-bottom: 0.1rem;
       .list-item {
          flex: 1;
          &:first-child {
@@ -378,18 +383,29 @@ input[type="tel"] {
          <div class="own-banner">
             <!---->
             <div class="own-main">
-               <nuxt-link to="/userinfo" tag="div" class="own-info">
-                  <div class="own-info-photo">
+               <div class="own-info">
+                  <!-- <div class="own-info-photo"></div> -->
+                  <nuxt-link to="/userinfo" tag="div" class="own-info-photo">
                      <img src="/male-130.png" />
-                  </div>
+                  </nuxt-link>
+
                   <div class="right">
                      <div class="top">
                         <em class="own-info-nickname">{{userDetail?userDetail.user.username:''}}</em>
                         <em class="own-info-level">{{userDetail?userDetail.promote.level_desc:''}}</em>
                      </div>
-                     <div class="bottom">UID：{{userDetail?userDetail.user.userid:''}}</div>
+                     <div class="bottom">
+                        ID：{{userDetail?userDetail.user.userid:''}}
+                        <span
+                           class="btn-mini"
+                           v-clipboard:error="onError"
+                           v-clipboard:copy="userDetail?userDetail.user.userid:''"
+                           v-clipboard:success="onUseridCopy"
+                           v-if="userDetail"
+                        >复制邀请码</span>
+                     </div>
                   </div>
-               </nuxt-link>
+               </div>
 
                <div class="own-settle" style="flex-wrap: wrap;">
                   <div class="own-settle-money">
@@ -546,7 +562,7 @@ export default Vue.extend({
             this.$message.error("请先授权！");
             setTimeout(() => {
                this.$router.push({
-                  path: "authorize_v2",
+                  path: "authorize_v2"
                });
             }, 500);
             return;
@@ -577,6 +593,9 @@ export default Vue.extend({
       onCopy() {
          this.$message.success("复制客服微信号成功");
       },
+      onUseridCopy(){
+         this.$message.success("复制成功");
+      },
       custService() {},
       cashOut() {
          this.$router.push("settling");
@@ -595,7 +614,7 @@ export default Vue.extend({
       },
       async getRebateList() {
          try {
-            let { data } = await getRebateList({ time_type: 5,type:"0" });
+            let { data } = await getRebateList({ time_type: 5, type: "0" });
             this.rebateList = data.data.list;
          } catch (error) {
             console.log(error);

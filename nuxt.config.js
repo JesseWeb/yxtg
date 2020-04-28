@@ -63,7 +63,7 @@ export default {
     {
       src: '@/assets/scss/common.scss',
       lang: "scss"
-    },
+    }
 
   ],
   /*
@@ -83,6 +83,7 @@ export default {
   buildModules: [
     '@nuxt/typescript-build'
   ],
+  
   /*
   ** Nuxt.js modules
   */
@@ -90,7 +91,12 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/component-cache',
     '@nuxtjs/proxy',
+    "@nuxtjs/style-resources"
   ],
+  styleResources: {
+    scss: './assets/scss/variables.scss',
+    // sass: ...
+  },
   /**
    * Render configuration
    */
@@ -154,7 +160,7 @@ export default {
     },
     loaders: {
       less: {
-        javascriptEnabled:true
+        javascriptEnabled: true
       }
     },
     babel: {
