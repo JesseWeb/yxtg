@@ -87,13 +87,31 @@ input[type="tel"] {
             display: flex;
             align-items: center;
          }
-         .bottom {
+         .middle {
+            display: flex;
+            align-items: center;
+            height:.27rem;
             margin-left: 0.07rem;
             font-size: 0.12rem;
             .btn-mini {
+               margin-left: .1rem;
                padding: 0.02rem 0.1rem;
                border-radius: 0.5rem;
                background-color: $mainColor;
+            }
+         }
+         .bottom {
+            display: flex;
+            align-items: center;
+            height:.27rem;
+            margin-left: 0.07rem;
+            font-size: 0.12rem;
+            .btn-mini {
+               margin-left: .1rem;
+               text-decoration: underline;
+               // padding: 0.02rem 0.1rem;
+               // border-radius: 0.5rem;
+               // background-color: $mainColor;
             }
          }
       }
@@ -394,7 +412,7 @@ input[type="tel"] {
                         <em class="own-info-nickname">{{userDetail?userDetail.user.username:''}}</em>
                         <em class="own-info-level">{{userDetail?userDetail.promote.level_desc:''}}</em>
                      </div>
-                     <div class="bottom">
+                     <div class="middle">
                         ID：{{userDetail?userDetail.user.userid:''}}
                         <span
                            class="btn-mini"
@@ -403,6 +421,15 @@ input[type="tel"] {
                            v-clipboard:success="onUseridCopy"
                            v-if="userDetail"
                         >复制邀请码</span>
+                     </div>
+                     <div class="bottom">
+                        直推返佣：{{userDetail?userDetail.promote.rebate+'%':''}}
+                        <n-link 
+                           to="/missions"
+                           tag="span"
+                           class="btn-mini"
+                           v-if="userDetail"
+                        >提高返佣</n-link>
                      </div>
                   </div>
                </div>
@@ -473,7 +500,7 @@ input[type="tel"] {
             <li class="list-item">
                <nuxt-link tag="a" to="/missions" class="item-link">
                   <span class="c-icon c-combatTeam"></span>
-                  <i class="c-txt">我的任务</i>
+                  <i class="c-txt">提高佣金</i>
                </nuxt-link>
             </li>
             <li class="list-item">
@@ -593,7 +620,7 @@ export default Vue.extend({
       onCopy() {
          this.$message.success("复制客服微信号成功");
       },
-      onUseridCopy(){
+      onUseridCopy() {
          this.$message.success("复制成功");
       },
       custService() {},
