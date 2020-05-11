@@ -119,37 +119,37 @@
 </style>
 <template>
    <div id="settling">
-      <GoleTitle title="结算" />
+      <GoleTitle title="提现" />
       <div class="main-wrap">
          <div class="main">
             <div class="settle-account-wrap">
                <div class="account-info">
                   <div class="desc">到账账号</div>
                   <div class="set-account" v-if="userDetail.user.ali_account" @click="openBindZfbModal">支付宝账号（{{corpAccount(userDetail.user.ali_account||'')}}）</div>
-                  <div class="set-account" @click="openBindZfbModal" v-else>填写结算账号</div>
+                  <div class="set-account" @click="openBindZfbModal" v-else>填写提现账号</div>
                </div>
                <div class="income-delay">7个工作日内到账</div>
             </div>
             <div class="form">
-               <div class="title">结算金额</div>
+               <div class="title">提现金额</div>
                <div class="money-wrap">
                   <div class="digit">¥</div>
                   <div class="input-wrap">
-                     <input type="number" pattern="number" onkeyup="value=value.replace(/[^\d\.]/g,'')" step="0.01" placeholder="请输入结算金额" v-model="num" />
+                     <input type="number" pattern="number" onkeyup="value=value.replace(/[^\d\.]/g,'')" step="0.01" placeholder="请输入提现金额" v-model="num" />
 
                   </div>
                </div>
                <div class="money-desc">
-                  <div class="surplus">当前可结算金额{{userDetail.account.price}}元，</div>
-                  <div class="settle-all" @click="settleAll">全部结算</div>
+                  <div class="surplus">当前可提现金额{{userDetail.account.price}}元，</div>
+                  <div class="settle-all" @click="settleAll">全部提现</div>
                </div>
                <div class="settle-btn-wrap">
-                  <button class="settle-btn" @click="handleSubmit">结算</button>
+                  <button class="settle-btn" @click="handleSubmit">提现</button>
                </div>
             </div>
          </div>
       </div>
-      <a-modal title="填写结算账号" cancelText="取消" okText="确定" v-model="changeZfbModalVisible" @ok="bindZfb">
+      <a-modal title="填写提现账号" cancelText="取消" okText="确定" v-model="changeZfbModalVisible" @ok="bindZfb">
          <a-form-model ref="form" :rules="rules" layout="vertical" :model="form">
             <a-form-model-item label="支付宝账号" prop="ali_account">
                <a-input type="primary" v-model="form.ali_account" />

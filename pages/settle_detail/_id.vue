@@ -42,17 +42,17 @@
 </style>
 <template>
    <div id="settleDetail">
-      <GoldTitle title="结算详情" />
+      <GoldTitle title="提现详情" />
       <div class="main">
          <div class="title">返佣金额</div>
          <div class="digit">1889</div>
-         <div class="status">已结算</div>
-         <div class="status-info">您的结算已完成，请到银行卡查看</div>
+         <div class="status">已提现</div>
+         <div class="status-info">您的提现已完成，请到银行卡查看</div>
          <div class="line"></div>
       </div>
       <div class="detail">
          <div class="item">
-            <div class="left">结算周期</div>
+            <div class="left">提现周期</div>
             <div class="right">2019.08.01-2019.11.30</div>
          </div>
          <div class="item">

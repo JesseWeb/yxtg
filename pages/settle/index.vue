@@ -119,26 +119,26 @@
 <template>
    <div id="settle">
       <gold-header :showBackButton="true">
-         <div class="title">结算记录</div>
+         <div class="title">提现记录</div>
          <div class="main">
             <div class="main-wrap">
-               <div class="main-title">可结算金额</div>
+               <div class="main-title">可提现金额</div>
                <div class="main-money">
                   <span class="digit">{{userDetail?userDetail.account.price:'0'}}</span>
                   <span class="unit">元</span>
                </div>
-               <nuxt-link tag="div" to="settling" class="settle-btn" :class="settleNum<=0?'disabled':'primary'">申请结算</nuxt-link>
+               <nuxt-link tag="div" to="settling" class="settle-btn" :class="settleNum<=0?'disabled':'primary'">申请提现</nuxt-link>
             </div>
          </div>
       </gold-header>
       <div class="settle-history">
-         <div class="settle-history-title">返佣结算记录</div>
+         <div class="settle-history-title">返佣提现记录</div>
          <div class="settle-history-list">
             <empty-list :list="cashList" offsetTop=".3rem" />
             <div class="item" v-for="(item,index) in cashList" :key="index">
                <div class="item-top">
                   <div class="item-top-left">
-                     结算金额：
+                     提现金额：
                      <span class="money">¥{{item.value}}</span>
                   </div>
                   <div class="item-top-right">申请时间：{{parseTimeS(item.created)}}</div>

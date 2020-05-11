@@ -506,7 +506,7 @@ input[type="tel"] {
             <li class="list-item">
                <nuxt-link to="/settle" tag="a" class="item-link">
                   <span class="c-icon c-count"></span>
-                  <i class="c-txt">结算记录</i>
+                  <i class="c-txt">提现记录</i>
                </nuxt-link>
             </li>
             <li class="list-item">
