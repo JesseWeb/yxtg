@@ -89,7 +89,7 @@ export async function getRandomPromoteText(params) {
    let defaultParams = {
       type: "1",
       promote_type: "2",
-      source_type:"1"
+      source_type: "1"
    }
    params = { ...defaultParams, ...params }
    return request({
@@ -100,19 +100,19 @@ export async function getRandomPromoteText(params) {
 }
 export async function drawal(cash_num) {
    return request({
-      url:"/api/account/withdrawal",
-      method:"post",
-      data:{
+      url: "/api/account/withdrawal",
+      method: "post",
+      data: {
          cash_num
       }
    })
-   
+
 }
-export async function getRebateStatic(time_type=1,from_type=1,type=1){
+export async function getRebateStatic(time_type = 1, from_type = 1, type = 1) {
    return request({
-      url:"/api/promote/rebateStatistic",
-      method:"get",
-      params:{
+      url: "/api/promote/rebateStatistic",
+      method: "get",
+      params: {
          time_type,
          from_type,
          type
@@ -120,55 +120,65 @@ export async function getRebateStatic(time_type=1,from_type=1,type=1){
    })
 }
 
-export async function getTeamList(type=1,page=1,num=20){
+export async function getTeamList(type = 1, page = 1, num = 20) {
    return request({
-      url:"/api/team/list",
-      method:"get",
-      params:{
-         type,page,num
+      url: "/api/team/list",
+      method: "get",
+      params: {
+         type, page, num
       }
    })
 }
-export async function getTeamStatistics(type=1){
+export async function getTeamStatistics(type = 1) {
    return request({
-      url:"/api/team/statistics",
-      method:"get",
-      params:{
+      url: "/api/team/statistics",
+      method: "get",
+      params: {
          type
       }
    })
 }
-export async function getUpgradeProgress(){
+export async function getUpgradeProgress() {
    return request({
-      url:"/api/promote/upgrade_progress",
-      method:"get",
+      url: "/api/promote/upgrade_progress",
+      method: "get",
    })
 }
-export async function updateUserInfo(data={wechat:"",ali_account:"",realname:""}){
+export async function updateUserInfo(data = { wechat: "", ali_account: "", realname: "" }) {
    return request({
-      url:"/api/profile/modify",
-      method:"post",
+      url: "/api/profile/modify",
+      method: "post",
       data
    })
 }
-export async function visitorGetInviterInfoById(userid){
+export async function visitorGetInviterInfoById(userid) {
    return request({
-      url:"/api/index/user",
-      method:'get',
-      params:{
+      url: "/api/index/user",
+      method: 'get',
+      params: {
          userid
       }
    })
 }
-export async function getTaobaoAuthCode(){
+export async function getTaobaoAuthCode() {
    return request({
-      url:"/api/promote/inviteCode",
+      url: "/api/promote/inviteCode",
    })
 }
 
-export async function checkAuthResult(){
+export async function checkAuthResult() {
    return request({
-      url:"/api/promote/checkAuthResult",
-      method:"post"
+      url: "/api/promote/checkAuthResult",
+      method: "post"
+   })
+}
+
+export function getRpLink(openid = "") {
+   return request({
+      url: "/api/index/link",
+      method: "get",
+      params: {
+         openid: openid
+      }
    })
 }

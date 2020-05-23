@@ -327,6 +327,9 @@
       }
    }
 }
+.mt10 {
+   margin: 0.05rem 0;
+}
 </style>
 <template>
    <div id="introduce">
@@ -369,7 +372,7 @@
                id="join-party-1"
                class="login-top-btn-main"
             >加入推广获取佣金</nuxt-link>
-            <div class="self-get-rp-btn" @click="getRP">领取外卖大红包</div>
+            <div class="login-top-btn-main mt10" @click="getRP">领取外卖大红包</div>
          </div>
          <!-- <div class="login-top-agreement">
             <p class="login-top-agreement-text">
@@ -466,7 +469,11 @@
 
 <script>
 import isLogin from "@/tools/isLogin";
-import { getUserDetail, visitorGetInviterInfoById } from "@/apis/user";
+import {
+   getUserDetail,
+   visitorGetInviterInfoById,
+   getRpLink
+} from "@/apis/user";
 export default {
    name: "introduce",
    components: {},
@@ -528,7 +535,7 @@ export default {
             onConfirm: index => this.onConfirm(index)
          });
       },
-      onConfirm(index) {
+      async onConfirm(index) {
          let guoshu, elem, mt;
          if (this.userLogin) {
             if (!this.userInfo.channel.rid) {
@@ -542,9 +549,10 @@ export default {
             elem = this.userInfo.channel.elem_share_url;
             mt = this.userInfo.channel.mt_url;
          } else {
-            elem = "http://t.cn/A6w5XghZ";
-            mt = "http://t.cn/A6wbK5Jw";
-            guoshu = `http://t.cn/A6waTvDN`;
+            let res = await getRpLink(this.openid);
+            elem = res.data.data.channel.elem_share_url;
+            mt = res.data.data.channel.mt_url;
+            guoshu =  res.data.data.channel.elem_shop_url;
          }
          if (index == `饿了么`) {
             location.href = elem;
