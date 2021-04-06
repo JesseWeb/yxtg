@@ -9165,9 +9165,9 @@ svgo@^1.0.0:
     util.promisify "~1.0.0"
 
 systeminformation@^4.14.16:
-  version "4.23.3"
-  resolved "https://registry.npm.taobao.org/systeminformation/download/systeminformation-4.23.3.tgz?cache=0&sync_timestamp=1586436691996&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fsysteminformation%2Fdownload%2Fsysteminformation-4.23.3.tgz#abb618a66365181f2ef9de58ba2101fb36a1f005"
-  integrity sha1-q7YYpmNlGB8u+d5YuiEB+zah8AU=
+  version "4.34.19"
+  resolved "https://registry.yarnpkg.com/systeminformation/-/systeminformation-4.34.19.tgz#c5f066cc043482686d95bbc554d52e6ec9e42367"
+  integrity sha512-ssUYQ0s1FFeb8EGtyCX/41cC/XaF84gbNAUfaUTziibx+xCAaR0zrOy0yZlnUrsWDQ+snp/Utl8cx8IdtrevrA==
 
 tapable@^1.0.0, tapable@^1.0.0-beta.5, tapable@^1.1.3:
   version "1.1.3"
